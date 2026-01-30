@@ -1,0 +1,78 @@
+{
+    "reviews": [
+        {
+            "description": "Agenda de revisão",
+            "statusInfo": "Em atraso",
+            "topics": [
+                {
+                    "order": 1,
+                    "description": "Licitações",
+                    "elapsedTime": "3h45min",
+                    "score": "90%",
+                    "subject": "Direito Administrativo",
+                    "annotation": "Focar nos tópicos 4, 7, 8",
+                    "reviewInfo": "Agenda de próximas revisões: 3d, 5d, 15d, 30d",
+                    "history": [
+                        {
+                            "description": "Questões 20/01/2026",
+                            "information": "60Q 40A 66%",
+                            "annotation": null
+                        },
+                        {
+                            "description": "Revisão 01/02/2026",
+                            "information": "20Q 18A 90%",
+                            "annotation": "Refazer questões 35 a 70 do pdf, para rever os erros\n na revisão 3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "description": "Agenda de revisão",
+            "statusInfo": "Hoje",
+            "topics": [
+                {
+                    "order": 1,
+                    "description": "DW",
+                    "elapsedTime": "1h20min",
+                    "score": "90%",
+                    "subject": "Análise de dados",
+                    "annotation": null,
+                    "reviewInfo": "Agenda de próximas revisões: 15d, 30d",
+                    "history": [
+                        {
+                            "description": "Questões 20/01/2026",
+                            "information": "20Q 18A 90%",
+                            "annotation": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "cycles": [
+        {
+            "description": "Ciclo 2 Prova X",
+            "statusInfo": "Data de início: 14/02/2026",
+            "annotation": "Ciclo de Segurança , repetir o ciclo por 4 dias. Fazer simulado 4 após fim das matérias",
+            "topics": [
+                {
+                    "order": 1,
+                    "description": "Criptografia",
+                    "elapsedTime": "55min",
+                    "score": "-%",
+                    "subject": "Segurança da Informação",
+                    "annotation": "Ver livro x, capitulo 2"
+                },
+                {
+                    "order": 2,
+                    "description": "Verbos",
+                    "elapsedTime": "0min",
+                    "score": "-%",
+                    "subject": "Português",
+                    "annotation": null
+                }
+            ]
+        }
+    ]
+}

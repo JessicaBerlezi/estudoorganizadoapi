@@ -1,0 +1,30 @@
+{
+    "reviews": [
+        null
+    ],
+    "cycles": [
+        {
+            "description": "Ciclo 2 Prova X",
+            "statusInfo": "Data de início: 14/02/2026",
+            "annotation": "Ciclo de Segurança , repetir o ciclo por 4 dias. Fazer simulado 4 após fim das matérias",
+            "topics": [
+                {
+                    "order": 1,
+                    "description": "Criptografia",
+                    "elapsedTime": "55min",
+                    "score": "-%",
+                    "subject": "Segurança da Informação",
+                    "annotation": "Ver livro x, capitulo 2"
+                },
+                {
+                    "order": 2,
+                    "description": "Verbos",
+                    "elapsedTime": "0min",
+                    "score": "-%",
+                    "subject": "Português",
+                    "annotation": null
+                }
+            ]
+        }
+    ]
+}
