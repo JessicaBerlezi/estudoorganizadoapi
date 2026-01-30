@@ -10,23 +10,26 @@
                 {
                     "id": 1,
                     "order": 1,
+                    "rgb": "#E36713",
                     "description": "DW",
-                    "elapsedTime": "0h 57min",
-                    "score": "2%"
+                    "elapsedTime": "1h 11min",
+                    "score": "41%"
                 },
                 {
                     "id": 2,
                     "order": 2,
+                    "rgb": "#71AD47",
                     "description": "ETL",
-                    "elapsedTime": "0h 27min",
-                    "score": "36%"
+                    "elapsedTime": "8h 50min",
+                    "score": "68%"
                 },
                 {
                     "id": 3,
                     "order": 3,
+                    "rgb": "#93E410",
                     "description": "SQL",
-                    "elapsedTime": "8h 21min",
-                    "score": "75%"
+                    "elapsedTime": "11h 46min",
+                    "score": "76%"
                 }
             ]
         },
@@ -40,44 +43,50 @@
                 {
                     "id": 1,
                     "order": 1,
+                    "rgb": "#D2A000",
                     "description": "Organização do Estado",
-                    "elapsedTime": "0h 43min",
-                    "score": "7%"
+                    "elapsedTime": "2h 21min",
+                    "score": "38%"
                 },
                 {
                     "id": 2,
                     "order": 2,
+                    "rgb": "#93E410",
                     "description": "Licitações",
-                    "elapsedTime": "6h 17min",
-                    "score": "89%"
+                    "elapsedTime": "12h 36min",
+                    "score": "6%"
                 },
                 {
                     "id": 3,
                     "order": 3,
+                    "rgb": "#E36713",
                     "description": "Atos Administrativos",
-                    "elapsedTime": "3h 56min",
-                    "score": "38%"
+                    "elapsedTime": "8h 6min",
+                    "score": "46%"
                 },
                 {
                     "id": 4,
                     "order": 4,
+                    "rgb": "#920000",
                     "description": "Servidores Públicos",
-                    "elapsedTime": "9h 9min",
-                    "score": "46%"
+                    "elapsedTime": "1h 32min",
+                    "score": "68%"
                 },
                 {
                     "id": 5,
                     "order": 5,
+                    "rgb": "#777777",
                     "description": "Controle da Administração",
-                    "elapsedTime": "12h 48min",
-                    "score": "35%"
+                    "elapsedTime": "5h 39min",
+                    "score": "39%"
                 },
                 {
                     "id": 6,
                     "order": 6,
+                    "rgb": "#71AD47",
                     "description": "Responsabilidade Civil do Estado",
-                    "elapsedTime": "5h 36min",
-                    "score": "68%"
+                    "elapsedTime": "5h 37min",
+                    "score": "25%"
                 }
             ]
         },
@@ -91,23 +100,26 @@
                 {
                     "id": 1,
                     "order": 1,
+                    "rgb": "#D2A000",
                     "description": "Probabilidade",
-                    "elapsedTime": "7h 50min",
-                    "score": "75%"
+                    "elapsedTime": "12h 21min",
+                    "score": "15%"
                 },
                 {
                     "id": 2,
                     "order": 2,
+                    "rgb": "#EE7D31",
                     "description": "Regressão Linear",
-                    "elapsedTime": "3h 19min",
-                    "score": "91%"
+                    "elapsedTime": "1h 50min",
+                    "score": "59%"
                 },
                 {
                     "id": 3,
                     "order": 3,
+                    "rgb": "#EE7D31",
                     "description": "Correlação",
-                    "elapsedTime": "4h 13min",
-                    "score": "68%"
+                    "elapsedTime": "2h 26min",
+                    "score": "46%"
                 }
             ]
         },
@@ -121,9 +133,10 @@
                 {
                     "id": 1,
                     "order": 1,
+                    "rgb": "#920000",
                     "description": "Criptografia",
-                    "elapsedTime": "5h 14min",
-                    "score": "48%"
+                    "elapsedTime": "7h 53min",
+                    "score": "4%"
                 }
             ]
         },
@@ -137,16 +150,18 @@
                 {
                     "id": 1,
                     "order": 1,
+                    "rgb": "#FF6D6D",
                     "description": "Verbos",
-                    "elapsedTime": "4h 35min",
-                    "score": "66%"
+                    "elapsedTime": "1h 38min",
+                    "score": "37%"
                 },
                 {
                     "id": 2,
                     "order": 2,
+                    "rgb": "#C2C2C2",
                     "description": "Interpretação",
-                    "elapsedTime": "1h 43min",
-                    "score": "100%"
+                    "elapsedTime": "5h 27min",
+                    "score": "12%"
                 }
             ]
         }

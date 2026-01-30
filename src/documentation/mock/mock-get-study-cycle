@@ -5,10 +5,12 @@
             "statusInfo": "Em atraso",
             "topics": [
                 {
+                    "id": 0,
                     "order": 1,
+                    "rgb": "#BF0001",
                     "description": "Licitações",
                     "elapsedTime": "3h45min",
-                    "score": "90%",
+                    "score": "85%",
                     "subject": "Direito Administrativo",
                     "annotation": "Focar nos tópicos 4, 7, 8",
                     "reviewInfo": "Agenda de próximas revisões: 3d, 5d, 15d, 30d",
@@ -20,7 +22,7 @@
                         },
                         {
                             "description": "Revisão 01/02/2026",
-                            "information": "20Q 18A 90%",
+                            "information": "20Q 17A 85%",
                             "annotation": "Refazer questões 35 a 70 do pdf, para rever os erros\n na revisão 3"
                         }
                     ]
@@ -32,7 +34,9 @@
             "statusInfo": "Hoje",
             "topics": [
                 {
+                    "id": 0,
                     "order": 1,
+                    "rgb": "#920000",
                     "description": "DW",
                     "elapsedTime": "1h20min",
                     "score": "90%",
@@ -57,7 +61,9 @@
             "annotation": "Ciclo de Segurança , repetir o ciclo por 4 dias. Fazer simulado 4 após fim das matérias",
             "topics": [
                 {
+                    "id": 0,
                     "order": 1,
+                    "rgb": "#93E410",
                     "description": "Criptografia",
                     "elapsedTime": "55min",
                     "score": "-%",
@@ -65,7 +71,9 @@
                     "annotation": "Ver livro x, capitulo 2"
                 },
                 {
+                    "id": 0,
                     "order": 2,
+                    "rgb": "#FEC000",
                     "description": "Verbos",
                     "elapsedTime": "0min",
                     "score": "-%",

@@ -9,7 +9,9 @@
             "annotation": "Ciclo de Segurança , repetir o ciclo por 4 dias. Fazer simulado 4 após fim das matérias",
             "topics": [
                 {
+                    "id": 0,
                     "order": 1,
+                    "rgb": "#FEC000",
                     "description": "Criptografia",
                     "elapsedTime": "55min",
                     "score": "-%",
@@ -17,7 +19,9 @@
                     "annotation": "Ver livro x, capitulo 2"
                 },
                 {
+                    "id": 0,
                     "order": 2,
+                    "rgb": "#C2C2C2",
                     "description": "Verbos",
                     "elapsedTime": "0min",
                     "score": "-%",

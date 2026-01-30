@@ -1,5 +1,6 @@
 package br.pucrs.estudoorganizado.controller;
 
+import br.pucrs.estudoorganizado.Utils;
 import br.pucrs.estudoorganizado.controller.dto.*;
 
 import java.util.LinkedList;
@@ -7,6 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 public class MocksFactory {
+    private static String getRandomRGB(){
+        return Utils.getRandomRGB();
+    }
+
     public static StudyMapsDTO createStudyMapsMock() {
         StudyMapsDTO studyMaps = new StudyMapsDTO();
         studyMaps.subjects = new LinkedList<>();
@@ -71,6 +76,7 @@ public class MocksFactory {
             TopicSummaryDTO topic = new TopicSummaryDTO();
             topic.id = i;
             topic.order = i++;
+            topic.rgb = getRandomRGB();
             topic.description = t;
             topic.elapsedTime = random.nextInt(13) + "h " + random.nextInt(60) + "min";
             topic.score = random.nextInt(100) + 1 + "%";
@@ -156,6 +162,7 @@ public class MocksFactory {
 
         TopicReviewDetailDTO topic = new TopicReviewDetailDTO();
         topic.order = order;
+        topic.rgb = getRandomRGB();
         topic.description = description;
         topic.elapsedTime = elapsedTime;
         topic.score = score;
@@ -186,6 +193,7 @@ public class MocksFactory {
         TopicDetailDTO topic = new TopicDetailDTO();
 
         topic.order = order;
+        topic.rgb = getRandomRGB();
         topic.description = description;
         topic.elapsedTime = elapsedTime;
         topic.score = "-%";
