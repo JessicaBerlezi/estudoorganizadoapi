@@ -17,7 +17,7 @@ import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StudyMapsControllerParamsTest {
+public class StudyMapControllerParamsTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -141,6 +141,7 @@ public class StudyMapsControllerParamsTest {
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     void shouldReturnBadRequestWhenReviewIntervalIsOutOfRange() throws Exception {
         InsertTopicDTO topic = validTopic();
