@@ -13,12 +13,14 @@ public class MocksFactory {
 
         studyMaps.subjects.add(createSubjectMock(
                 1,
+                1,
                 "Análise de dados",
                 "Em andamento (1/3)",
                 "Em SQL ver as formas normais",
                 List.of("DW", "ETL", "SQL")));
 
         studyMaps.subjects.add(createSubjectMock(
+                2,
                 2,
                 "Direito Administrativo",
                 "Em andamento (1/7)",
@@ -28,12 +30,14 @@ public class MocksFactory {
 
         studyMaps.subjects.add(createSubjectMock(
                 3,
+                3,
                 "Estatística",
                 "Não iniciado (0/3)",
                 "Anotações sobre probabilidade",
                 List.of("Probabilidade", "Regressão Linear", "Correlação")));
 
         studyMaps.subjects.add(createSubjectMock(
+                5,
                 4,
                 "Segurança da Informação",
                 "Em andamento (0/1)",
@@ -41,6 +45,7 @@ public class MocksFactory {
                 List.of("Criptografia")));
 
         studyMaps.subjects.add(createSubjectMock(
+                4,
                 5,
                 "Português",
                 "Em andamento (0/2)",
@@ -51,8 +56,9 @@ public class MocksFactory {
         return studyMaps;
     }
 
-    private static SubjectDTO createSubjectMock(int order, String description, String statusInfo, String annotation, List<String> topics) {
+    private static SubjectDTO createSubjectMock(long id, int order, String description, String statusInfo, String annotation, List<String> topics) {
         SubjectDTO subject = new SubjectDTO();
+        subject.id = id;
         subject.order = order;
         subject.description = description;
         subject.statusInfo = statusInfo;
@@ -63,6 +69,7 @@ public class MocksFactory {
         Random random = new Random();
         for (String t : topics) {
             TopicSummaryDTO topic = new TopicSummaryDTO();
+            topic.id = i;
             topic.order = i++;
             topic.description = t;
             topic.elapsedTime = random.nextInt(13) + "h " + random.nextInt(60) + "min";

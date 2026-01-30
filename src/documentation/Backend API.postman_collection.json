@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "c62b41ac-a9f1-41d3-8f72-5e111f5b23dc",
+		"name": "Backend API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4400595"
+	},
+	"item": [
+		{
+			"name": "GET study-map",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/mock-api/study-map",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"mock-api",
+						"study-map"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "MOCK study-maps",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get/mock-api/study-map",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get",
+								"mock-api",
+								"study-map"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 30 Jan 2026 13:52:34 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"subjects\": [\n        {\n            \"order\": 1,\n            \"description\": \"Estatística\",\n            \"annotation\": \"Anotações sobre probabilidade\",\n            \"topics\": [\n                {\n                    \"order\": 1,\n                    \"description\": \"Probabilidade\",\n                    \"elapsedTime\": \"11h 56min\",\n                    \"score\": 91\n                },\n                {\n                    \"order\": 2,\n                    \"description\": \"Distribuição Normal\",\n                    \"elapsedTime\": \"9h 3min\",\n                    \"score\": 63\n                },\n                {\n                    \"order\": 3,\n                    \"description\": \"Regressão Linear\",\n                    \"elapsedTime\": \"1h 45min\",\n                    \"score\": 9\n                },\n                {\n                    \"order\": 4,\n                    \"description\": \"Teste de Hipóteses\",\n                    \"elapsedTime\": \"9h 13min\",\n                    \"score\": 70\n                },\n                {\n                    \"order\": 5,\n                    \"description\": \"Correlação\",\n                    \"elapsedTime\": \"1h 59min\",\n                    \"score\": 28\n                }\n            ]\n        },\n        {\n            \"order\": 2,\n            \"description\": \"Direito Administrativo\",\n            \"annotation\": \"Resumo das principais leis\",\n            \"topics\": [\n                {\n                    \"order\": 1,\n                    \"description\": \"Licitações\",\n                    \"elapsedTime\": \"0h 39min\",\n                    \"score\": 85\n                },\n                {\n                    \"order\": 2,\n                    \"description\": \"Atos Administrativos\",\n                    \"elapsedTime\": \"5h 27min\",\n                    \"score\": 40\n                },\n                {\n                    \"order\": 3,\n                    \"description\": \"Servidores Públicos\",\n                    \"elapsedTime\": \"0h 0min\",\n                    \"score\": 72\n                },\n                {\n                    \"order\": 4,\n                    \"description\": \"Controle da Administração\",\n                    \"elapsedTime\": \"10h 40min\",\n                    \"score\": 54\n                },\n                {\n                    \"order\": 5,\n                    \"description\": \"Responsabilidade Civil do Estado\",\n                    \"elapsedTime\": \"12h 36min\",\n                    \"score\": 71\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "POST subject in study-map",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "PUT subject order in study-map",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"subjectsOrder\": [\r\n    { \"id\": 1, \"order\": 2 },\r\n    { \"id\": 2, \"order\": 1 },\r\n    { \"id\": 3, \"order\": 3 },\r\n    { \"id\": 5, \"order\": 4 },\r\n    { \"id\": 4, \"order\": 5 }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/mock-api/study-map/subjects/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"mock-api",
+						"study-map",
+						"subjects",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT topic order in subject",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"subjectId\": 1,\r\n  \"subjectsOrder\": [\r\n    { \"id\": 1, \"order\": 2 },\r\n    { \"id\": 2, \"order\": 1 },\r\n    { \"id\": 3, \"order\": 3 },\r\n    { \"id\": 5, \"order\": 4 },\r\n    { \"id\": 4, \"order\": 5 }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/mock-api/study-map/subject/topics/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"mock-api",
+						"study-map",
+						"subject",
+						"topics",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET study-cycle",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/mock-api/study-cycle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"mock-api",
+						"study-cycle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET study-cycle - No Review Version",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/mock-api/study-cycle/no-review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"mock-api",
+						"study-cycle",
+						"no-review"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
