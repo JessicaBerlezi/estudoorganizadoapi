@@ -148,18 +148,12 @@ public class MocksFactory {
             LinkedList<TopicHistoryDTO> history) {
 
         TopicReviewDetailDTO topic = new TopicReviewDetailDTO();
-
-        // Campos herdados de TopicSummaryDTO
         topic.order = order;
         topic.description = description;
         topic.elapsedTime = elapsedTime;
         topic.score = score;
-
-        // Campos herdados de TopicDetailDTO
         topic.subject = subject;
         topic.annotation = annotation;
-
-        // Campos específicos de TopicReviewDetailDTO
         topic.reviewInfo = reviewInfo;
         topic.history = history;
 
@@ -196,7 +190,7 @@ public class MocksFactory {
     private static ReviewDTO createReview1Mock(){
         LinkedList<TopicHistoryDTO> history = new LinkedList<>();
         history.add(createTopicHistory("Questões 20/01/2026", "60Q 40A 66%",null));
-        history.add(createTopicHistory("Revisão 01/02/2026", "20Q 18A 90%", "Refazer questões 35 a 70 do pdf, para rever os erros\n" +
+        history.add(createTopicHistory("Revisão 01/02/2026", "20Q 17A 85%", "Refazer questões 35 a 70 do pdf, para rever os erros\n" +
                 " na revisão 3"));
         LinkedList<TopicReviewDetailDTO> reviewTopics = new LinkedList<>();
 
@@ -206,7 +200,7 @@ public class MocksFactory {
                         "Licitações",
                         "Direito Administrativo",
                         "3h45min",
-                        "90%",
+                        "85%",
                         "Agenda de próximas revisões: 3d, 5d, 15d, 30d",
                         "Focar nos tópicos 4, 7, 8",
                         history
