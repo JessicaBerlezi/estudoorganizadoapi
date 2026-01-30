@@ -1,5 +1,7 @@
 package br.pucrs.estudoorganizado.service;
 
+import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectOrderDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateTopicOrderDTO;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,28 +16,66 @@ public class StudyMapServiceOrderTest {
     private final StudyMapService service = new StudyMapService();
 
     @Test
-    void shouldThrowExceptionWhenMaxOrderIsGreaterThanListSize() {
+    void shouldThrowExceptionWhenSubjectMaxOrderIsGreaterThanListSize() {
+
+        UpdateSubjectOrderDTO requestDTO = new UpdateSubjectOrderDTO();
 
         List<UpdateOrderDTO> list = List.of(
                 subject(1L, 1),
                 subject(2L, 2),
                 subject(3L, 5) // inválido
         );
+        requestDTO.subjectsOrder = list;
 
         assertThrows(IllegalArgumentException.class,
-                () -> service.updateSubjectsOrder(list));
+                () -> service.updateSubjectsOrder(requestDTO));
+    }
+
+
+    @Test
+    void shouldThrowExceptionWhenTopicsMaxOrderIsGreaterThanListSize() {
+
+        UpdateTopicOrderDTO requestDTO = new UpdateTopicOrderDTO();
+
+        List<UpdateOrderDTO> list = List.of(
+                subject(1L, 1),
+                subject(2L, 2),
+                subject(3L, 5) // inválido
+        );
+        requestDTO.topicsOrder = list;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.updateTopicsOrder(requestDTO));
     }
 
     @Test
-    void shouldNotThrowWhenOrdersAreValid() {
+    void shouldNotThrowWhenSubjectOrdersAreValid() {
+        UpdateSubjectOrderDTO requestDTO = new UpdateSubjectOrderDTO();
 
         List<UpdateOrderDTO> list = List.of(
                 subject(1L, 1),
                 subject(2L, 2),
                 subject(3L, 3)
         );
+        requestDTO.subjectsOrder = list;
 
-        assertDoesNotThrow(() -> service.updateSubjectsOrder(list));
+        assertDoesNotThrow(() -> service.updateSubjectsOrder(requestDTO));
+    }
+
+
+    @Test
+    void shouldNotThrowWhenTopicsOrdersAreValids() {
+        UpdateTopicOrderDTO requestDTO = new UpdateTopicOrderDTO();
+
+        List<UpdateOrderDTO> list = List.of(
+                subject(1L, 1),
+                subject(2L, 2),
+                subject(3L, 3)
+        );
+        requestDTO.subjectId = 1L;
+        requestDTO.topicsOrder = list;
+
+        assertDoesNotThrow(() -> service.updateTopicsOrder(requestDTO));
     }
 
     private UpdateOrderDTO subject(Long id, int order) {

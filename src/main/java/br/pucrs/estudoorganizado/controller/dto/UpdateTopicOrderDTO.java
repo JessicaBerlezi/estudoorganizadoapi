@@ -14,13 +14,13 @@ public class UpdateTopicOrderDTO {
 
     @NotEmpty(message = "Necessária lista para atualização da ordem")
     @Valid
-    public List<UpdateOrderDTO> subjectsOrder;
+    public List<UpdateOrderDTO> topicsOrder;
 
 
     public String toLogString() {
-        String topicsLog = (subjectsOrder == null || subjectsOrder.isEmpty())
+        String topicsLog = (topicsOrder == null || topicsOrder.isEmpty())
                 ? "[]"
-                : subjectsOrder.stream()
+                : topicsOrder.stream()
                 .map(UpdateOrderDTO::toString)
                 .collect(Collectors.joining(", ", "[", "]"));
 

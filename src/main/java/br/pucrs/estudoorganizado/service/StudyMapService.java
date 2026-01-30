@@ -17,7 +17,7 @@ public class StudyMapService {
     }
 
     public void updateTopicsOrder(UpdateTopicOrderDTO request) {
-        validatedObjectOrderParams(request.subjectsOrder);
+        validatedObjectOrderParams(request.topicsOrder);
     }
 
     private void validatedObjectOrderParams(List<UpdateOrderDTO> subjectsOrder){
