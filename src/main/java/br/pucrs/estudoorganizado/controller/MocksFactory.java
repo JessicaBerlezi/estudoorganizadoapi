@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.controller;
 
-import br.pucrs.estudoorganizado.Utils;
+import br.pucrs.estudoorganizado.service.utils.Utils;
 import br.pucrs.estudoorganizado.controller.dto.*;
 
 import java.util.LinkedList;

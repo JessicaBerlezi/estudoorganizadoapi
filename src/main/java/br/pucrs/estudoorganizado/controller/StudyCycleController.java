@@ -3,7 +3,9 @@ package br.pucrs.estudoorganizado.controller;
 import br.pucrs.estudoorganizado.controller.dto.InsertStudyCycleDTO;
 import br.pucrs.estudoorganizado.controller.dto.StudyCycleDTO;
 import br.pucrs.estudoorganizado.controller.dto.SubjectTopicOptionDTO;
+import br.pucrs.estudoorganizado.service.StudyCycleService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,11 @@ import java.util.List;
 
 @Tag(name = "Ciclo de estudos", description = "Gerenciamento de ciclos de estudo")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/mock-api/study-cycle")
 public class StudyCycleController {
+
+    private final StudyCycleService service;
 
     private static final Logger logger = LoggerFactory.getLogger(StudyCycleController.class);
 
@@ -43,6 +48,7 @@ public class StudyCycleController {
     @PostMapping()
     public ResponseEntity<Void> postStudyCycle(@Valid @RequestBody InsertStudyCycleDTO newCycle) {
         logger.info("New cycle: {}", newCycle.toLogString());
+        service.create(newCycle);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado;
+package br.pucrs.estudoorganizado.service.utils;
 
 import java.util.Random;
 
