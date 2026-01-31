@@ -6,17 +6,17 @@ import br.pucrs.estudoorganizado.controller.dto.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class MocksFactory {
     private static String getRandomRGB(){
         return Utils.getRandomRGB();
     }
 
-    public static StudyMapsDTO createStudyMapsMock() {
-        StudyMapsDTO studyMaps = new StudyMapsDTO();
-        studyMaps.subjects = new LinkedList<>();
+    private static LinkedList<SubjectDTO> createSubjectDTOMock(){
+        LinkedList<SubjectDTO> subject = new LinkedList<>();
 
-        studyMaps.subjects.add(createSubjectMock(
+        subject.add(createSubjectMock(
                 1,
                 1,
                 "Análise de dados",
@@ -24,7 +24,7 @@ public class MocksFactory {
                 "Em SQL ver as formas normais",
                 List.of("DW", "ETL", "SQL")));
 
-        studyMaps.subjects.add(createSubjectMock(
+        subject.add(createSubjectMock(
                 2,
                 2,
                 "Direito Administrativo",
@@ -33,7 +33,7 @@ public class MocksFactory {
                 List.of("Organização do Estado", "Licitações", "Atos Administrativos", "Servidores Públicos", "Controle da Administração", "Responsabilidade Civil do Estado")));
 
 
-        studyMaps.subjects.add(createSubjectMock(
+        subject.add(createSubjectMock(
                 3,
                 3,
                 "Estatística",
@@ -41,7 +41,7 @@ public class MocksFactory {
                 "Anotações sobre probabilidade",
                 List.of("Probabilidade", "Regressão Linear", "Correlação")));
 
-        studyMaps.subjects.add(createSubjectMock(
+        subject.add(createSubjectMock(
                 5,
                 4,
                 "Segurança da Informação",
@@ -49,7 +49,7 @@ public class MocksFactory {
                 null,
                 List.of("Criptografia")));
 
-        studyMaps.subjects.add(createSubjectMock(
+        subject.add(createSubjectMock(
                 4,
                 5,
                 "Português",
@@ -57,7 +57,12 @@ public class MocksFactory {
                 "Contnuir da vídeo aula 4",
                 List.of("Verbos", "Interpretação")
         ));
+        return subject;
+    }
 
+    public static StudyMapsDTO createStudyMapsMock() {
+        StudyMapsDTO studyMaps = new StudyMapsDTO();
+        studyMaps.subjects = new LinkedList<>(createSubjectDTOMock());
         return studyMaps;
     }
 
@@ -252,6 +257,19 @@ public class MocksFactory {
         review.statusInfo = "Hoje";
         review.topics = reviewTopics;
         return review;
+    }
+
+
+   public static List<SubjectTopicOptionDTO> getSubjectTopicOptionMock(){
+        LinkedList<SubjectDTO> subjects = new LinkedList<>(createSubjectDTOMock());
+
+        return subjects.stream()
+                .map(s -> new SubjectTopicOptionDTO(
+                        s.getId(),
+                        s.getDescription(),
+                        (s.getTopics() != null && !s.getTopics().isEmpty()) ? s.getTopics().getFirst() : null
+                ))
+                .collect(Collectors.toList());
     }
 
 

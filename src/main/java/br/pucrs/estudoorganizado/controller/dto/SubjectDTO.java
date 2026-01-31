@@ -9,4 +9,16 @@ public class SubjectDTO {
     public String statusInfo; // top-right
     public String annotation;
     public LinkedList<TopicSummaryDTO> topics;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LinkedList<TopicSummaryDTO> getTopics() {
+        return topics;
+    }
 }
