@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/mock-api/study-cycle")
 public class StudyCycleController {
 
-    private static final Logger logger = LoggerFactory.getLogger(StudyMapController.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudyCycleController.class);
 
     @Operation(summary = "Ciclos de revisões e estudos ativos", description = "Retorna nesta ordem: Revisões em atraso, revisões para a data atual e tópicos não concluídos do ciclo de estudo ativo")
     @GetMapping
