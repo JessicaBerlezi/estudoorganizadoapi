@@ -13,7 +13,7 @@ public class MocksFactory {
         return Utils.getRandomRGB();
     }
 
-    private static LinkedList<SubjectDTO> createSubjectDTOMock(){
+    public static LinkedList<SubjectDTO> createSubjectDTOMock(){
         LinkedList<SubjectDTO> subject = new LinkedList<>();
 
         subject.add(createSubjectMock(
