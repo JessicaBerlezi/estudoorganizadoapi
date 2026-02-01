@@ -294,7 +294,7 @@
       "name": "Study Cycle",
       "item": [
         {
-          "name": "GET study-cycle",
+          "name": "GET study-cycle - No Review Version",
           "request": {
             "auth": {
               "type": "noauth"
@@ -302,7 +302,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/mock-api/study-cycle",
+              "raw": "http://localhost:8080/mock-api/study-cycle/no-review",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -310,7 +310,8 @@
               "port": "8080",
               "path": [
                 "mock-api",
-                "study-cycle"
+                "study-cycle",
+                "no-review"
               ]
             }
           },
@@ -341,7 +342,7 @@
           "response": []
         },
         {
-          "name": "GET study-cycle - No Review Version",
+          "name": "GET topics-by-subject",
           "request": {
             "auth": {
               "type": "noauth"
@@ -349,7 +350,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/mock-api/study-cycle/no-review",
+              "raw": "http://localhost:8080/mock-api/study-cycle/topics-by-subject?id=2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -358,7 +359,13 @@
               "path": [
                 "mock-api",
                 "study-cycle",
-                "no-review"
+                "topics-by-subject"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
               ]
             }
           },

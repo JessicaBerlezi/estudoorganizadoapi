@@ -3,6 +3,9 @@ package br.pucrs.estudoorganizado.controller;
 import br.pucrs.estudoorganizado.controller.dto.InsertStudyCycleDTO;
 import br.pucrs.estudoorganizado.controller.dto.StudyCycleDTO;
 import br.pucrs.estudoorganizado.controller.dto.SubjectTopicOptionDTO;
+import br.pucrs.estudoorganizado.controller.dto.TopicSummaryDTO;
+import br.pucrs.estudoorganizado.service.StudyCycleService;
+import br.pucrs.estudoorganizado.service.StudyMapService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/mock-api/study-cycle")
 public class StudyCycleController {
+
+    private final StudyCycleService service;
+
+    public StudyCycleController(StudyCycleService service) {
+        this.service = service;
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(StudyCycleController.class);
 
@@ -44,5 +53,12 @@ public class StudyCycleController {
     public ResponseEntity<Void> postStudyCycle(@Valid @RequestBody InsertStudyCycleDTO newCycle) {
         logger.info("New cycle: {}", newCycle.toLogString());
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Lista de tópicos da disciplinao", description = "Retorna lista de tópicos existentes para a disciplina: Na criação ou edição de novo ciclo, permitirá ver a lista de opções para a troca de tópico pré-selecionado")
+    @GetMapping("topics-by-subject")
+    public List<TopicSummaryDTO> getTopicsBySubjectId(@RequestParam Long id) {
+        logger.info("Get topics by subject id: {}", id);
+        return service.getTopicsBySubjectId(id);
     }
 }
