@@ -1,9 +1,6 @@
 package br.pucrs.estudoorganizado.controller;
 
-import br.pucrs.estudoorganizado.controller.dto.InsertSubjectDTO;
-import br.pucrs.estudoorganizado.controller.dto.StudyMapsDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectOrderDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateTopicOrderDTO;
+import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.service.StudyMapService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Mapa de estudoss", description = "Controle de disciplinas e tópicos")
+@Tag(name = "Mapa de estudos", description = "Controle de disciplinas")
 @RestController
 @RequestMapping("/mock-api/study-map")
 public class StudyMapController {
@@ -40,21 +37,6 @@ public class StudyMapController {
         logger.info("Updating subjects order: {}", request.toLogString());
         service.updateSubjectsOrder(request);
         return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Ordenação de tópicos da disciplina", description = "Permite alterar a ordem das disciplinas dentro da disciplina do Mapa de estudos")
-    @PutMapping("/subject/topics/order")
-    public ResponseEntity<Void> updateTopicsOrder(@Valid @RequestBody UpdateTopicOrderDTO request) {
-        logger.info("Updating topics order in subject: {}", request.toLogString());
-        service.updateTopicsOrder(request);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Criação de item no Mapa de estudos", description = "Abre painel para permitir inclusão de disciplinas, com seus respectivos tópicos")
-    @PostMapping("/subject")
-    public ResponseEntity<Void> postSubject(@Valid @RequestBody InsertSubjectDTO newSubject){
-        logger.info("New subject: {}", newSubject.toLogString());
-        return ResponseEntity.ok().build();
     }
 }
 
