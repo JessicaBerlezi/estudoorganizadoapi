@@ -1,10 +1,12 @@
 package br.pucrs.estudoorganizado.controller.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class InsertSubjectDTO {
     @NotBlank(message = "Nome da disciplina é obrigatória")
     @Size(max = 100, message = "Nome da disciplina deve ter no máximo 100 caracteres")

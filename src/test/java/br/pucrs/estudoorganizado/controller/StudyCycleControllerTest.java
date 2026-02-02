@@ -33,12 +33,12 @@ public class StudyCycleControllerTest {
     @Test
     public void shouldReturnOk_whenValidRequest() throws Exception {
         SubjectTopicDTO topic1 = new SubjectTopicDTO();
-        topic1.idSubject = 3;
-        topic1.idTopic = 1;
+        topic1.idSubject = 3L;
+        topic1.idTopic = 1L;
 
         SubjectTopicDTO topic2 = new SubjectTopicDTO();
-        topic2.idSubject = 4;
-        topic2.idTopic = 2;
+        topic2.idSubject = 4L;
+        topic2.idTopic = 2L;
 
         InsertStudyCycleDTO dto = new InsertStudyCycleDTO(
                 "Ciclo de Estatística",
@@ -96,8 +96,8 @@ public class StudyCycleControllerTest {
     @Test
     public void shouldReturnBadRequest_whenDescriptionTooLong() throws Exception {
         SubjectTopicDTO topic = new SubjectTopicDTO();
-        topic.idSubject = 1;
-        topic.idTopic = 2;
+        topic.idSubject = 1L;
+        topic.idTopic = 2L;
 
         InsertStudyCycleDTO dto = new InsertStudyCycleDTO(
                 "D".repeat(101), // >100 caracteres
@@ -114,8 +114,8 @@ public class StudyCycleControllerTest {
     @Test
     public void shouldReturnBadRequest_whenAnnotationTooLong() throws Exception {
         SubjectTopicDTO topic = new SubjectTopicDTO();
-        topic.idSubject = 1;
-        topic.idTopic = 1;
+        topic.idSubject = 1L;
+        topic.idTopic = 1L;
 
         InsertStudyCycleDTO dto = new InsertStudyCycleDTO(
                 "Descrição válida",

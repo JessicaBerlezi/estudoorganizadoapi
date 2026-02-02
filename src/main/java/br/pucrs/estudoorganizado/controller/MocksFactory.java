@@ -18,43 +18,28 @@ public class MocksFactory {
 
         subject.add(createSubjectMock(
                 1,
-                1,
                 "Análise de dados",
-                "Em andamento (1/3)",
-                "Em SQL ver as formas normais",
                 List.of("DW", "ETL", "SQL")));
 
         subject.add(createSubjectMock(
                 2,
-                2,
                 "Direito Administrativo",
-                "Em andamento (1/7)",
-                "Resumo das principais leis",
                 List.of("Organização do Estado", "Licitações", "Atos Administrativos", "Servidores Públicos", "Controle da Administração", "Responsabilidade Civil do Estado")));
 
 
         subject.add(createSubjectMock(
                 3,
-                3,
                 "Estatística",
-                "Não iniciado (0/3)",
-                "Anotações sobre probabilidade",
                 List.of("Probabilidade", "Regressão Linear", "Correlação")));
 
         subject.add(createSubjectMock(
                 5,
-                4,
                 "Segurança da Informação",
-                "Em andamento (0/1)",
-                null,
                 List.of("Criptografia")));
 
         subject.add(createSubjectMock(
                 4,
-                5,
                 "Português",
-                "Em andamento (0/2)",
-                "Contnuir da vídeo aula 4",
                 List.of("Verbos", "Interpretação")
         ));
         return subject;
@@ -66,13 +51,10 @@ public class MocksFactory {
         return studyMaps;
     }
 
-    private static SubjectDTO createSubjectMock(long id, int order, String description, String statusInfo, String annotation, List<String> topics) {
+    private static SubjectDTO createSubjectMock(long id, String description, List<String> topics) {
         SubjectDTO subject = new SubjectDTO();
         subject.id = id;
-        subject.order = order;
         subject.description = description;
-        subject.statusInfo = statusInfo;
-        subject.annotation = annotation;
         subject.topics = new LinkedList<>();
 
         int i = 1;
