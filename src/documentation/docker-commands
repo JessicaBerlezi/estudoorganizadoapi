@@ -1,7 +1,15 @@
+CRIAÇÃO:
 docker pull mysql:8.0
 ocker run --name estudoorganizado-mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=estudoorganizado -e MYSQL_USER=jberlezi -e MYSQL_PASSWORD=senha -p 3306:3306 -v mysql_data:/var/lib/mysql mysql:8.0
+
+EXECUÇÃO DO CONTAINER
 docker exec -it estudoorganizado-mysql-container mysql -u jberlezi -p
 
 SHOW DATABASES;
 USE estudoorganizado;
 SHOW TABLES;
+
+
+SELECT TABLE_NAME, CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE REFERENCED_TABLE_NAME = 'topic';

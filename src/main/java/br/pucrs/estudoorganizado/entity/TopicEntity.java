@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Tag(name = "Tabela tópicos de uma disciplina", description = """
         Tabela relacional de tópicos de uma disciplina.\s
         Pertencerá a uma disciplina, e será destruído com ela.\s
@@ -23,8 +26,8 @@ public class TopicEntity extends BaseCommonEntity {
     @Column(name = "topic_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "subject_id")
     private SubjectEntity subject;
 
     @NotBlank
@@ -45,20 +48,10 @@ public class TopicEntity extends BaseCommonEntity {
     @Column(length = 7)
     private String color;
 
-    //@Column(name = "elapsed_time")
-    //private Duration elapsedTime;
-
-    //@Max(100)
-    //private int score;
-
-    /**
-     * @ElementCollection
-     * @CollectionTable( name = "topic_review_intervals",
-     * joinColumns = @JoinColumn(name = "topic_id")
-     * )
-     * @Column(name = "interval_value")
-     * private List<Integer> reviewIntervals = new ArrayList<>();
-     */
+    @ElementCollection
+    @CollectionTable(name = "topic_review_days", joinColumns = @JoinColumn(name = "topic_id"))
+    @Column(name = "day_of_week")
+    private List<Integer> reviewIntervalsDays = new ArrayList<>();
 
     @Size(max = 250)
     @Column(length = 250)
@@ -67,12 +60,20 @@ public class TopicEntity extends BaseCommonEntity {
     public TopicEntity() {
     }
 
-    public TopicEntity(String description, Integer order, Integer incidenceScore, Integer knowledgeScore, String color, String annotation, SubjectEntity subject) {
+    public TopicEntity(String description,
+                       Integer order,
+                       Integer incidenceScore,
+                       Integer knowledgeScore,
+                       String color,
+                       List<Integer> reviewIntervalsDays,
+                       String annotation,
+                       SubjectEntity subject) {
         this.description = description;
         this.order = order;
         this.incidenceScore = incidenceScore;
         this.knowledgeScore = knowledgeScore;
         this.color = color;
+        this.reviewIntervalsDays = reviewIntervalsDays;
         this.annotation = annotation;
         this.subject = subject;
     }

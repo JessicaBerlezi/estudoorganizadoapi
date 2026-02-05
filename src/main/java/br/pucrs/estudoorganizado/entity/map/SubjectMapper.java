@@ -21,16 +21,11 @@ public class SubjectMapper {
         List<TopicEntity> entities = new ArrayList<>();
         int order = 1;
         for (InsertTopicDTO topicDTO : dto.getTopics()) {
-            TopicEntity entity = new TopicEntity(
-                    topicDTO.description,
-                    order,
-                    topicDTO.incidenceScore,
-                    topicDTO.knowledgeScore,
-                    null, //todo
-                    topicDTO.annotation,
-                    subject
-            );
-            entities.add(entity);
+            entities.add(TopicMapper.convertToEntity(
+                    topicDTO,
+                    subject,
+                    order
+            ));
             order++;
         }
         subject.setTopics(entities);

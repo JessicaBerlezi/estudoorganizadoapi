@@ -14,11 +14,15 @@ public class BaseCommonEntity {
     @Column(name = "created_datetime", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "created_by", length = 100)
+    private String createdBy;
+
     @Column(name = "updated_datetime")
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", length = 100)
-    private String createdBy;
+    @Column(name = "updated_by", length = 100)
+    private String updateBy;
+
 
     @PrePersist
     protected void onCreate() {
@@ -27,10 +31,12 @@ public class BaseCommonEntity {
         }
         this.updatedAt = LocalDateTime.now();
         this.createdBy = "system";
+        this.updateBy = "system";
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+        this.updateBy = "system";
     }
 }
