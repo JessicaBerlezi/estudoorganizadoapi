@@ -33,12 +33,6 @@ public class StudyCycleController {
         return MocksFactory.createStudyCycleMock();
     }
 
-    @Operation(summary = "Ciclo de estudos", description = "Adaptação do endpoint para mock sem retorno de revisões ")
-    @GetMapping("/no-review")
-    public StudyCycleDTO getStudyCycleNoReviewMock() {
-        return MocksFactory.createStudyCycleNoReviewMock();
-    }
-
     @Operation(summary = "Lista de disciplina e tópico para criação de novo ciclo", description = "Na criação de novo ciclo, retornará identificação básica da disciplina e informações do tópico pré-selecionado")
     @GetMapping("/subject-topic-option")
     public List<SubjectTopicOptionDTO> getSubjectTopicOptionMock() {
@@ -53,10 +47,4 @@ public class StudyCycleController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Lista de tópicos da disciplinao", description = "Retorna lista de tópicos existentes para a disciplina: Na criação ou edição de novo ciclo, permitirá ver a lista de opções para a troca de tópico pré-selecionado")
-    @GetMapping("topics-by-subject")
-    public List<TopicSummaryDTO> getTopicsBySubjectId(@RequestParam Long id) {
-        logger.info("Get topics by subject id: {}", id);
-        return service.getTopicsBySubjectId(id);
-    }
 }

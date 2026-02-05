@@ -57,7 +57,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"description\": \"Matemática\",\r\n  \"annotation\": null,\r\n  \"topics\": [\r\n    {\r\n      \"description\": \"Funções\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [7, 15, 30],\r\n      \"annotation\": \"Revisar antes de simulados\"\r\n    },\r\n    {\r\n      \"description\": \"Geometria\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
+                  "raw": "{\r\n  \"description\": \"Portugues\",\r\n  \"annotation\": null,\r\n  \"topics\": [\r\n    {\r\n      \"description\": \"tste\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [7, 15, 30],\r\n      \"annotation\": \"Revisar antes de simulados\"\r\n    },\r\n    {\r\n      \"description\": \"test\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -159,7 +159,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/mock-api/study-map/subject?id=2",
+                  "raw": "http://localhost:8080/mock-api/study-map/subject?id=1",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -173,8 +173,7 @@
                   "query": [
                     {
                       "key": "id",
-                      "value": "2",
-                      "type": "text"
+                      "value": "1"
                     }
                   ]
                 }
@@ -384,7 +383,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"description\": \"Ciclo de Estatística\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 3, \"idTopic\": 1 },\r\n    { \"idSubject\": 4, \"idTopic\": 2 }\r\n  ]\r\n}",
+              "raw": "{\r\n  \"description\": \"Ciclo de Estatística\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 1, \"idTopic\": 1 },\r\n    { \"idSubject\": 1, \"idTopic\": 2 }\r\n  ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -413,6 +412,74 @@
             }
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "V1",
+      "item": [
+        {
+          "name": "Ciclo de estudo",
+          "item": [
+            {
+              "name": "Planejamento",
+              "item": [
+                {
+                  "name": "Tópicos para estudo por disciplina",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/:id/topics-option",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "planning",
+                        "subjects",
+                        ":id",
+                        "topics-option"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Disciplina e sugestão de tópico para estudo",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/topics-suggestion",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "planning",
+                        "subjects",
+                        "topics-suggestion"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
         }
       ]
     }

@@ -1,0 +1,30 @@
+#getSubjectTopicToStudy
+SELECT t.*
+FROM topic t
+JOIN (
+    SELECT t2.subject_id, MIN(t2.topic_order) AS min_order
+    FROM topic t2
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM study_cycle_item sci
+        WHERE sci.topic_id = t2.topic_id
+        AND sci.status IN ('DONE', 'REMOVED')
+    )
+    GROUP BY t2.subject_id
+) first_topic
+    ON first_topic.subject_id = t.subject_id
+   AND first_topic.min_order = t.topic_order
+ORDER BY t.subject_id;
+
+
+#getTopicsToStudyBySubjectId
+SELECT t.*
+FROM topic t
+WHERE t.subject_id = :SUBJECTID
+AND NOT EXISTS (
+    SELECT 1
+    FROM study_cycle_item sci
+    WHERE sci.topic_id = t.topic_id
+    AND sci.status IN ('DONE', 'REMOVED')
+)
+ORDER BY t.topic_order ASC;
