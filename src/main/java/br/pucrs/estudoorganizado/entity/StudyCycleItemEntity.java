@@ -4,6 +4,7 @@ import br.pucrs.estudoorganizado.entity.enumerate.StudyStatusEnum;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "study_cycle_item")
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class StudyCycleItemEntity {
 
     @Id
@@ -29,8 +31,6 @@ public class StudyCycleItemEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "topic_id")
     private TopicEntity topic;
-
-    //private Integer orderIndex;
 
     @Enumerated(EnumType.STRING)
     private StudyStatusEnum status;

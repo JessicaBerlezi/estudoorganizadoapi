@@ -1,8 +1,8 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class StudyCycleDTO {
-    public LinkedList<ReviewDTO> reviews;
-    public LinkedList<CycleDTO> cycles;
+    public List<ReviewDTO> reviews;
+    public List<CycleDTO> cycles;
 }
