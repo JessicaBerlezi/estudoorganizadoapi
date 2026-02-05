@@ -37,7 +37,6 @@ public class SubjectMapper {
         dto.id = entity.getId();
         dto.description = entity.getDescription();
 
-        // Converter lista de tópicos ordenados pelo campo order
         dto.topics = entity.getTopics().stream()
                 .sorted(Comparator.comparing(TopicEntity::getOrder, Comparator.nullsLast(Integer::compareTo)))
                 .map(topic -> {
