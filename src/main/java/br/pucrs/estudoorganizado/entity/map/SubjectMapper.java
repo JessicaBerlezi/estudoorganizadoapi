@@ -38,6 +38,7 @@ public class SubjectMapper {
         dto.description = entity.getDescription();
 
         dto.topics = entity.getTopics().stream()
+                .filter(topic -> Boolean.TRUE.equals(topic.getIsActive()))
                 .sorted(Comparator.comparing(TopicEntity::getOrder, Comparator.nullsLast(Integer::compareTo)))
                 .map(topic -> {
                     TopicSummaryDTO topicDTO = new TopicSummaryDTO();

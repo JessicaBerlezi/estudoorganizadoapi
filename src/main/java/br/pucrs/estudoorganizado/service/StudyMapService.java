@@ -1,10 +1,7 @@
 package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.MocksFactory;
-import br.pucrs.estudoorganizado.controller.dto.SubjectDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateOrderDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectOrderDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateTopicOrderDTO;
+import br.pucrs.estudoorganizado.controller.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,6 +14,18 @@ import java.util.Objects;
 public class StudyMapService {
 
     private static final Logger logger = LoggerFactory.getLogger(StudyMapService.class);
+
+    private final SubjectService service;
+
+    public StudyMapService(SubjectService service) {
+        this.service = service;
+    }
+
+    public StudyMapsDTO getStudyMaps() {
+        StudyMapsDTO studyMapsDTO = new StudyMapsDTO();
+        studyMapsDTO.subjects = service.findActivesSubjects();
+        return studyMapsDTO;
+    }
 
     public SubjectDTO getSubjectById(Long id) {
         LinkedList<SubjectDTO> subjects = MocksFactory.createSubjectDTOMock();
@@ -39,6 +48,7 @@ public class StudyMapService {
 
     public void updateSubjectsOrder(UpdateSubjectOrderDTO request) {
         validatedObjectOrderParams(request.subjectsOrder);
+
     }
 
     public void updateTopicsOrder(UpdateTopicOrderDTO request) {

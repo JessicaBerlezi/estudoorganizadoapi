@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +21,6 @@ public class TopicService {
 
     private final TopicRepository topicRepository;
     private final SubjectRepository subjectRepository;
-
-
 
     @Transactional(readOnly = true)
     public List<SubjectTopicOptionDTO> getTopicToStudyPerSubject() {
@@ -53,5 +52,9 @@ public class TopicService {
                 .toList();
     }
 
+    public void deleteTopic(Long id) {
+        Optional<TopicEntity> optional = topicRepository.findById(id);
+        optional.ifPresent(topicRepository::delete);
+    }
 }
 

@@ -3,6 +3,7 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.InsertTopicDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicDetailDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicSummaryDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateTopicDTO;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 
@@ -45,5 +46,18 @@ public class TopicMapper {
         dto.subject = entity.getSubject().getDescription();
 
         return dto;
+    }
+
+    public static TopicEntity update(TopicEntity entity, UpdateTopicDTO dto, Integer order) {
+        TopicEntity topic = entity;
+        topic.setDescription(dto.description);
+        topic.setOrder(order);
+        topic.setIncidenceScore(dto.incidenceScore);
+        topic.setKnowledgeScore(dto.knowledgeScore);
+        topic.setReviewIntervalsDays(dto.reviewIntervals);
+        topic.setAnnotation(dto.annotation);
+        topic.setColor("#9E9E9E");
+
+        return topic;
     }
 }

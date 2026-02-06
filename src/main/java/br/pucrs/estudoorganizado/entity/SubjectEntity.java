@@ -47,6 +47,20 @@ public class SubjectEntity  extends BaseCommonEntity{
         this.annotation = annotation;
     }
 
+    public SubjectEntity(
+            SubjectEntity entity,
+            List<TopicEntity> topics,
+            String description,
+            String annotation) {
+        this.id = entity.id;
+        this.setCreatedAt(entity.getCreatedAt());
+        this.setIsActive(entity.getIsActive());
+        this.topics = topics;
+        this.description = description;
+        this.annotation = annotation;
+        onUpdate();
+    }
+
     public String toLogString() {
         String topicsLog = (topics == null || topics.isEmpty())
                 ? "[]"

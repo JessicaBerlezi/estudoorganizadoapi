@@ -1,8 +1,8 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class StudyMapsDTO {
-    public LinkedList<SubjectDTO> subjects;
+    public List<SubjectDTO> subjects;
 }
 

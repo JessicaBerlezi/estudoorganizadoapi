@@ -7,13 +7,23 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import br.pucrs.estudoorganizado.controller.dto.UpdateOrderDTO;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
+
 public class StudyMapServiceOrderTest {
 
-    private final StudyMapService service = new StudyMapService();
+    @Mock
+    private SubjectService subjectService;
+
+    @InjectMocks
+    private StudyMapService service;
 
     @Test
     void shouldThrowExceptionWhenSubjectMaxOrderIsGreaterThanListSize() {

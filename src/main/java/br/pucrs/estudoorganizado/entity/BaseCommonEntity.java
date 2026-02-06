@@ -33,9 +33,4 @@ public class BaseCommonEntity {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-    protected void onDelete() {
-        this.updatedAt = LocalDateTime.now();
-        this.isActive = false;
-    }
 }

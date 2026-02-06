@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
         Cor é uma cor calculada a partir dos dados da própria tabela sobre conhecimento anterior e incidência em probas. \s
         Tempo decorrido e score serão valores calculados a partir de registros de estudo relacionado ao tópico""")
 @Getter
+@Setter
 @Entity
 @Table(name = "topic")
 public class TopicEntity extends BaseCommonEntity {
