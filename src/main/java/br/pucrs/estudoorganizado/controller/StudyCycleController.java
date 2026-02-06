@@ -34,8 +34,8 @@ public class StudyCycleController {
     @Operation(summary = "Ciclos de revisões e estudos ativos", description = "Tela inicial da aplicação. \n" +
             "Retorna nesta ordem: Revisões em atraso, revisões para a data atual e tópicos não concluídos do ciclo de estudo ativo")
     @GetMapping
-    public StudyCycleDTO getStudyCycle() {
-        return service.getActiveStudyCycles();
+    public ResponseEntity<StudyCycleDTO> getStudyCycle() {
+        return ResponseEntity.ok(service.getActiveStudyCycles());
     }
 
 }
