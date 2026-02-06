@@ -3,7 +3,6 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.InsertTopicDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicDetailDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicSummaryDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateTopicDTO;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 

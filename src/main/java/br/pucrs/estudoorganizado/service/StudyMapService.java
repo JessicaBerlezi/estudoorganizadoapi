@@ -1,14 +1,11 @@
 package br.pucrs.estudoorganizado.service;
 
-import br.pucrs.estudoorganizado.controller.MocksFactory;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class StudyMapService {

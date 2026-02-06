@@ -51,10 +51,5 @@ public class TopicService {
                 .map(TopicMapper::convertToSummaryDTO)
                 .toList();
     }
-
-    public void deleteTopic(Long id) {
-        Optional<TopicEntity> optional = topicRepository.findById(id);
-        optional.ifPresent(topicRepository::delete);
-    }
 }
 
