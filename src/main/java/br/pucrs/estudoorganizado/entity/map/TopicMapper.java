@@ -48,16 +48,4 @@ public class TopicMapper {
         return dto;
     }
 
-    public static TopicEntity update(TopicEntity entity, UpdateTopicDTO dto, Integer order) {
-        TopicEntity topic = entity;
-        topic.setDescription(dto.description);
-        topic.setOrder(order);
-        topic.setIncidenceScore(dto.incidenceScore);
-        topic.setKnowledgeScore(dto.knowledgeScore);
-        topic.setReviewIntervalsDays(dto.reviewIntervals);
-        topic.setAnnotation(dto.annotation);
-        topic.setColor("#9E9E9E");
-
-        return topic;
-    }
 }

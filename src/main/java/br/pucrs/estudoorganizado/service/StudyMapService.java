@@ -27,28 +27,8 @@ public class StudyMapService {
         return studyMapsDTO;
     }
 
-    public SubjectDTO getSubjectById(Long id) {
-        LinkedList<SubjectDTO> subjects = MocksFactory.createSubjectDTOMock();
-
-        SubjectDTO subject = getSubjectById(subjects, id);
-        if (subject != null) {
-            logger.info("Subject find: {}", subject);
-        } else {
-            logger.info("Subject not find for id: {}", id);
-        }
-        return subject;
-    }
-
-    private static SubjectDTO getSubjectById(LinkedList<SubjectDTO> subjects, Long id) {
-        return subjects.stream()
-                .filter(s -> Objects.equals(s.getId(), id))
-                .findFirst()
-                .orElse(null);
-    }
-
     public void updateSubjectsOrder(UpdateSubjectOrderDTO request) {
         validatedObjectOrderParams(request.subjectsOrder);
-
     }
 
     public void updateTopicsOrder(UpdateTopicOrderDTO request) {

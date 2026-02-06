@@ -80,6 +80,28 @@ public class TopicEntity extends BaseCommonEntity {
         this.subject = subject;
     }
 
+    public TopicEntity(TopicEntity entity,
+                       String description,
+                       Integer order,
+                       Integer incidenceScore,
+                       Integer knowledgeScore,
+                       String color,
+                       List<Integer> reviewIntervalsDays,
+                       String annotation) {
+        this.id = entity.getId();
+        this.setCreatedAt(entity.getCreatedAt());
+        this.setIsActive(entity.getIsActive());
+        this.subject = entity.subject;
+        this.description = description;
+        this.order = order;
+        this.incidenceScore = incidenceScore;
+        this.knowledgeScore = knowledgeScore;
+        this.color = color;
+        this.reviewIntervalsDays = reviewIntervalsDays;
+        this.annotation = annotation;
+        this.onUpdate();
+    }
+
     public String toLogString() {
         return String.format(
                 "TopicEntity{id=%d, order=%d, description='%s', incidenceScore=%d, knowledgeScore=%d, color='%s', annotation='%s'}",

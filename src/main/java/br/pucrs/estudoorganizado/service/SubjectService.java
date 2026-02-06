@@ -52,7 +52,16 @@ public class SubjectService {
             TopicEntity topic;
             if (topicDTO.id != null && existingTopics.containsKey(topicDTO.id)) {
                 topic = existingTopics.get(topicDTO.id);
-                topic = TopicMapper.update(topic,topicDTO, order++);
+                topic = new TopicEntity(
+                        topic,
+                        topicDTO.description,
+                        order++,
+                        topicDTO.incidenceScore,
+                        topicDTO.knowledgeScore,
+                        "#ffffff",
+                        topicDTO.reviewIntervals,
+                        topicDTO.annotation
+                );
             } else {
                 topic = TopicMapper.convertToEntity(topicDTO, subject, order++);
             }
