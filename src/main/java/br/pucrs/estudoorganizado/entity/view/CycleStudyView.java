@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.entity;
+package br.pucrs.estudoorganizado.entity.view;
 
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Immutable
 @Table(name = "vw_topic_study_history")
 @Getter
-public class TopicStudyHistoryView {
+public class CycleStudyView {
 
     @Id
     private String id;

@@ -1,13 +1,13 @@
 package br.pucrs.estudoorganizado.entity.map;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
-import br.pucrs.estudoorganizado.entity.TopicStudyHistoryView;
+import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 
 import java.time.LocalDateTime;
 
 public class StudyCycleMapper {
 
-    public static StudyCycleWithTopicsDTO toCycleDTO(TopicStudyHistoryView row) {
+    public static StudyCycleWithTopicsDTO toCycleDTO(CycleStudyView row) {
         StudyCycleWithTopicsDTO dto = new StudyCycleWithTopicsDTO();
         dto.setId(row.getCycleId());
         dto.setDescription(row.getCycleDescription());

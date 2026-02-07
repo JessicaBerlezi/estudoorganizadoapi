@@ -3,12 +3,12 @@ package br.pucrs.estudoorganizado.service;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
-import br.pucrs.estudoorganizado.entity.TopicStudyHistoryView;
+import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.repository.StudyCycleRepository;
-import br.pucrs.estudoorganizado.repository.TopicStudyHistoryViewRepository;
+import br.pucrs.estudoorganizado.repository.CycleStudyViewRepository;
 import br.pucrs.estudoorganizado.repository.TopicRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.*;
 @Transactional
 public class StudyCycleService {
 
-    private final TopicStudyHistoryViewRepository viewRepository;
+    private final CycleStudyViewRepository viewRepository;
     private final StudyCycleRepository studyCycleRepository;
     private final TopicRepository topicRepository;
 
@@ -43,19 +43,18 @@ public class StudyCycleService {
     public StudyCycleDTO getActiveStudyCycles() {
         StudyCycleDTO response = new StudyCycleDTO();
         response.reviews = null;
-        response.cycles = findActiveCyclesWithFullHistory();;
+        response.cycles = findActiveCyclesWithFullHistory();
         return response;
     }
 
     private List<StudyCycleWithTopicsDTO> findActiveCyclesWithFullHistory() {
-        List<TopicStudyHistoryView> rows =
+        List<CycleStudyView> rows =
                 viewRepository.findAllByOrderByCycleStartedAtAscCycleIdAscTopicOrderAscRecordStartedAtDesc();
 
         Map<Long, StudyCycleWithTopicsDTO> cycleMap = new LinkedHashMap<>();
         Map<Long, TopicWithHistoryDTO> topicMap = new HashMap<>();
-        Map<Long, Set<Integer>> reviewDaysMap = new HashMap<>();
 
-        for (TopicStudyHistoryView row : rows) {
+        for (CycleStudyView row : rows) {
 
             StudyCycleWithTopicsDTO cycle = cycleMap.computeIfAbsent(
                     row.getCycleId(),

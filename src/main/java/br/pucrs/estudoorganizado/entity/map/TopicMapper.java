@@ -3,7 +3,7 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
-import br.pucrs.estudoorganizado.entity.TopicStudyHistoryView;
+import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public class TopicMapper {
         return dto;
     }
 
-    public static TopicWithHistoryDTO toTopicDTO(TopicStudyHistoryView row) {
+    public static TopicWithHistoryDTO toTopicDTO(CycleStudyView row) {
         TopicWithHistoryDTO dto = new TopicWithHistoryDTO();
         dto.setId(row.getTopicId());
         dto.setOrder(row.getTopicOrder());
@@ -50,7 +50,7 @@ public class TopicMapper {
         return dto;
     }
 
-    public static TopicHistoryDTO toHistoryDTO(TopicStudyHistoryView row) {
+    public static TopicHistoryDTO toHistoryDTO(CycleStudyView row) {
         TopicHistoryDTO dto = new TopicHistoryDTO();
 
         String label = switch (row.getStudyType()) {
