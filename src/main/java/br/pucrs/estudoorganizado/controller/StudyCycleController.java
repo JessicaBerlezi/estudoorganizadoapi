@@ -40,7 +40,7 @@ public class StudyCycleController {
 
     @Operation(summary = "Informações de um ciclo", description = "Retorna dados do ciclo com seus respectivos tópicos")
     @GetMapping("/cycle")
-    public ResponseEntity<StudyCycleWithTopicsDTO> getSubjectById(@RequestParam Long cycleId){
+    public ResponseEntity<StudyCycleWithTopicsDTO> getStudyCycleById(@RequestParam Long cycleId){
         logger.info("API getSubjectById, id: {}", cycleId);
         return ResponseEntity.ok().build();
     }
