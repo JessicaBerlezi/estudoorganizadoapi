@@ -1,10 +1,13 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
+import lombok.Data;
+
+@Data
 public class TopicSummaryDTO {
     public long id;
     public Integer order;
-    public String rgb;
+    public String color;
     public String description;
-    public String elapsedTime; //4h15min format
-    public String score; // de 1 a 100 format
+    public String elapsedTime;
+    public String score;
 }

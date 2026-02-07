@@ -58,7 +58,6 @@ public class SubjectService {
                         order++,
                         topicDTO.incidenceScore,
                         topicDTO.knowledgeScore,
-                        "#ffffff",
                         topicDTO.reviewIntervals,
                         topicDTO.annotation
                 );

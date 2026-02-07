@@ -1,38 +1,21 @@
 package br.pucrs.estudoorganizado.entity.map;
 
-import br.pucrs.estudoorganizado.controller.dto.CycleDTO;
-import br.pucrs.estudoorganizado.controller.dto.TopicDetailDTO;
-import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
-import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
+import br.pucrs.estudoorganizado.controller.dto.*;
+import br.pucrs.estudoorganizado.entity.TopicStudyHistoryView;
 
-import java.util.LinkedList;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 public class StudyCycleMapper {
 
-    public static CycleDTO convertToDTO(StudyCycleEntity cycle) {
-
-        LinkedList<TopicDetailDTO> topicDTOs = cycle.getItems()
-                .stream()
-                .map(StudyCycleItemEntity::getTopic)
-                .map(TopicMapper::convertToDetailDTO)
-                .collect(Collectors.toCollection(LinkedList::new));
-
-        return new CycleDTO(
-                cycle.getDescription(),
-                buildStatusInfo(cycle),
-                cycle.getAnnotation(),
-                topicDTOs
-        );
-
+    public static StudyCycleWithTopicsDTO toCycleDTO(TopicStudyHistoryView row) {
+        StudyCycleWithTopicsDTO dto = new StudyCycleWithTopicsDTO();
+        dto.setId(row.getCycleId());
+        dto.setDescription(row.getCycleDescription());
+        dto.setAnnotation(row.getCycleAnnotation());
+        dto.setStatusInfo(buildStatusInfo(row.getCycleStartedAt()));
+        return dto;
     }
-
-    private static String buildStatusInfo(StudyCycleEntity cycle) {
-        long total = cycle.getItems().size();
-        long done = cycle.getItems().stream()
-                .filter(i -> i.getDoneAt() != null)
-                .count();
-
-        return done + "/" + total + " concluídos";
+    private static String buildStatusInfo(LocalDateTime startedAt) {
+        return startedAt == null ? "Não iniciado" : "Iniciado em " + startedAt;
     }
 }

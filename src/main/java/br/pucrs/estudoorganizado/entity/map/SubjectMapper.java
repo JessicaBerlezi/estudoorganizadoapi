@@ -3,6 +3,7 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.service.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,7 +45,7 @@ public class SubjectMapper {
                     TopicSummaryDTO topicDTO = new TopicSummaryDTO();
                     topicDTO.id = topic.getId();
                     topicDTO.order = topic.getOrder();
-                    topicDTO.rgb = topic.getColor();
+                    topicDTO.color = Utils.resolveTopicColor(topic.getIncidenceScore(), topic.getKnowledgeScore());
                     topicDTO.description = topic.getDescription();
                     return topicDTO;
                 })

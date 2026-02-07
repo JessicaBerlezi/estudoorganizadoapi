@@ -1,8 +1,10 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
-import java.util.LinkedList;
+import lombok.Setter;
+import java.util.List;
 
-public class TopicReviewDetailDTO extends  TopicDetailDTO {
+@Setter
+public class TopicReviewDetailDTO extends TopicDetailDTO {
     public String reviewInfo;
-    public LinkedList<TopicHistoryDTO> history;
+    public List<TopicHistoryDTO> history;
 }

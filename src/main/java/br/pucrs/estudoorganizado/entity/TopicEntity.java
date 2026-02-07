@@ -46,10 +46,6 @@ public class TopicEntity extends BaseCommonEntity {
     @Column(name = "knowledge_score")
     private Integer knowledgeScore;
 
-    @Size(max = 7)
-    @Column(length = 7)
-    private String color;
-
     @ElementCollection
     @CollectionTable(name = "topic_review_days", joinColumns = @JoinColumn(name = "topic_id"))
     @Column(name = "day_of_week")
@@ -66,7 +62,6 @@ public class TopicEntity extends BaseCommonEntity {
                        Integer order,
                        Integer incidenceScore,
                        Integer knowledgeScore,
-                       String color,
                        List<Integer> reviewIntervalsDays,
                        String annotation,
                        SubjectEntity subject) {
@@ -74,7 +69,6 @@ public class TopicEntity extends BaseCommonEntity {
         this.order = order;
         this.incidenceScore = incidenceScore;
         this.knowledgeScore = knowledgeScore;
-        this.color = color;
         this.reviewIntervalsDays = reviewIntervalsDays;
         this.annotation = annotation;
         this.subject = subject;
@@ -85,7 +79,6 @@ public class TopicEntity extends BaseCommonEntity {
                        Integer order,
                        Integer incidenceScore,
                        Integer knowledgeScore,
-                       String color,
                        List<Integer> reviewIntervalsDays,
                        String annotation) {
         this.id = entity.getId();
@@ -96,7 +89,6 @@ public class TopicEntity extends BaseCommonEntity {
         this.order = order;
         this.incidenceScore = incidenceScore;
         this.knowledgeScore = knowledgeScore;
-        this.color = color;
         this.reviewIntervalsDays = reviewIntervalsDays;
         this.annotation = annotation;
         this.onUpdate();
@@ -104,13 +96,12 @@ public class TopicEntity extends BaseCommonEntity {
 
     public String toLogString() {
         return String.format(
-                "TopicEntity{id=%d, order=%d, description='%s', incidenceScore=%d, knowledgeScore=%d, color='%s', annotation='%s'}",
+                "TopicEntity{id=%d, order=%d, description='%s', incidenceScore=%d, knowledgeScore=%d, annotation='%s'}",
                 getId(),
                 order,
                 description,
                 incidenceScore,
                 knowledgeScore,
-                color,
                 annotation
         );
     }

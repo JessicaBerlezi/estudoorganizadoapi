@@ -4,5 +4,5 @@ import java.util.List;
 
 public class StudyCycleDTO {
     public List<ReviewDTO> reviews;
-    public List<CycleDTO> cycles;
+    public List<StudyCycleWithTopicsDTO> cycles;
 }

@@ -37,5 +37,4 @@ public class StudyCycleController {
     public ResponseEntity<StudyCycleDTO> getStudyCycle() {
         return ResponseEntity.ok(service.getActiveStudyCycles());
     }
-
 }
