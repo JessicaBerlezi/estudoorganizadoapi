@@ -33,24 +33,31 @@ public class StudyMapController {
     }
 
     @Operation(summary = "Criação de disciplina no Mapa de estudos", description = "Abre painel para permitir inclusão de disciplinas, com seus respectivos tópicos")
-    @PostMapping("/subjects")
+    @PostMapping("/subject")
     public ResponseEntity<SubjectDTO> postSubject(@Valid @RequestBody InsertSubjectDTO request){
         logger.info("API postSubject, request: {}", request.toLogString());
         return ResponseEntity.ok(subjectService.create(request));
     }
 
-    @Operation(summary = "Edição de disciplina no Mapa de estudos", description = "Abre painel para permitir ajuste de disciplinas e sua lista de tópicos")
-    @PutMapping("/subjects")
-    public ResponseEntity<SubjectDTO> putSubject(@RequestParam Long id, @Valid @RequestBody UpdateSubjectDTO request) {
-        logger.info("Subject update: {}", request.toLogString());
-        return ResponseEntity.ok(subjectService.update(id, request));
+    @Operation(summary = "Informações de uma disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos")
+    @GetMapping("/subject")
+    public ResponseEntity<SubjectDTO> getSubjectById(@RequestParam Long subjectId){
+        logger.info("API getSubjectById, id: {}", subjectId);
+        return ResponseEntity.ok(subjectService.getActiveSubject(subjectId));
     }
 
-    @Operation(summary = "Informações de disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos")
-    @GetMapping("/subjects")
-    public ResponseEntity<SubjectDTO> getSubjectById(@RequestParam Long id){
-        logger.info("API getSubjectById, id: {}", id);
-        return ResponseEntity.ok(subjectService.getActiveSubject(id));
+    @Operation(summary = "Edição de uma disciplina no Mapa de estudos", description = "Abre painel para permitir ajuste de disciplinas e sua lista de tópicos")
+    @PutMapping("/subject")
+    public ResponseEntity<SubjectDTO> putSubject(@RequestParam Long subjectId, @Valid @RequestBody UpdateSubjectDTO request) {
+        logger.info("Subject update: {}", request.toLogString());
+        return ResponseEntity.ok(subjectService.update(subjectId, request));
+    }
+
+    @Operation(summary = "Deleção de uma disciplina de estudos", description = "Permite remoção de disciplina e de seus itens (tópicos)")
+    @DeleteMapping("/subject")
+    public ResponseEntity<Void> deleteSubject(@RequestParam Long subjectId) {
+        //todo
+        return ResponseEntity.ok().build();
     }
 }
 

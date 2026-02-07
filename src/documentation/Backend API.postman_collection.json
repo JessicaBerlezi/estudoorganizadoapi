@@ -13,107 +13,6 @@
           "name": "Ciclo de estudo",
           "item": [
             {
-              "name": "Planejamento",
-              "item": [
-                {
-                  "name": "Tópicos para estudo por disciplina",
-                  "request": {
-                    "method": "GET",
-                    "header": [],
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/:id/topics-option",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "planning",
-                        "subjects",
-                        ":id",
-                        "topics-option"
-                      ],
-                      "variable": [
-                        {
-                          "key": "id",
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Disciplina e sugestão de tópico para estudo",
-                  "request": {
-                    "method": "GET",
-                    "header": [],
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/topics-suggestion",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "planning",
-                        "subjects",
-                        "topics-suggestion"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Criação de ciclo de estudo",
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle"
-                      ],
-                      "query": [
-                        {
-                          "key": "",
-                          "value": null,
-                          "type": "text",
-                          "disabled": true
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ]
-            },
-            {
               "name": "Registro de estudo",
               "item": [
                 {
@@ -237,6 +136,216 @@
               ]
             },
             {
+              "name": "Controle de ciclo individual",
+              "item": [
+                {
+                  "name": "Planejamento - para criação de ciclo de estudo",
+                  "item": [
+                    {
+                      "name": "Tópicos para estudo por disciplina",
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/:id/topics-option",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "8080",
+                          "path": [
+                            "v1",
+                            "study-cycle",
+                            "planning",
+                            "subjects",
+                            ":id",
+                            "topics-option"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2"
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Disciplina e sugestão de tópico para estudo",
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/topics-suggestion",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "8080",
+                          "path": [
+                            "v1",
+                            "study-cycle",
+                            "planning",
+                            "subjects",
+                            "topics-suggestion"
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Criação de ciclo de estudo",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "",
+                          "value": null,
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Informações de um ciclo de estudos",
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "1",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Edição de um ciclo de estudo",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Deleção de um ciclo de estudos",
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
               "name": "Ciclos de estudo",
               "request": {
                 "auth": {
@@ -265,6 +374,149 @@
           "name": "Mapa de estudos",
           "item": [
             {
+              "name": "Controle de disciplina individual",
+              "item": [
+                {
+                  "name": "Criação de nova disciplina no mapa de estudos",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Segurança da informação\",\r\n  \"annotation\": null,\r\n  \"topics\": [\r\n    {\r\n      \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [7, 15, 30]\r\n      },\r\n    {\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n        {\r\n      \"description\": \"materia errada\",\r\n      \"incidenceScore\": 4,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-map/subject",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-map",
+                        "subject"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Informações de uma disciplina",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-map/subject?id=7",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-map",
+                        "subject"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "7"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Edição de disciplina no mapa de estudos",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Segurança da informação\",\r\n  \"annotation\": \"adição comentario no update\",\r\n  \"topics\": [\r\n    {\r\n     \"id\": 18,\r\n    \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [2, 10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"description\": \"Aparelhos roteadores\",\r\n      \"incidenceScore\": 1,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"id\": 19,\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [2, 5, 15, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-map/subject?subjectId=7",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-map",
+                        "subject"
+                      ],
+                      "query": [
+                        {
+                          "key": "subjectId",
+                          "value": "7"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Deleção de disciplina no mapa de estudos",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-map/subject?id=7",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-map",
+                        "subject"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "7"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
               "name": "Disciplinas e tópicos do mapa de estudos",
               "request": {
                 "method": "GET",
@@ -279,111 +531,6 @@
                   "path": [
                     "v1",
                     "study-map"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Criação de novo item no mapa de estudos - nova disciplina",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"description\": \"Segurança da informação\",\r\n  \"annotation\": null,\r\n  \"topics\": [\r\n    {\r\n      \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [7, 15, 30]\r\n      },\r\n    {\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 1,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n        {\r\n      \"description\": \"materia errada\",\r\n      \"incidenceScore\": 4,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [10, 25, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/v1/study-map/subjects",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "v1",
-                    "study-map",
-                    "subjects"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Edição de item no mapa de estudos - ajuste disciplina",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"description\": \"Segurança da informação\",\r\n  \"annotation\": \"adição comentario no update\",\r\n  \"topics\": [\r\n    {\r\n     \"id\": 18,\r\n    \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [2, 10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"description\": \"Aparelhos roteadores\",\r\n      \"incidenceScore\": 1,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"id\": 19,\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [2, 5, 15, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/v1/study-map/subjects?id=7",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "v1",
-                    "study-map",
-                    "subjects"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "7"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Informações de disciplina",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8080/v1/study-map/subjects?id=7",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "v1",
-                    "study-map",
-                    "subjects"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "7"
-                    }
                   ]
                 }
               },
