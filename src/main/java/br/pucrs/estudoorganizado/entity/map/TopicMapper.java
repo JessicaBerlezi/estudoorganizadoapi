@@ -1,17 +1,11 @@
 package br.pucrs.estudoorganizado.entity.map;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
-import br.pucrs.estudoorganizado.entity.StudyRecordEntity;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.TopicStudyHistoryView;
 import br.pucrs.estudoorganizado.service.utils.Utils;
-
-import java.time.Duration;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TopicMapper {
 
@@ -33,14 +27,6 @@ public class TopicMapper {
         return fillSummaryFields(new TopicSummaryDTO(), entity);
     }
 
-
-    public static TopicDetailDTO convertToDetailDTO(TopicEntity entity) {
-        TopicDetailDTO dto = fillSummaryFields(new TopicDetailDTO(), entity);
-        dto.annotation = entity.getAnnotation();
-        dto.subject = entity.getSubject().getDescription();
-        return dto;
-    }
-
     private static <T extends TopicSummaryDTO> T fillSummaryFields(T dto, TopicEntity entity) {
         dto.id = entity.getId();
         dto.order = entity.getOrder();
@@ -49,31 +35,6 @@ public class TopicMapper {
         dto.elapsedTime = "0min";
         dto.score = "-%";
         return dto;
-    }
-
-    public static TopicReviewDetailDTO convertToHistoryDTO(TopicEntity entity, List<StudyRecordEntity> histories) {
-        TopicReviewDetailDTO dto = fillSummaryFields(new TopicReviewDetailDTO(), entity);
-
-        List<TopicHistoryDTO> historyDTOs = histories.stream()
-                .sorted(Comparator.comparing(StudyRecordEntity::getStartedAt).reversed())
-                .map(StudyRecordMapper::toHistoryDTO)
-                .toList();
-
-        dto.setHistory(historyDTOs);
-        dto.setReviewInfo(buildReviewInfo(entity));
-        return dto;
-    }
-
-    public static String buildReviewInfo(TopicEntity entity) {
-        List<Integer> intervals = entity.getReviewIntervalsDays();
-        if (intervals == null || intervals.isEmpty()) {
-            return "Sem revisões agendadas";
-        }
-        String joined = intervals.stream()
-                .sorted()
-                .map(d -> d + "d")
-                .collect(Collectors.joining(", "));
-        return "Agenda de próximas revisões: " + joined;
     }
 
     public static TopicWithHistoryDTO toTopicDTO(TopicStudyHistoryView row) {

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,9 +45,7 @@ public class StudyCycleService {
         response.reviews = null;
         response.cycles = findActiveCyclesWithFullHistory();;
         return response;
-
     }
-
 
     private List<StudyCycleWithTopicsDTO> findActiveCyclesWithFullHistory() {
         List<TopicStudyHistoryView> rows =

@@ -1,9 +1,10 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDTO {
-    public String description; //first Line
-    public String statusInfo; // top-right
-    public LinkedList<TopicReviewDetailDTO> topics;
+    public String description;
+    public String statusInfo;
+    public List<TopicWithHistoryDTO> topics = new ArrayList<>();
 }

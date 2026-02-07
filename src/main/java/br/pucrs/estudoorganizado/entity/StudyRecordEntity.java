@@ -4,8 +4,6 @@ import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-
-import java.time.Duration;
 import java.time.LocalDate;
 
 @Entity
@@ -20,30 +18,30 @@ public class StudyRecordEntity {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "study_cycle_item_id")
-    private StudyCycleItemEntity studyCycleItem;
+    private final StudyCycleItemEntity studyCycleItem;
 
     @Enumerated(EnumType.STRING)
-    private StudyTypeEnum studyType;
+    private final StudyTypeEnum studyType;
 
-    private LocalDate startedAt;
+    private final LocalDate startedAt;
 
     @Column(name = "duration_minutes")
-    private Long durationMinutes;
+    private final Long minutes;
 
-    private double questionsPercent;
+    private final double questionsPercent;
 
-    private Integer questionsSolved;
+    private final Integer questionsSolved;
 
-    private Integer questionsIncorrected;
+    private final Integer questionsIncorrected;
 
     @Size(max = 250)
     @Column(length = 250)
-    private String annotation;
+    private final String annotation;
 
     public StudyRecordEntity(StudyCycleItemEntity studyCycleItem,
                              StudyTypeEnum studyType,
                              LocalDate startedAt,
-                             Long durationMinutes,
+                             Long minutes,
                              double questionsPercent,
                              Integer questionsSolved,
                              Integer questionsIncorrected,
@@ -51,7 +49,7 @@ public class StudyRecordEntity {
         this.studyCycleItem = studyCycleItem;
         this.studyType = studyType;
         this.startedAt = startedAt;
-        this.durationMinutes = durationMinutes;
+        this.minutes = minutes;
         this.questionsPercent = questionsPercent;
         this.questionsSolved = questionsSolved;
         this.questionsIncorrected = questionsIncorrected;

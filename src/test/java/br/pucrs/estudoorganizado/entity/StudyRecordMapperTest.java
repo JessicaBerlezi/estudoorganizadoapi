@@ -4,12 +4,10 @@ import br.pucrs.estudoorganizado.controller.dto.InsertStudyRecordDTO;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
 import org.junit.jupiter.api.Test;
-import java.time.Duration;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudyRecordMapperTest {
-
 
     @Test
     void shouldMapCorrectlyWhenDataIsValid() {
@@ -27,7 +25,7 @@ public class StudyRecordMapperTest {
         assertEquals(item, result.getStudyCycleItem());
         assertEquals(StudyTypeEnum.STUDY_CYCLE, result.getStudyType());
         assertEquals(LocalDate.of(2026, 2, 6), result.getStartedAt());
-        assertEquals(Duration.ofMinutes(30), result.getDurationMinutes());
+        assertEquals(30L, result.getMinutes()); // agora compara com Long
         assertEquals(10, result.getQuestionsSolved());
         assertEquals(2, result.getQuestionsIncorrected());
         assertEquals("Sessão produtiva", result.getAnnotation());
@@ -79,11 +77,11 @@ public class StudyRecordMapperTest {
 
         StudyRecordEntity result = StudyRecordMapper.map(item, dto);
 
-        assertEquals(Duration.ZERO, result.getDurationMinutes());
+        assertEquals(0L, result.getMinutes()); // null vira 0
     }
 
     @Test
-    void shouldReturnZeroDurationWhenMinutesIsZeroOrNegative() {
+    void shouldReturnZeroWhenMinutesIsZeroOrNegative() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
 
         InsertStudyRecordDTO zeroDto = new InsertStudyRecordDTO(
@@ -94,8 +92,8 @@ public class StudyRecordMapperTest {
                 LocalDate.now(), -10L, 5, 1, null
         );
 
-        assertEquals(Duration.ZERO, StudyRecordMapper.map(item, zeroDto).getDurationMinutes());
-        assertEquals(Duration.ZERO, StudyRecordMapper.map(item, negativeDto).getDurationMinutes());
+        assertEquals(0L, StudyRecordMapper.map(item, zeroDto).getMinutes());
+        assertEquals(0L, StudyRecordMapper.map(item, negativeDto).getMinutes());
     }
 
     @Test
