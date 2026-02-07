@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.entity;
 
-import br.pucrs.estudoorganizado.controller.dto.InsertStudyRecordDTO;
+import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldToStudyRecordCorrectlyWhenDataIsValid() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.of(2026, 2, 6),
                 30L,
                 10,
@@ -35,7 +35,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldCalculateQuestionsPercentCorrectly() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 20L,
                 8,
@@ -53,7 +53,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldReturnZeroPercentWhenNoQuestionsSolved() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 15L,
                 0,
@@ -70,7 +70,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldReturnZeroDurationWhenMinutesIsNull() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 null,
                 5,
@@ -88,11 +88,11 @@ public class StudyRecordMapperTest {
     void shouldReturnZeroWhenMinutesIsZeroOrNegative() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
 
-        InsertStudyRecordDTO zeroDto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO zeroDto = new RegistreStudyRecordDTO(
                 LocalDate.now(), 0L, 5, 1, null, false
         );
 
-        InsertStudyRecordDTO negativeDto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO negativeDto = new RegistreStudyRecordDTO(
                 LocalDate.now(), -10L, 5, 1, null, false
         );
 
@@ -103,7 +103,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldThrowExceptionWhenSolvedIsNegative() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 10L,
                 -1,
@@ -119,7 +119,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldThrowExceptionWhenIncorrectIsNegative() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 10L,
                 5,
@@ -135,7 +135,7 @@ public class StudyRecordMapperTest {
     @Test
     void shouldThrowExceptionWhenIncorrectGreaterThanSolved() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
-        InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
+        RegistreStudyRecordDTO dto = new RegistreStudyRecordDTO(
                 LocalDate.now(),
                 10L,
                 5,

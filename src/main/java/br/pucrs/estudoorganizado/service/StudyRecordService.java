@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.service;
 
-import br.pucrs.estudoorganizado.controller.dto.InsertStudyRecordDTO;
+import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
 import br.pucrs.estudoorganizado.repository.StudyCycleItemRepository;
@@ -18,7 +18,7 @@ public class StudyRecordService {
     private final ReviewControlService reviewControlService;
 
 
-    public void recordStudy(Long cycleId, Long topicId, InsertStudyRecordDTO request) {
+    public void recordStudy(Long cycleId, Long topicId, RegistreStudyRecordDTO request) {
         StudyCycleItemEntity item = getStudyCycleItem(cycleId, topicId);
         repository.save(StudyRecordMapper.toStudyRecord(item, request));
 

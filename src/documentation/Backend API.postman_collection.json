@@ -123,7 +123,7 @@
                     "header": [],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n    \"startedAt\": \"2026-02-06\",\r\n    \"minutes\": 90,\r\n    \"questionsSolved\": 40,\r\n    \"questionsIncorrected\": 8,\r\n    \"annotation\": \"Revisão de algoritmos de criptografia e resolução de questões.\",\r\n    \"isDone\": false\r\n}",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-01\",//mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 151, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 80, //opcional int\r\n    \"questionsIncorrected\": 21, //opcional int\r\n    \"annotation\": \".\",   //opcional (250)\r\n    \"isDone\": true  //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n\r\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -131,7 +131,7 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:8080/v1/study-record?cycleId=3&topicId=4",
+                      "raw": "http://localhost:8080/v1/study-record?cycleId=1&topicId=1",
                       "protocol": "http",
                       "host": [
                         "localhost"
@@ -144,11 +144,11 @@
                       "query": [
                         {
                           "key": "cycleId",
-                          "value": "3"
+                          "value": "1"
                         },
                         {
                           "key": "topicId",
-                          "value": "4"
+                          "value": "1"
                         }
                       ]
                     }
@@ -206,7 +206,7 @@
                     "header": [],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n    \"startedAt\": \"2026-02-07\",\r\n    \"minutes\": 25,\r\n    \"questionsSolved\": 21,\r\n    \"questionsIncorrected\": 2,\r\n    \"isDone\": true\r\n}",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-07\", //mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 25, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 21, //opcional int\r\n    \"questionsIncorrected\": 2, //opticional int\r\n    \"isDone\": true //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n    //annotation opcional (250)\r\n}",
                       "options": {
                         "raw": {
                           "language": "json"
