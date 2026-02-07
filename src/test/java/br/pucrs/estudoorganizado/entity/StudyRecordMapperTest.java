@@ -17,7 +17,8 @@ public class StudyRecordMapperTest {
                 30L,
                 10,
                 2,
-                "Sessão produtiva"
+                "Sessão produtiva",
+                false
         );
 
         StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
@@ -39,7 +40,8 @@ public class StudyRecordMapperTest {
                 20L,
                 8,
                 2,
-                null
+                null,
+                false
         );
 
         StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
@@ -56,7 +58,8 @@ public class StudyRecordMapperTest {
                 15L,
                 0,
                 0,
-                null
+                null,
+                false
         );
 
         StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
@@ -72,7 +75,8 @@ public class StudyRecordMapperTest {
                 null,
                 5,
                 1,
-                null
+                null,
+                false
         );
 
         StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
@@ -85,11 +89,11 @@ public class StudyRecordMapperTest {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
 
         InsertStudyRecordDTO zeroDto = new InsertStudyRecordDTO(
-                LocalDate.now(), 0L, 5, 1, null
+                LocalDate.now(), 0L, 5, 1, null, false
         );
 
         InsertStudyRecordDTO negativeDto = new InsertStudyRecordDTO(
-                LocalDate.now(), -10L, 5, 1, null
+                LocalDate.now(), -10L, 5, 1, null, false
         );
 
         assertEquals(0L, StudyRecordMapper.toStudyRecord(item, zeroDto).getMinutes());
@@ -104,7 +108,8 @@ public class StudyRecordMapperTest {
                 10L,
                 -1,
                 0,
-                null
+                null,
+                false
         );
 
         assertThrows(IllegalArgumentException.class,
@@ -119,7 +124,8 @@ public class StudyRecordMapperTest {
                 10L,
                 5,
                 -1,
-                null
+                null,
+                false
         );
 
         assertThrows(IllegalArgumentException.class,
@@ -134,7 +140,8 @@ public class StudyRecordMapperTest {
                 10L,
                 5,
                 6,
-                null
+                null,
+                false
         );
 
         assertThrows(IllegalArgumentException.class,
