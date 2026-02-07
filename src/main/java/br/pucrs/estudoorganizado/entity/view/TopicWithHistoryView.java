@@ -6,42 +6,32 @@ import lombok.Getter;
 import org.hibernate.annotations.Immutable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "vw_topic_history")
 @Immutable
-@Table(name = "vw_cycle_study_topic_history")
 @Getter
-public class CycleStudyView {
+public class TopicWithHistoryView {
 
     @Id
     private String id;
 
-    private Long cycleId;
-    private String cycleDescription;
-    private String cycleAnnotation;
-    private LocalDateTime cycleStartedAt;
-
     private Long topicId;
+    private Integer topicOrder;
     private String topicDescription;
     private Integer topicIncidenceScore;
     private Integer topicKnowledgeScore;
-    private Integer topicOrder;
-    private String topicAnnotation;
+    private Long topicTotalDurationMinutes;
+    private Integer topicAvgScore;
     private String subjectDescription;
+    private String topicAnnotation;
 
-    private Long recordId;
+    @Enumerated(EnumType.STRING)
+    private StudyTypeEnum studyType;
     private LocalDate recordStartedAt;
-    private Long recordDurationMinutes;
+    //private Long recordDurationMinutes;
     private Integer questionsSolved;
     private Integer questionsIncorrected;
     private Double questionsPercent;
     private String recordAnnotation;
-
-    private Long topicTotalDurationMinutes;
-    private Integer topicAvgScore;
-    @Enumerated(EnumType.STRING)
-    private StudyTypeEnum studyType;
-
-
 }

@@ -15,12 +15,16 @@ import org.springframework.stereotype.Service;
 public class StudyRecordService {
     private final StudyCycleItemRepository itemRepository;
     private final StudyRecordRepository repository;
+    private final ReviewControlService reviewControlService;
 
 
-
-    public void create(Long cycleId, Long topicId, InsertStudyRecordDTO request) {
+    public void recordStudy(Long cycleId, Long topicId, InsertStudyRecordDTO request) {
         StudyCycleItemEntity item = getStudyCycleItem(cycleId, topicId);
-        repository.save(StudyRecordMapper.map(item, request));
+        repository.save(StudyRecordMapper.toStudyRecord(item, request));
+
+        if(request.getIsDone() == true) {
+            reviewControlService.startedReview(topicId);
+        }
     }
 
     private StudyCycleItemEntity getStudyCycleItem(Long cycleId, Long topicId) {

@@ -20,6 +20,10 @@ public class StudyRecordEntity {
     @JoinColumn(name = "study_cycle_item_id")
     private final StudyCycleItemEntity studyCycleItem;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "review_control_id")
+    private final ReviewControlEntity reviewControl;
+
     @Enumerated(EnumType.STRING)
     private final StudyTypeEnum studyType;
 
@@ -39,6 +43,7 @@ public class StudyRecordEntity {
     private final String annotation;
 
     public StudyRecordEntity(StudyCycleItemEntity studyCycleItem,
+                             ReviewControlEntity reviewControl,
                              StudyTypeEnum studyType,
                              LocalDate startedAt,
                              Long minutes,
@@ -47,6 +52,7 @@ public class StudyRecordEntity {
                              Integer questionsIncorrected,
                              String annotation) {
         this.studyCycleItem = studyCycleItem;
+        this.reviewControl = reviewControl;
         this.studyType = studyType;
         this.startedAt = startedAt;
         this.minutes = minutes;

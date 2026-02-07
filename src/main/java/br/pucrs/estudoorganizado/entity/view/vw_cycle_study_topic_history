@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW vw_topic_study_history AS
+CREATE OR REPLACE VIEW vw_cycle_study_topic_history AS
 SELECT
     CONCAT(
        sc.study_cycle_id, '-',
@@ -20,7 +20,7 @@ SELECT
 
     s.description        AS subject_description,
 
-     sr.study_record_id   AS record_id,
+    sr.study_record_id   AS record_id,
     sr.started_at        AS record_started_at,
     sr.duration_minutes  AS record_duration_minutes,
     sr.questions_solved,

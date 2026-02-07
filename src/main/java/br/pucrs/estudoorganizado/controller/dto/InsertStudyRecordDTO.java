@@ -22,4 +22,6 @@ public class InsertStudyRecordDTO {
     @Size(max = 250, message = "Anotação deve ter no máximo 250 caracteres")
     String annotation;
 
+    @NotNull
+    Boolean isDone;
 }

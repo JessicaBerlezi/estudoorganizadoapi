@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StudyRecordMapperTest {
 
     @Test
-    void shouldMapCorrectlyWhenDataIsValid() {
+    void shouldToStudyRecordCorrectlyWhenDataIsValid() {
         StudyCycleItemEntity item = new StudyCycleItemEntity();
         InsertStudyRecordDTO dto = new InsertStudyRecordDTO(
                 LocalDate.of(2026, 2, 6),
@@ -20,7 +20,7 @@ public class StudyRecordMapperTest {
                 "Sessão produtiva"
         );
 
-        StudyRecordEntity result = StudyRecordMapper.map(item, dto);
+        StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
 
         assertEquals(item, result.getStudyCycleItem());
         assertEquals(StudyTypeEnum.STUDY_CYCLE, result.getStudyType());
@@ -42,7 +42,7 @@ public class StudyRecordMapperTest {
                 null
         );
 
-        StudyRecordEntity result = StudyRecordMapper.map(item, dto);
+        StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
 
         // 6 corretas de 8 = 75%
         assertEquals(75.0, result.getQuestionsPercent());
@@ -59,7 +59,7 @@ public class StudyRecordMapperTest {
                 null
         );
 
-        StudyRecordEntity result = StudyRecordMapper.map(item, dto);
+        StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
 
         assertEquals(0.0, result.getQuestionsPercent());
     }
@@ -75,7 +75,7 @@ public class StudyRecordMapperTest {
                 null
         );
 
-        StudyRecordEntity result = StudyRecordMapper.map(item, dto);
+        StudyRecordEntity result = StudyRecordMapper.toStudyRecord(item, dto);
 
         assertEquals(0L, result.getMinutes()); // null vira 0
     }
@@ -92,8 +92,8 @@ public class StudyRecordMapperTest {
                 LocalDate.now(), -10L, 5, 1, null
         );
 
-        assertEquals(0L, StudyRecordMapper.map(item, zeroDto).getMinutes());
-        assertEquals(0L, StudyRecordMapper.map(item, negativeDto).getMinutes());
+        assertEquals(0L, StudyRecordMapper.toStudyRecord(item, zeroDto).getMinutes());
+        assertEquals(0L, StudyRecordMapper.toStudyRecord(item, negativeDto).getMinutes());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class StudyRecordMapperTest {
         );
 
         assertThrows(IllegalArgumentException.class,
-                () -> StudyRecordMapper.map(item, dto));
+                () -> StudyRecordMapper.toStudyRecord(item, dto));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class StudyRecordMapperTest {
         );
 
         assertThrows(IllegalArgumentException.class,
-                () -> StudyRecordMapper.map(item, dto));
+                () -> StudyRecordMapper.toStudyRecord(item, dto));
     }
 
     @Test
@@ -138,6 +138,6 @@ public class StudyRecordMapperTest {
         );
 
         assertThrows(IllegalArgumentException.class,
-                () -> StudyRecordMapper.map(item, dto));
+                () -> StudyRecordMapper.toStudyRecord(item, dto));
     }
 }

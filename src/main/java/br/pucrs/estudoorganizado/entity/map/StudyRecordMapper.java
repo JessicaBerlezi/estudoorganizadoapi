@@ -1,15 +1,24 @@
 package br.pucrs.estudoorganizado.entity.map;
 
 import br.pucrs.estudoorganizado.controller.dto.InsertStudyRecordDTO;
+import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.StudyRecordEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 
 public class StudyRecordMapper {
 
-    public static StudyRecordEntity map(StudyCycleItemEntity item, InsertStudyRecordDTO dto) {
+    public static StudyRecordEntity toStudyRecord(StudyCycleItemEntity studyCycleItem, InsertStudyRecordDTO dto) {
+        return buildRecord(studyCycleItem, null, StudyTypeEnum.STUDY_CYCLE, dto);
+    }
 
-        int solved = dto.getQuestionsSolved();
+    public static StudyRecordEntity toReviewRecord(ReviewControlEntity reviewControl, InsertStudyRecordDTO dto) {
+        return buildRecord(null, reviewControl, StudyTypeEnum.REVIEW, dto);
+    }
+
+    private static StudyRecordEntity buildRecord(StudyCycleItemEntity studyCycleItem, ReviewControlEntity reviewControl, StudyTypeEnum type, InsertStudyRecordDTO dto) {
+
+            int solved = dto.getQuestionsSolved();
         int incorrect = dto.getQuestionsIncorrected();
 
         if (solved < 0 || incorrect < 0) {
@@ -26,8 +35,9 @@ public class StudyRecordMapper {
         }
 
         return new StudyRecordEntity(
-                item,
-                StudyTypeEnum.STUDY_CYCLE,
+                studyCycleItem,
+                reviewControl,
+                type,
                 dto.getStartedAt(),
                 minutes,
                 calcQuestionsPercent(dto),

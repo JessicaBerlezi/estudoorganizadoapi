@@ -26,6 +26,7 @@ public class StudyCycleService {
     private final CycleStudyViewRepository viewRepository;
     private final StudyCycleRepository studyCycleRepository;
     private final TopicRepository topicRepository;
+    private final ReviewControlService reviewControlService;
 
     public void create(InsertStudyCycleDTO dto) {
 
@@ -42,7 +43,7 @@ public class StudyCycleService {
 
     public StudyCycleDTO getActiveStudyCycles() {
         StudyCycleDTO response = new StudyCycleDTO();
-        response.reviews = null;
+        response.reviews = reviewControlService.getReviewAgenda();
         response.cycles = findActiveCyclesWithFullHistory();
         return response;
     }
@@ -69,12 +70,6 @@ public class StudyCycleService {
                         return t;
                     }
             );
-
-            if (row.getRecordId() != null) {
-                topic.getHistory().add(
-                        TopicMapper.toHistoryDTO(row)
-                );
-            }
         }
         return new ArrayList<>(cycleMap.values());
     }

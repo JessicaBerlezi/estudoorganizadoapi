@@ -67,51 +67,174 @@
                     }
                   },
                   "response": []
+                },
+                {
+                  "name": "Criação de ciclo de estudo",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "",
+                          "value": null,
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
                 }
               ]
             },
             {
-              "name": "Criação de ciclo de estudo",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+              "name": "Registro de estudo",
+              "item": [
+                {
+                  "name": "Registro de estudo do ciclo",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-06\",\r\n    \"minutes\": 90,\r\n    \"questionsSolved\": 40,\r\n    \"questionsIncorrected\": 8,\r\n    \"annotation\": \"Revisão de algoritmos de criptografia e resolução de questões.\",\r\n    \"isDone\": false\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-record?cycleId=3&topicId=4",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-record"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "3"
+                        },
+                        {
+                          "key": "topicId",
+                          "value": "4"
+                        }
+                      ]
                     }
-                  }
+                  },
+                  "response": []
                 },
-                "url": {
-                  "raw": "http://localhost:8080/v1/study-cycle",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "v1",
-                    "study-cycle"
-                  ],
-                  "query": [
-                    {
-                      "key": "",
-                      "value": null,
-                      "type": "text",
-                      "disabled": true
+                {
+                  "name": "Registro de estudo do ciclo - com conclusão de tópico",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-01\",\r\n    \"minutes\": 92,\r\n    \"questionsSolved\": 35,\r\n    \"questionsIncorrected\": 5,\r\n    \"isDone\": true\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-record?cycleId=3&topicId=3",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-record"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "3"
+                        },
+                        {
+                          "key": "topicId",
+                          "value": "3"
+                        }
+                      ]
                     }
-                  ]
+                  },
+                  "response": []
                 }
-              },
-              "response": []
+              ]
+            },
+            {
+              "name": "Registro de review",
+              "item": [
+                {
+                  "name": "Registro de revisão",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-07\",\r\n    \"minutes\": 25,\r\n    \"questionsSolved\": 21,\r\n    \"questionsIncorrected\": 2,\r\n    \"isDone\": true\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/review-record?topicId=4",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "review-record"
+                      ],
+                      "query": [
+                        {
+                          "key": "topicId",
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
             },
             {
               "name": "Ciclos de estudo",
@@ -245,7 +368,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/v1/study-map/subjects?id=3",
+                  "raw": "http://localhost:8080/v1/study-map/subjects?id=7",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -259,7 +382,7 @@
                   "query": [
                     {
                       "key": "id",
-                      "value": "3"
+                      "value": "7"
                     }
                   ]
                 }
