@@ -11,5 +11,5 @@ import java.util.List;
 public class TopicWithHistoryDTO extends TopicSummaryDTO {
     public String subject;
     public String annotation;
-    private List<TopicHistoryDTO> history = new ArrayList<>();
+    private List<HistoryDTO> history = new ArrayList<>();
 }

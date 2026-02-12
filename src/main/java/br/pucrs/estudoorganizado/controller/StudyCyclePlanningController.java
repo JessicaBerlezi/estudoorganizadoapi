@@ -28,7 +28,7 @@ public class StudyCyclePlanningController {
                     "A sugestão considera apenas tópicos que ainda não foram concluídos ou removidos em ciclos anteriores.")
     @GetMapping("subjects/topics-suggestion")
     public ResponseEntity<List<SubjectTopicOptionDTO>> getTopicToStudyPerSubject() {
-        return ResponseEntity.ok(service.getTopicToStudyPerSubject());
+        return ResponseEntity.ok(service.getNextTopicPerSubject());
     }
 
     @Operation(
@@ -37,7 +37,7 @@ public class StudyCyclePlanningController {
                     "São considerados disponíveis os tópicos que ainda não foram concluídos ou removidos em ciclos anteriores.")
     @GetMapping("subjects/{subjectId}/topics-option")
     public ResponseEntity<List<TopicSummaryDTO>> getTopicsToStudyBySubjectId(@PathVariable Long subjectId) {
-        return ResponseEntity.ok(service.getTopicsToStudyBySubjectId(subjectId));
+        return ResponseEntity.ok(service.getTopicsBySubjectId(subjectId));
     }
 
 }

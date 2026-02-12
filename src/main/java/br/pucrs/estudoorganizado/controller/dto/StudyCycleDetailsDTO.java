@@ -6,11 +6,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InsertStudyCycleDTO {
+@Getter
+public class StudyCycleDetailsDTO {
     @NotBlank(message = "Nome do ciclo de estudo é obrigatório")
     @Size(max = 100, message = "Nome do ciclo de estudo deve ter no máximo 100 caracteres")
     String description;
@@ -19,29 +21,17 @@ public class InsertStudyCycleDTO {
     String annotation;
 
     @Valid
-    @NotEmpty(message = "Alguma Disiciplima e tópico deve ser selecionada")
-    List<SubjectTopicDTO> topics;
+    @NotEmpty(message = "Algum tópico deve ser selecionada")
+    List<Long> topics;
 
     @JsonCreator
-    public InsertStudyCycleDTO(
+    public StudyCycleDetailsDTO(
             @JsonProperty("description") String description,
             @JsonProperty("annotation") String annotation,
-            @JsonProperty("topics") List<SubjectTopicDTO> topics) {
+            @JsonProperty("topics") List<Long> topics) {
         this.description = description;
         this.annotation = annotation;
         this.topics = topics;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getAnnotation() {
-        return annotation;
-    }
-
-    public List<SubjectTopicDTO> getTopics() {
-        return topics;
     }
 
     public String toLogString() {
@@ -49,12 +39,12 @@ public class InsertStudyCycleDTO {
         String topicsLog = (topics == null || topics.isEmpty())
                 ? "[]"
                 : topics.stream()
-                .map(SubjectTopicDTO::toLogString)
+                .map(String::valueOf)
                 .collect(Collectors.joining(", ", "[", "]"));
 
 
           return String.format(
-                "description='%s', annotation=%s, topics=%s",
+                "description='%s', annotation=%s, topicsId=%s",
                 description,
                 annotation != null && !annotation.isBlank(),
                 topicsLog

@@ -48,37 +48,47 @@ public class TopicMapper {
         dto.setColor(Utils.resolveTopicColor(row.getTopicIncidenceScore(), row.getTopicKnowledgeScore()));
         dto.setDescription(row.getTopicDescription());
         dto.setSubject(row.getSubjectDescription());
-        dto.setElapsedTime(Utils.formatDurationMinutes(row.getTopicTotalDurationMinutes()));
-        dto.setScore(row.getTopicAvgScore() == null ? "-" : row.getTopicAvgScore() + "%");
         dto.setAnnotation(row.getTopicAnnotation());
 
-        dto.getHistory().add(toHistoryDTO(
-                row.getStudyType(),
-                row.getRecordStartedAt(),
-                row.getQuestionsSolved(),
-                row.getQuestionsIncorrected(),
-                row.getQuestionsPercent(),
-                row.getRecordAnnotation()
-        ));
+        if(row.getRecordId() != null){
+            dto.setElapsedTime(Utils.formatDurationMinutes(row.getTopicTotalDurationMinutes()));
+            dto.setScore(row.getTopicAvgScore() == null ? "-" : row.getTopicAvgScore() + "%");
+
+            dto.getHistory().add(toHistoryDTO(
+                    row.getStudyType(),
+                    row.getRecordStartedAt(),
+                    row.getQuestionsSolved(),
+                    row.getQuestionsIncorrected(),
+                    row.getQuestionsPercent(),
+                    row.getRecordAnnotation(),
+                    row.getRecordDurationMinutes()
+            ));
+        } else {
+            dto.setElapsedTime("0 min");
+            dto.setScore("- %");
+        }
 
         return dto;
     }
 
-    private static TopicHistoryDTO toHistoryDTO(
+    private static HistoryDTO toHistoryDTO(
             StudyTypeEnum studyType,
             LocalDate recordStartedAt,
             Integer questionsSolved,
             Integer questionsIncorrected,
             Double questionsPercent,
-            String recordAnnotation) {
-        TopicHistoryDTO dto = new TopicHistoryDTO();
+            String recordAnnotation,
+            Long recordDurationMinutes) {
+        HistoryDTO dto = new HistoryDTO();
 
         String label = switch (studyType) {
             case STUDY_CYCLE -> "Estudo";
             case REVIEW -> "Revisão";
         };
 
-        dto.description = label + " " + recordStartedAt.format(Utils.DATE_FMT);
+        dto.description = label + " "
+                + Utils.formatDurationMinutes(recordDurationMinutes) +" em "
+                + recordStartedAt.format(Utils.DATE_FMT);
 
         int solved = Optional.ofNullable(questionsSolved).orElse(0);
         int incorrect = Optional.ofNullable(questionsIncorrected).orElse(0);
@@ -124,7 +134,8 @@ public class TopicMapper {
                     row.getQuestionsSolved(),
                     row.getQuestionsIncorrected(),
                     row.getQuestionsPercent(),
-                    row.getRecordAnnotation()
+                    row.getRecordAnnotation(),
+                    row.getRecordDurationMinutes()
             ));
 
         }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Immutable
-@Table(name = "vw_cycle_study_topic_history")
+@Table(name = "vw_cycle_study_history")
 @Getter
 public class CycleStudyView {
 

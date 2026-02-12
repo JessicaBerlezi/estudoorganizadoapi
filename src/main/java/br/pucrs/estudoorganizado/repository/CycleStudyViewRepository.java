@@ -9,4 +9,8 @@ public interface CycleStudyViewRepository extends JpaRepository<CycleStudyView, 
 
     List<CycleStudyView>
     findAllByOrderByCycleStartedAtAscCycleIdAscTopicOrderAscRecordStartedAtDesc();
+
+    List<CycleStudyView>
+    findByCycleId(Long cycleId);
+
 }

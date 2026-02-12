@@ -7,25 +7,29 @@ import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;
 import br.pucrs.estudoorganizado.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TopicService {
 
-    private final TopicRepository topicRepository;
+    private final TopicRepository repository;
     private final SubjectRepository subjectRepository;
 
-    @Transactional(readOnly = true)
-    public List<SubjectTopicOptionDTO> getTopicToStudyPerSubject() {
+    private static final Logger logger = LoggerFactory.getLogger(TopicService.class);
 
-        List<TopicEntity> topics = topicRepository.findFirstAvailableTopicPerSubject();
+    @Transactional(readOnly = true)
+    public List<SubjectTopicOptionDTO> getNextTopicPerSubject() {
+
+        List<TopicEntity> topics = repository.findFirstAvailableTopicPerSubject();
 
         return topics.stream()
                 .map(topic -> new SubjectTopicOptionDTO(
@@ -37,7 +41,7 @@ public class TopicService {
     }
 
     @Transactional(readOnly = true)
-    public List<TopicSummaryDTO> getTopicsToStudyBySubjectId(Long subjectId) {
+    public List<TopicSummaryDTO> getTopicsBySubjectId(Long subjectId) {
 
         if (!subjectRepository.existsById(subjectId)) {
             throw new ResponseStatusException(
@@ -46,10 +50,32 @@ public class TopicService {
             );
         }
 
-        return topicRepository.findTopicsToStudyBySubjectId(subjectId)
+        return repository.findTopicsToStudyBySubjectId(subjectId)
                 .stream()
                 .map(TopicMapper::convertToSummaryDTO)
                 .toList();
+    }
+
+    public List<TopicEntity> getExistingTopicsById(List<Long> topicsId) {
+
+        logger.debug("Buscando tópicos para o ciclo de estudo. IDs={}", topicsId);
+
+        List<TopicEntity> topics = new ArrayList<>();
+        for (Long id : topicsId) {
+            try {
+                repository.findById(id).ifPresentOrElse(
+                        topics::add,
+                        () -> logger.warn("Tópico não encontrado. ID={}, continuando com os demais.", id)
+                );
+            } catch (Exception e){
+                logger.error("Erro inesperado ao buscar tópicos na base de dados. ID={}", topicsId, e);
+                throw new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Erro inesperado ao processar a requisição"
+                );
+            }
+        }
+        return topics;
     }
 }
 

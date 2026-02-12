@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW vw_cycle_study_topic_history AS
+CREATE OR REPLACE VIEW vw_cycle_study_history AS
 SELECT
     CONCAT(
        sc.study_cycle_id, '-',

@@ -1,7 +1,7 @@
 package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
-import br.pucrs.estudoorganizado.controller.dto.ReviewDTO;
+import br.pucrs.estudoorganizado.controller.dto.ReviewWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
@@ -161,17 +161,17 @@ public class ReviewControlService {
      * DELAYED → "Em atraso"
      * PENDING → "Hoje"
      */
-    public List<ReviewDTO> getReviewAgenda() {
+    public List<ReviewWithTopicsDTO> getReviewAgenda() {
         updateReviewStatuses();
-        List<ReviewDTO> revies = new ArrayList<>();
-        revies.add(getReviewAgendaByStatus(ReviewStatusEnum.DELAYED, "Em atraso"));
-        revies.add(getReviewAgendaByStatus(ReviewStatusEnum.PENDING, "Planejado"));
-        return revies;
+        List<ReviewWithTopicsDTO> reviews = new ArrayList<>();
+        reviews.add(getReviewAgendaByStatus(ReviewStatusEnum.DELAYED, "Em atraso"));
+        reviews.add(getReviewAgendaByStatus(ReviewStatusEnum.PENDING, "Planejado"));
+        return reviews;
     }
 
-    private ReviewDTO getReviewAgendaByStatus(ReviewStatusEnum status, String statusInfo) {
+    private ReviewWithTopicsDTO getReviewAgendaByStatus(ReviewStatusEnum status, String statusInfo) {
 
-        ReviewDTO reviewDTO = new ReviewDTO();
+        ReviewWithTopicsDTO reviewDTO = new ReviewWithTopicsDTO();
         reviewDTO.setDescription("Agenda de revisões");
         reviewDTO.setStatusInfo(statusInfo);
         List<ReviewControlEntity> reviews = repository.findAllByStatus(status);

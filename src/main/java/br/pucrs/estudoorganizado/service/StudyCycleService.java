@@ -2,14 +2,11 @@ package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
-import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
-import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.repository.StudyCycleRepository;
 import br.pucrs.estudoorganizado.repository.CycleStudyViewRepository;
-import br.pucrs.estudoorganizado.repository.TopicRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,31 +21,18 @@ import java.util.*;
 public class StudyCycleService {
 
     private final CycleStudyViewRepository viewRepository;
-    private final StudyCycleRepository studyCycleRepository;
-    private final TopicRepository topicRepository;
-    private final ReviewControlService reviewControlService;
+    private final StudyCycleRepository repository;
 
-    public void create(InsertStudyCycleDTO dto) {
-
-        List<StudyCycleItemEntity> saveAt = new ArrayList<>();
-        StudyCycleEntity cycle = StudyCycleEntity.fromDTO(dto);
-
-        for (SubjectTopicDTO itemDTO : dto.getTopics()) {
-            TopicEntity topic = topicRepository.findById(itemDTO.getIdTopic()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Topic not found: " + itemDTO.getIdTopic()));
-            saveAt.add(new StudyCycleItemEntity(cycle, topic));
-        }
-        cycle.setItems(saveAt);
-        studyCycleRepository.save(cycle);
+    public StudyCycleEntity saveStudyCycle(StudyCycleEntity cycle) {
+        return repository.save(cycle);
     }
 
-    public StudyCycleDTO getActiveStudyCycles() {
-        StudyCycleDTO response = new StudyCycleDTO();
-        response.reviews = reviewControlService.getReviewAgenda();
-        response.cycles = findActiveCyclesWithFullHistory();
-        return response;
+    public StudyCycleEntity getStudyCycle(Long cycleId) {
+        return repository.findById(cycleId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciclo de estudos não encontrado"));
     }
 
-    private List<StudyCycleWithTopicsDTO> findActiveCyclesWithFullHistory() {
+    public List<StudyCycleWithTopicsDTO> findActiveCyclesWithFullHistory() {
         List<CycleStudyView> rows =
                 viewRepository.findAllByOrderByCycleStartedAtAscCycleIdAscTopicOrderAscRecordStartedAtDesc();
 
@@ -62,7 +46,7 @@ public class StudyCycleService {
                     id -> StudyCycleMapper.toCycleDTO(row)
             );
 
-            TopicWithHistoryDTO topic = topicMap.computeIfAbsent(
+           topicMap.computeIfAbsent(
                     row.getTopicId(),
                     id -> {
                         TopicWithHistoryDTO t = TopicMapper.toTopicDTO(row);
@@ -72,5 +56,38 @@ public class StudyCycleService {
             );
         }
         return new ArrayList<>(cycleMap.values());
+    }
+
+    public StudyCycleWithTopicsDTO getCycleWithFullHistoryById(Long cycleId) {
+
+        List<CycleStudyView> rows = viewRepository.findByCycleId(cycleId);
+
+        if (rows.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciclo não encontrado: " + cycleId);
+        }
+
+        StudyCycleWithTopicsDTO cycle = StudyCycleMapper.toCycleDTO(rows.get(0));
+
+        Map<Long, TopicWithHistoryDTO> topicMap = new HashMap<>();
+
+        for (CycleStudyView row : rows) {
+
+            topicMap.computeIfAbsent(
+                    row.getTopicId(),
+                    id -> {
+                        TopicWithHistoryDTO topic =
+                                TopicMapper.toTopicDTO(row);
+                        cycle.getTopics().add(topic);
+                        return topic;
+                    }
+            );
+        }
+
+        return cycle;
+    }
+
+
+    public void deleteStudyCycle(StudyCycleEntity cycle) {
+        repository.delete(cycle);
     }
 }

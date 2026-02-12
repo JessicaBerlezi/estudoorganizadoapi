@@ -47,6 +47,7 @@ public class SubjectEntity  extends BaseCommonEntity{
         this.annotation = annotation;
     }
 
+    //todo rever isso aqui
     public SubjectEntity(
             SubjectEntity entity,
             List<TopicEntity> topics,

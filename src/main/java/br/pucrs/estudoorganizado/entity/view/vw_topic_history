@@ -11,6 +11,7 @@ SELECT
     t.annotation         AS topic_annotation,
 
     sr.started_at        AS record_started_at,
+    sr.duration_minutes  AS record_duration_minutes,
     sr.questions_solved,
     sr.questions_incorrected,
     sr.questions_percent,

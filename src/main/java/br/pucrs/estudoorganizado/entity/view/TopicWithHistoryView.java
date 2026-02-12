@@ -29,7 +29,7 @@ public class TopicWithHistoryView {
     @Enumerated(EnumType.STRING)
     private StudyTypeEnum studyType;
     private LocalDate recordStartedAt;
-    //private Long recordDurationMinutes;
+    private Long recordDurationMinutes;
     private Integer questionsSolved;
     private Integer questionsIncorrected;
     private Double questionsPercent;
