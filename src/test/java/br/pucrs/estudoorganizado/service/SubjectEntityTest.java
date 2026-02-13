@@ -3,7 +3,6 @@ package br.pucrs.estudoorganizado.service;
 import br.pucrs.estudoorganizado.Mocks;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
-import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;

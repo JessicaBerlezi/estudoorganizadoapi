@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
     List<SubjectEntity> findByIsActiveTrueOrderByIdAsc();
-    Optional<SubjectEntity> findByIdAndIsActiveTrue(Long subjectId);
 
     @Query("""
     select s from SubjectEntity s
