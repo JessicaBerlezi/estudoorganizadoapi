@@ -1,7 +1,6 @@
 package br.pucrs.estudoorganizado.entity.map;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
-import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 
 import java.time.LocalDateTime;

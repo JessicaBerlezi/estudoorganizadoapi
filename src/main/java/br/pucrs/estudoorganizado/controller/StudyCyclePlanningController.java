@@ -34,7 +34,9 @@ public class StudyCyclePlanningController {
     @Operation(
             summary = "Listar tópicos disponíveis para estudo por disciplina",
             description = "Retorna os tópicos de uma disciplina específica que estão disponíveis para inclusão em um novo ciclo de estudos. \n" +
-                    "São considerados disponíveis os tópicos que ainda não foram concluídos ou removidos em ciclos anteriores.")
+                    "São considerados disponíveis os tópicos que ainda não foram concluídos ou removidos em ciclos anteriores." +
+                    "Endpoint utilizado para quando for utilizada a opção de TROCAR \n" +
+                    "o tópico da sugestão automática de tópico por disciplina\n")
     @GetMapping("subjects/{subjectId}/topics-option")
     public ResponseEntity<List<TopicSummaryDTO>> getTopicsToStudyBySubjectId(@PathVariable Long subjectId) {
         return ResponseEntity.ok(service.getTopicsBySubjectId(subjectId));

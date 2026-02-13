@@ -34,7 +34,7 @@ public class StudyCycleController {
         return ResponseEntity.ok(component.getStudyCycleById(entity.getId()));
     }
 
-    @Operation(summary = "Informações de um ciclo", description = "Retorna dados do ciclo com seus respectivos tópicos")
+    @Operation(summary = "Informações de um ciclo", description = "Retorna dados do ciclo com seus respectivos tópicos e histórico")
     @GetMapping("/cycle")
     public ResponseEntity<StudyCycleWithTopicsDTO> getStudyCycleById(@RequestParam Long cycleId) {
         return ResponseEntity.ok(component.getStudyCycleById(cycleId));

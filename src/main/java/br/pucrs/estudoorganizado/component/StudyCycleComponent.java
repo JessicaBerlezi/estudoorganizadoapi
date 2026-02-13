@@ -40,18 +40,26 @@ public class StudyCycleComponent {
             response.reviews = reviewControlService.getReviewAgenda();
             response.cycles = service.findActiveCyclesWithFullHistory();
             return response;
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Erro ao carregar ciclos de estudo e revisões.");
         }
     }
 
     public StudyCycleWithTopicsDTO getStudyCycleById(Long cycleId) {
         try {
             return service.getCycleWithFullHistoryById(cycleId);
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Erro ao buscar ciclo de estudo.");
         }
     }
 
@@ -80,9 +88,13 @@ public class StudyCycleComponent {
             cycle.setItems(items);
 
             return service.saveStudyCycle(cycle);
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Erro ao criar novo ciclo de estudo.");
         }
     }
 
@@ -125,9 +137,13 @@ public class StudyCycleComponent {
                 cycle.setAnnotation(dto.getAnnotation());
             }
             service.saveStudyCycle(cycle);
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Erro ao alterar ciclo de estudo.");
         }
     }
 
