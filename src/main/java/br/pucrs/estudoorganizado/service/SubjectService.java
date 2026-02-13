@@ -6,12 +6,13 @@ import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.map.SubjectMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
 
     @Transactional
-    public SubjectDTO create(InsertSubjectDTO dto) {
+    public SubjectDTO createSubjectWithTopics(InsertSubjectDTO dto) {
 
         SubjectEntity subject = SubjectMapper.convertToEntity(dto);
         subjectRepository.saveAndFlush(subject);
@@ -37,10 +38,10 @@ public class SubjectService {
     }
 
     @Transactional
-    public SubjectDTO update(Long subjectId, UpdateSubjectDTO dto) {
+    public SubjectDTO updateSubjectWithTopics(Long subjectId, UpdateSubjectDTO dto) {
 
         SubjectEntity subject = subjectRepository.findByIdAndIsActiveTrue(subjectId)
-                .orElseThrow(() -> new EntityNotFoundException("Subject not found: " + subjectId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Disciplina não encontrada " + subjectId));
 
         logger.info("Subject to be updated: {}, new info: {}", subject, dto);
         Map<Long, TopicEntity> existingTopics = subject.getTopics().stream()
@@ -67,7 +68,7 @@ public class SubjectService {
             updatedTopics.add(topic);
         }
 
-        SubjectEntity updated =  new SubjectEntity(
+        SubjectEntity updated = new SubjectEntity(
                 subject,
                 updatedTopics,
                 dto.getDescription(),
@@ -89,7 +90,11 @@ public class SubjectService {
 
     public SubjectDTO getActiveSubject(Long id) {
         SubjectEntity subject = subjectRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new EntityNotFoundException("Subject not found or inactive: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Disciplina não encontrada " + id));
         return SubjectMapper.convertToDTO(subject);
+    }
+
+    public void deleteSubject(Long id) {
+        subjectRepository.deleteById(id);
     }
 }

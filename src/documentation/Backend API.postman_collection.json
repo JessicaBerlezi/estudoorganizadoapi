@@ -10,367 +10,6 @@
       "name": "V1",
       "item": [
         {
-          "name": "Ciclo de estudo",
-          "item": [
-            {
-              "name": "Registro de estudo",
-              "item": [
-                {
-                  "name": "Registro de estudo do ciclo",
-                  "request": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n    \"startedAt\": \"2026-02-01\",//mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 151, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 80, //opcional int\r\n    \"questionsIncorrected\": 21, //opcional int\r\n    \"annotation\": \".\",   //opcional (250)\r\n    \"isDone\": true  //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-record?cycleId=1&topicId=1",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-record"
-                      ],
-                      "query": [
-                        {
-                          "key": "cycleId",
-                          "value": "1"
-                        },
-                        {
-                          "key": "topicId",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Registro de estudo do ciclo - com conclusão de tópico",
-                  "request": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n    \"startedAt\": \"2026-02-01\",\r\n    \"minutes\": 92,\r\n    \"questionsSolved\": 35,\r\n    \"questionsIncorrected\": 5,\r\n    \"isDone\": true\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-record?cycleId=3&topicId=3",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-record"
-                      ],
-                      "query": [
-                        {
-                          "key": "cycleId",
-                          "value": "3"
-                        },
-                        {
-                          "key": "topicId",
-                          "value": "3"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ]
-            },
-            {
-              "name": "Registro de review",
-              "item": [
-                {
-                  "name": "Registro de revisão",
-                  "request": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n    \"startedAt\": \"2026-02-07\", //mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 25, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 21, //opcional int\r\n    \"questionsIncorrected\": 2, //opticional int\r\n    \"isDone\": true //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n    //annotation opcional (250)\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/review-record?topicId=4",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "review-record"
-                      ],
-                      "query": [
-                        {
-                          "key": "topicId",
-                          "value": "4"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ]
-            },
-            {
-              "name": "Controle de ciclo individual",
-              "item": [
-                {
-                  "name": "Planejamento - para criação de ciclo de estudo",
-                  "item": [
-                    {
-                      "name": "Tópicos para estudo por disciplina",
-                      "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/:id/topics-option",
-                          "protocol": "http",
-                          "host": [
-                            "localhost"
-                          ],
-                          "port": "8080",
-                          "path": [
-                            "v1",
-                            "study-cycle",
-                            "planning",
-                            "subjects",
-                            ":id",
-                            "topics-option"
-                          ],
-                          "variable": [
-                            {
-                              "key": "id",
-                              "value": "2"
-                            }
-                          ]
-                        }
-                      },
-                      "response": []
-                    },
-                    {
-                      "name": "Disciplina e sugestão de tópico para estudo",
-                      "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/topics-suggestion",
-                          "protocol": "http",
-                          "host": [
-                            "localhost"
-                          ],
-                          "port": "8080",
-                          "path": [
-                            "v1",
-                            "study-cycle",
-                            "planning",
-                            "subjects",
-                            "topics-suggestion"
-                          ]
-                        }
-                      },
-                      "response": []
-                    }
-                  ]
-                },
-                {
-                  "name": "Criação de ciclo de estudo",
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/cycle",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "cycle"
-                      ],
-                      "query": [
-                        {
-                          "key": "",
-                          "value": null,
-                          "type": "text",
-                          "disabled": true
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Informações de um ciclo de estudos",
-                  "request": {
-                    "auth": {
-                      "type": "noauth"
-                    },
-                    "method": "GET",
-                    "header": [],
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "cycle"
-                      ],
-                      "query": [
-                        {
-                          "key": "cycleId",
-                          "value": "1",
-                          "type": "text"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Edição de um ciclo de estudo",
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n  \"description\": \"Ciclo Ativo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n    { \"idSubject\": 2, \"idTopic\": 3 },\r\n    { \"idSubject\": 2, \"idTopic\": 4 }\r\n  ]\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "cycle"
-                      ],
-                      "query": [
-                        {
-                          "key": "cycleId",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Deleção de um ciclo de estudos",
-                  "request": {
-                    "auth": {
-                      "type": "noauth"
-                    },
-                    "method": "DELETE",
-                    "header": [],
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-cycle",
-                        "cycle"
-                      ],
-                      "query": [
-                        {
-                          "key": "cycleId",
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ]
-            },
-            {
-              "name": "Ciclos de estudo",
-              "request": {
-                "auth": {
-                  "type": "noauth"
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8080/v1/study-cycle",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "v1",
-                    "study-cycle"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
           "name": "Mapa de estudos",
           "item": [
             {
@@ -408,7 +47,8 @@
                         "study-map",
                         "subject"
                       ]
-                    }
+                    },
+                    "description": "```\nA partir da tela inicial, abre um painel que permite incluir disciplinas \ne seus respectivos tópicos.\n ....\n@RequestBody InsertSubjectDTO \n InsertSubjectDTO {\n    @NotBlank(message = \"Nome da disciplina é obrigatória\")\n    @Size(max = 100, message = \"Nome da disciplina deve ter no máximo 100 caracteres\")\n    public String description;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    public String annotation;\n    @Valid\n    public List<InsertTopicDTO> topics;\n }\n InsertTopicDTO {\n    @NotBlank(message = \"Nome do tópico é obrigatório\")\n    @Size(max = 150, message = \"Nome do tópico deve ter no máximo 150 caracteres\")\n    public String description;\n    @Min(value = 0, message = \"Incidência mínima é 0\")\n    @Max(value = 4, message = \"Incidência máxima é 4\")\n    public int incidenceScore;\n    @Min(value = 0, message = \"Domínio mínimo é 0\")\n    @Max(value = 2, message = \"Domínio máximo é 2\")\n    public int knowledgeScore;\n    @NotEmpty(message = \"Lista de intervalos não pode ser vazia\")\n    public List<@Min(1) @Max(90) Integer> reviewIntervals; \n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    public String annotation;\n }\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\nSubjectDTO {\n    public Long id;\n    public String description;\n    public List<TopicSummaryDTO> topics;\n}\npublic class TopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
                   },
                   "response": []
                 },
@@ -435,7 +75,8 @@
                           "value": "7"
                         }
                       ]
-                    }
+                    },
+                    "description": "```\nRetorna dados da disciplina com seus respectivos tópicos não concluídos\n....\n@RequestParam Long subjectId\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n\n ```"
                   },
                   "response": []
                 },
@@ -477,7 +118,8 @@
                           "value": "7"
                         }
                       ]
-                    }
+                    },
+                    "description": "```\nAbre painel para permitir ajuste de disciplinas e sua lista de tópicos.\n....\n@RequestParam Long subjectId\n@RequestBody UpdateSubjectDTO request\npublic class UpdateSubjectDTO {\n    @NotBlank(message = \"Nome da disciplina é obrigatória\")\n    @Size(max = 100, message = \"Nome da disciplina deve ter no máximo 100 caracteres\")\n    public String description;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    public String annotation;\n    @Valid\n    public List<UpdateTopicDTO> topics;\n}\nUpdateTopicDTO extends InsertTopicDTO { //DO POST\n    public Long id; \n}\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n\n\n ```"
                   },
                   "response": []
                 },
@@ -510,14 +152,15 @@
                           "value": "7"
                         }
                       ]
-                    }
+                    },
+                    "description": "```\nPermite remoção de disciplina e de seus itens (tópicos)\n....\n@RequestParam Long subjectId\n.... \nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
                   },
                   "response": []
                 }
               ]
             },
             {
-              "name": "Disciplinas e tópicos do mapa de estudos",
+              "name": "Tela inicial - Disciplinas e tópicos do mapa de estudos",
               "request": {
                 "method": "GET",
                 "header": [],
@@ -532,11 +175,347 @@
                     "v1",
                     "study-map"
                   ]
-                }
+                },
+                "description": "```\nLista de disciplinas em aberto:\nRetorna a lista de disciplinas e tópicos cadastrados, \nque ainda não foram concluídos e estão ativas (Não removidas);\n...\nResponseEntity<StudyMapsDTO>\n.\npublic class StudyMapsDTO {\n    public List<SubjectDTO> subjects;\n}\npublic class SubjectDTO {\n    public Long id;\n    public String description; //second line, smaller font size\n    public LinkedList<TopicSummaryDTO> topics;\n}\npublic class TopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
               },
               "response": []
             }
-          ]
+          ],
+          "description": "```\n/v1/study-map\nControle de disciplinas e tópicos/assunto de forma verticalizada. \nAqui a lista de itens a serem estudados é organizada e elencada. \nNo mapa de estudo esta lista é percorrida.\n\n ```"
+        },
+        {
+          "name": "Ciclo de estudo",
+          "item": [
+            {
+              "name": "Controle de ciclo individual",
+              "item": [
+                {
+                  "name": "Planejamento - para criação de ciclo de estudo",
+                  "item": [
+                    {
+                      "name": "Sugestão automática de tópico por disciplina",
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/topics-suggestion",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "8080",
+                          "path": [
+                            "v1",
+                            "study-cycle",
+                            "planning",
+                            "subjects",
+                            "topics-suggestion"
+                          ]
+                        },
+                        "description": "```\nRetorna, para cada disciplina cadastrada, \num tópico sugerido para iniciar o próximo ciclo de estudos.\n.\nA sugestão considera apenas tópicos que ainda não foram concluídos \nou removidos em ciclos anteriores.\n...\nResponseEntity<List<SubjectTopicOptionDTO>>\n.\nSubjectTopicOptionDTO {\n    public Long id;\n    public String description;\n    public TopicSummaryDTO topic;\n}\n TopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Listar tópicos disponíveis para estudo por disciplina",
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "http://localhost:8080/v1/study-cycle/planning/subjects/:id/topics-option",
+                          "protocol": "http",
+                          "host": [
+                            "localhost"
+                          ],
+                          "port": "8080",
+                          "path": [
+                            "v1",
+                            "study-cycle",
+                            "planning",
+                            "subjects",
+                            ":id",
+                            "topics-option"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2"
+                            }
+                          ]
+                        },
+                        "description": "```\nRetorna os tópicos de uma disciplina específica que estão disponíveis \npara inclusão em um novo ciclo de estudos.\n.        \nSão considerados disponíveis os tópicos que ainda não foram concluídos \nou removidos em ciclos anteriores.\n.\nEndpoint utilizado para quando for utilizada a opção de TROCAR \no tópico da sugestão automática de tópico por disciplina\n...\nResponseEntity<List<TopicSummaryDTO>>\n.\nTopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
+                      },
+                      "response": []
+                    }
+                  ],
+                  "description": "```\n/v1/study-cycle/planning/\nPlanejamento de Ciclo de Estudos;\nFornece dados e sugestões para auxiliar na montagem de um novo ciclo de estudos\n\n ```"
+                },
+                {
+                  "name": "Criação de ciclo de estudo",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Ciclo Ativo novo\",\r\n  \"annotation\": null,\r\n    \"topics\": [\r\n        1, 3, 4\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "",
+                          "value": null,
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    },
+                    "description": "```\nAbre painel para permitir inclusão de novo ciclo, \ncom suas respectivas disciplinas e tópicos, com seus respectivos históricos\nHistóricos: Reistro de estudo e registro de review\n.....\nRequestBody \n{\n    @NotBlank(message = \"Nome do ciclo de estudo é obrigatório\")\n    @Size(max = 100, message = \"Nome do ciclo de estudo deve ter no máximo 100 caracteres\")\n    String description;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    String annotation;\n    @Valid\n    @NotEmpty(message = \"Algum tópico deve ser selecionada\")\n    List<Long> topics;\n}\n.....\nResponseEntity<StudyCycleWithTopicsDTO> //O MESMO PARA POST, GET, PUT\n.\nStudyCycleWithTopicsDTO {\n    private Long id;\n    private String description;\n    private String statusInfo;\n    private String annotation;\n    private List<TopicWithHistoryDTO> topics = new ArrayList<>();\n}\nTopicWithHistoryDTO {\n    public long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n    public String subject;\n    public String annotation;\n    private List<HistoryDTO> history = new ArrayList<>();\n}\nHistoryDTO {\n    public String description;\n    public String information;\n    public String annotation;\n}\n\n ```"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Informações de um ciclo de estudos",
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=1",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "1",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "description": "```\nRetorna dados do ciclo com seus respectivos tópicos e histórico.\n....\nRequestParam Long cycleId\n....\nResponseEntity<StudyCycleWithTopicsDTO> //O MESMO PARA POST, GET, PUT\n\n\n\n ```"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Edição de um ciclo de estudo",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"description\": \"Ciclo Ativo alterado\",\r\n  \"annotation\": \"anotacao inclusa\",\r\n        \"topics\": [\r\n        2, 3\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=7",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    "description": "```\nAbre painel para permitir edição de ciclo.\n.....\nRequestParam Long cycleId\n....\nResponseEntity<StudyCycleWithTopicsDTO> //O MESMO PARA POST, GET, PUT\n\n ```"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Deleção de um ciclo de estudos",
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-cycle/cycle?cycleId=9",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-cycle",
+                        "cycle"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "9"
+                        }
+                      ]
+                    },
+                    "description": "```\nPermite remoção do ciclo e desvinculação de seus itens (Tabela relacional entre ciclo e tópico.\n....\n@RequestParam Long cycleId\n....\nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
+                  },
+                  "response": []
+                }
+              ],
+              "description": "```\n/v1/study-cycle\n\n ```"
+            },
+            {
+              "name": "Registro de estudo",
+              "item": [
+                {
+                  "name": "Registro de tempo de estudo",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-01\",//mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 151, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 80, //opcional int\r\n    \"questionsIncorrected\": 21, //opcional int\r\n    \"annotation\": \".\",   //opcional (250)\r\n    \"isDone\": true  //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-record?cycleId=1&topicId=1",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-record"
+                      ],
+                      "query": [
+                        {
+                          "key": "cycleId",
+                          "value": "1"
+                        },
+                        {
+                          "key": "topicId",
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    "description": "```\nRegistra a execução de estudo de um tópico no ciclo de estudo.\n....\n@RequestParam Long cycleId,\n@RequestParam Long topicId,\n@RequestBody \n{\n    @NotNull\n    LocalDate startedAt;\n    @NotNull\n    Long minutes;\n    int questionsSolved;\n    int questionsIncorrected;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    String annotation;\n    @NotNull\n    Boolean isDone; /** Default = false;\n        Quando true,\n        concluí o assunto e tópico é removido do ciclo de estudo. \n        Neste momento começa a contagem para a primeira revisão. */\n}\n....\nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Registro de review",
+              "item": [
+                {
+                  "name": "Registro de revisão",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"startedAt\": \"2026-02-07\", //mandatório LocalData de componente de data para definição da data real de estudo, pode ser diferente da daata atual´\r\n    \"minutes\": 25, //Mndatório Long de componente da definição do tempo efetivo de studo\r\n    \"questionsSolved\": 21, //opcional int\r\n    \"questionsIncorrected\": 2, //opticional int\r\n    \"isDone\": true //Mandatório booleaan  do componente de checkbox que indica que estudo do topico foi finalizado, default false\r\n    //annotation opcional (250)\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/review-record?topicId=4",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "review-record"
+                      ],
+                      "query": [
+                        {
+                          "key": "topicId",
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    "description": "```\nRegistra a execução de revisão planejada, \napós conclusão do tópico no ciclo de estudos.\nObedecendo o espaço de datas salvas como informação do tópico.\n....\n@RequestParam Long topicId,\n@RequestBody //MESMO corpo do Registro de tempo de estudo\n{\n    @NotNull\n    LocalDate startedAt;\n    @NotNull\n    Long minutes;\n    int questionsSolved;\n    int questionsIncorrected;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    String annotation;\n    @NotNull\n    Boolean isDone; /** Default= true;\n        Quando true, \n        concluí o assunto e tópico é removido da lista de revisão de estudo. \n        Neste momento começa a contagem para a próxima revisão, se existir. */\n}\n....\nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Tela inicial - Lista de ciclos de revisões e estudos ativos",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/v1/study-cycle",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "v1",
+                    "study-cycle"
+                  ]
+                },
+                "description": "Lista de ciclos de revisões e estudos ativos - Tela inicial. Retorna nesta ordem: Revisões em atraso, revisões para a data atual e tópicos não concluídos do ciclo de estudo ativo\"\n\n....\n\n```\nResponseEntity<DailyTasksDTO>\n.\nDailyTasksDTO {\n    public List<ReviewWithTopicsDTO> reviews;\n    public List<StudyCycleWithTopicsDTO> cycles;\n}\nReviewWithTopicsDTO {\n    public String description;\n    public String statusInfo;\n    public List<TopicWithHistoryDTO> topics = new ArrayList<>();\n}\nStudyCycleWithTopicsDTO {\n    private Long id;\n    private String description;\n    private String statusInfo;\n    private String annotation;\n    private List<TopicWithHistoryDTO> topics = new ArrayList<>();\n}\nTopicWithHistoryDTO extends TopicSummaryDTO {\n    public String subject;\n    public String annotation;\n    private List<HistoryDTO> history = new ArrayList<>();\n}\nTopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\nHistoryDTO {\n    public String description;\n    public String information;\n    public String annotation;\n}\n\n ```"
+              },
+              "response": []
+            }
+          ],
+          "description": "```\nGerenciamento de ciclos de estudo e revisões, \na partir da lista de disciplinas e tópicos do mapa de estudos.\n\n ```"
         }
       ]
     }

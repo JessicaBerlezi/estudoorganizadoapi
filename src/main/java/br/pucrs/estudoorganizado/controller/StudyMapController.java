@@ -1,62 +1,51 @@
 package br.pucrs.estudoorganizado.controller;
 
+import br.pucrs.estudoorganizado.component.StudyMapComponent;
 import br.pucrs.estudoorganizado.controller.dto.*;
-import br.pucrs.estudoorganizado.service.StudyMapService;
-import br.pucrs.estudoorganizado.service.SubjectService;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Mapa de estudos", description = "Controle de disciplinas")
+@Tag(name = "Mapa de estudos", description = "Controle de disciplinas e tópicos/assunto de forma verticalizada. " +
+        "Aqui a lista de itens a serem estudados é organizada e elencada. " +
+        "No mapa de estudo esta lista é percorrida.")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/study-map")
 public class StudyMapController {
-
-    private final StudyMapService service;
-    private final SubjectService subjectService;
-
-    public StudyMapController(StudyMapService service, SubjectService subjectService) {
-        this.service = service;
-        this.subjectService = subjectService;
-    }
-
-    private static final Logger logger = LoggerFactory.getLogger(StudyMapController.class);
+    private final StudyMapComponent component;
 
     @Operation(summary = "Lista de disciplinas em aberto", description = "Retorna a lista de disciplinas e tópicos cadastrados, que ainda não foram concluídos")
     @GetMapping
-    public ResponseEntity<StudyMapsDTO> getStudyMaps() {
-        return ResponseEntity.ok(service.getStudyMaps());
+    public ResponseEntity<StudyMapDTO> getStudyMaps() {
+        return ResponseEntity.ok(component.getStudyMap());
     }
 
-    @Operation(summary = "Criação de disciplina no Mapa de estudos", description = "Abre painel para permitir inclusão de disciplinas, com seus respectivos tópicos")
+    @Operation(summary = "Criação de disciplina no Mapa de estudos", description = "A partir da tela inicial, abre um painel que permite incluir disciplinas e seus respectivos tópicos.")
     @PostMapping("/subject")
-    public ResponseEntity<SubjectDTO> postSubject(@Valid @RequestBody InsertSubjectDTO request){
-        logger.info("API postSubject, request: {}", request.toLogString());
-        return ResponseEntity.ok(subjectService.create(request));
+    public ResponseEntity<SubjectDTO> postSubject(@Valid @RequestBody InsertSubjectDTO dto){
+        return ResponseEntity.ok(component.createSubjectWithTopics(dto));
     }
 
-    @Operation(summary = "Informações de uma disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos")
+    @Operation(summary = "Informações de uma disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos não concluídos")
     @GetMapping("/subject")
     public ResponseEntity<SubjectDTO> getSubjectById(@RequestParam Long subjectId){
-        logger.info("API getSubjectById, id: {}", subjectId);
-        return ResponseEntity.ok(subjectService.getActiveSubject(subjectId));
+        return ResponseEntity.ok(component.getSubjectById(subjectId));
     }
 
     @Operation(summary = "Edição de uma disciplina no Mapa de estudos", description = "Abre painel para permitir ajuste de disciplinas e sua lista de tópicos")
     @PutMapping("/subject")
     public ResponseEntity<SubjectDTO> putSubject(@RequestParam Long subjectId, @Valid @RequestBody UpdateSubjectDTO request) {
-        logger.info("Subject update: {}", request.toLogString());
-        return ResponseEntity.ok(subjectService.update(subjectId, request));
+        return ResponseEntity.ok(component.updateSubjectWithTopics(subjectId, request));
     }
 
     @Operation(summary = "Deleção de uma disciplina de estudos", description = "Permite remoção de disciplina e de seus itens (tópicos)")
     @DeleteMapping("/subject")
     public ResponseEntity<Void> deleteSubject(@RequestParam Long subjectId) {
-        //todo
+        component.deleteSubject(subjectId);
         return ResponseEntity.ok().build();
     }
 }

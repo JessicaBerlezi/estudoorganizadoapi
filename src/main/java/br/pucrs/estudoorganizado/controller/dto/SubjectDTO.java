@@ -7,6 +7,6 @@ import java.util.LinkedList;
 @Getter
 public class SubjectDTO {
     public Long id;
-    public String description; //second line, smaller font size
+    public String description;
     public LinkedList<TopicSummaryDTO> topics;
 }

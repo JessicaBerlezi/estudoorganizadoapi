@@ -18,7 +18,7 @@ public class InsertTopicDTO {
     public int knowledgeScore;
 
     @NotEmpty(message = "Lista de intervalos não pode ser vazia")
-    public List<@Min(1) @Max(90) Integer> reviewIntervals; //numeros de 1 a 90
+    public List<@Min(1) @Max(90) Integer> reviewIntervals;
 
     @Size(max = 250, message = "Anotação deve ter no máximo 250 caracteres")
     public String annotation;

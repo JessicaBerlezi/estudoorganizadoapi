@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "Execução de revisão", description = "Registra a execução de revisão planejada constante no ciclo de estudos")
+@Tag(name = "Registro de tempo de revisão", description = "Registra a execução de revisão planejada, \n" +
+        "após conclusão do tópico no ciclo de estudos.\n" +
+        "Obedecendo o espaço de datas salvas como informação do tópico.\n")
 @RestController
 @RequestMapping("/v1/review-record")
 public class ReviewRecordController {

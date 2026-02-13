@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "Execução de revisão", description = "Registra a execução de estudo do ciclo de estudo")
+@Tag(name = "Registro de tempo de estudo", description = "Registra a execução de estudo de um tópico no ciclo de estudo.")
 @RestController
 @RequestMapping("/v1/study-record")
 public class StudyRecordController {

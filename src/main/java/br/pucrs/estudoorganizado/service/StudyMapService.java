@@ -18,8 +18,8 @@ public class StudyMapService {
         this.service = service;
     }
 
-    public StudyMapsDTO getStudyMaps() {
-        StudyMapsDTO studyMapsDTO = new StudyMapsDTO();
+    public StudyMapDTO getStudyMaps() {
+        StudyMapDTO studyMapsDTO = new StudyMapDTO();
         studyMapsDTO.subjects = service.findActivesSubjects();
         return studyMapsDTO;
     }

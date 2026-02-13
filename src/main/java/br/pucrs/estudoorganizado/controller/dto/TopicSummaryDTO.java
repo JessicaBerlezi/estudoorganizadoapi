@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class TopicSummaryDTO {
-    public long id;
+    public Long id;
     public Integer order;
     public String color;
     public String description;
