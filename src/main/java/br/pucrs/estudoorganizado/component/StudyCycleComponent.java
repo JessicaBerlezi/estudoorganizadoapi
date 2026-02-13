@@ -6,7 +6,9 @@ import br.pucrs.estudoorganizado.controller.dto.StudyCycleWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.service.ReviewControlService;
 import br.pucrs.estudoorganizado.service.StudyCycleItemService;
 import br.pucrs.estudoorganizado.service.StudyCycleService;
@@ -14,7 +16,6 @@ import br.pucrs.estudoorganizado.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -46,8 +47,7 @@ public class StudyCycleComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao carregar ciclos de estudo e revisões.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_CYCLES_LOAD);
         }
     }
 
@@ -59,8 +59,7 @@ public class StudyCycleComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao buscar ciclo de estudo.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_CYCLE_LOAD);
         }
     }
 
@@ -70,10 +69,7 @@ public class StudyCycleComponent {
 
             if (foundTopics == null || foundTopics.isEmpty()) {
                 logger.warn("Tentativa de criar ciclo sem tópicos válidos. Parâmetros=" + dto.toLogString());
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Não é possível criar ciclo de estudo sem tópicos válidos."
-                );
+                throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_NOT_FOUND);
             }
 
             StudyCycleEntity cycle = StudyCycleMapper.fromDTO(dto);
@@ -94,8 +90,7 @@ public class StudyCycleComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao criar novo ciclo de estudo.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_CYCLE_CREATE);
         }
     }
 
@@ -143,8 +138,7 @@ public class StudyCycleComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao alterar ciclo de estudo.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_CYCLE_UPDATE);
         }
     }
 
@@ -169,7 +163,7 @@ public class StudyCycleComponent {
             service.deleteStudyCycle(cycle);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_CYCLE_DELETE);
         }
     }
 }

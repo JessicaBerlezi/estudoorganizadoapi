@@ -12,7 +12,6 @@ import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
@@ -36,8 +35,7 @@ public class StudyMapComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao carregar mapa de estudos.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_MAPS_LOAD);
         }
     }
 
@@ -49,8 +47,7 @@ public class StudyMapComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao criar nova disciplina no mapa de estudos.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_MAP_CREATE);
         }
     }
 
@@ -63,8 +60,7 @@ public class StudyMapComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao carregar informações de disciplinas.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_MAP_LOAD);
         }
     }
 
@@ -104,8 +100,7 @@ public class StudyMapComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Erro ao atualizar dados de disciplinas.");
+            throw ApiExceptionFactory.internalError(BusinessError.STUDY_MAP_UPDATE);
         }
     }
 
@@ -138,7 +133,7 @@ public class StudyMapComponent {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw ApiExceptionFactory.badRequest(BusinessError.DISABLE_SUBJECT);
+            throw ApiExceptionFactory.badRequest(BusinessError.SUBJECT_DISABLE);
         }
     }
 }

@@ -2,10 +2,11 @@ package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.StudyCycleItemRepository;
 import br.pucrs.estudoorganizado.repository.StudyRecordRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class StudyRecordService {
 
     private StudyCycleItemEntity getStudyCycleItem(Long cycleId, Long topicId) {
         return itemRepository.findByStudyCycleIdAndTopicId(cycleId, topicId)
-                .orElseThrow(() -> new EntityNotFoundException("Study Cycle Item not found, cycle=" + cycleId + ", topicId=" +topicId));
+                .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.STUDY_CYCLE_LOAD));
 
     }
 }

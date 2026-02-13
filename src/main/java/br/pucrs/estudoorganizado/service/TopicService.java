@@ -3,16 +3,16 @@ package br.pucrs.estudoorganizado.service;
 import br.pucrs.estudoorganizado.controller.dto.SubjectTopicOptionDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicSummaryDTO;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;
 import br.pucrs.estudoorganizado.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +44,7 @@ public class TopicService {
     public List<TopicSummaryDTO> getTopicsBySubjectId(Long subjectId) {
 
         if (!subjectRepository.existsById(subjectId)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Subject not found: " + subjectId
-            );
+            throw ApiExceptionFactory.internalError(BusinessError.SUBJECT_LOAD);
         }
 
         return repository.findTopicsToStudyBySubjectId(subjectId)
@@ -69,17 +66,10 @@ public class TopicService {
                 );
             } catch (Exception e){
                 logger.error("Erro inesperado ao buscar tópicos na base de dados. ID={}", topicsId, e);
-                throw new ResponseStatusException(
-                        HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Erro inesperado ao processar a requisição"
-                );
+                throw ApiExceptionFactory.internalError(BusinessError.TOPIC_NOT_FOUND);
             }
         }
         return topics;
-    }
-
-    public TopicEntity updateTopic(TopicEntity topicEntity) {
-        return repository.save(topicEntity);
     }
 }
 

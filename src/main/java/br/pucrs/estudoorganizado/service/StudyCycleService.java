@@ -2,16 +2,16 @@ package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.StudyCycleRepository;
 import br.pucrs.estudoorganizado.repository.CycleStudyViewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class StudyCycleService {
 
     public StudyCycleEntity getStudyCycle(Long cycleId) {
         return repository.findById(cycleId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciclo de estudos não encontrado"));
+                .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.STUDY_CYCLE_LOAD));
     }
 
     public List<StudyCycleWithTopicsDTO> findActiveCyclesWithFullHistory() {
@@ -63,10 +63,10 @@ public class StudyCycleService {
         List<CycleStudyView> rows = viewRepository.findByCycleId(cycleId);
 
         if (rows.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciclo não encontrado: " + cycleId);
+            throw ApiExceptionFactory.notFound(BusinessError.STUDY_CYCLE_LOAD);
         }
 
-        StudyCycleWithTopicsDTO cycle = StudyCycleMapper.toCycleDTO(rows.get(0));
+        StudyCycleWithTopicsDTO cycle = StudyCycleMapper.toCycleDTO(rows.getFirst());
 
         Map<Long, TopicWithHistoryDTO> topicMap = new HashMap<>();
 

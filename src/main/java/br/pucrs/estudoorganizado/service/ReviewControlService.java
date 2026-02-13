@@ -4,10 +4,12 @@ import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
 import br.pucrs.estudoorganizado.controller.dto.ReviewWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.ReviewControlRepository;
 import br.pucrs.estudoorganizado.repository.StudyRecordRepository;
 import br.pucrs.estudoorganizado.repository.TopicRepository;
@@ -29,8 +31,7 @@ public class ReviewControlService {
 
     public void startedReview(Long topicId) {
         TopicEntity topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado"));
-
+                .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.TOPIC_NOT_FOUND));
 
         if (topic.getReviewIntervalsDays().isEmpty()) return;
 
@@ -59,7 +60,7 @@ public class ReviewControlService {
 
         ReviewControlEntity reviewControl = repository
                 .findByTopicId(topicId)
-                .orElseThrow(() -> new IllegalStateException("Não há revisão pendente para este tópico"));
+                .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.REVIEW_NOT_FOUND));
 
         studyRecordRepository.save(
                 StudyRecordMapper.toReviewRecord(reviewControl, request)
@@ -116,7 +117,6 @@ public class ReviewControlService {
 
     /**
      * Atualiza automaticamente o status das revisões com base na data agendada.
-     *
      * Regras:
      * - Se a data ainda não chegou → PLANNED
      * - Se é hoje → PENDING
@@ -157,7 +157,6 @@ public class ReviewControlService {
 
     /**
      * Retorna a agenda de revisões agrupadas por status (Atrasadas e Hoje).
-     *
      * DELAYED → "Em atraso"
      * PENDING → "Hoje"
      */

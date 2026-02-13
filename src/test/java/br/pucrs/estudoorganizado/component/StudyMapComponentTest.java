@@ -313,7 +313,7 @@ public class StudyMapComponentTest {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
         Assertions.assertEquals(
-                BusinessError.DISABLE_SUBJECT.message(),
+                BusinessError.SUBJECT_DISABLE.message(),
                 ex.getReason()
         );
     }

@@ -10,9 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @Service
@@ -38,7 +37,7 @@ public class SubjectService {
             return repository.save(updatedSubject);
         }catch (Exception e){
             logger.error("Erro ao atualizar registro de disciplina", e);
-            throw  ApiExceptionFactory.badRequest(BusinessError.UPDATE_ERROR);
+            throw ApiExceptionFactory.notFound(BusinessError.STUDY_MAP_UPDATE);
         }
     }
 
@@ -52,11 +51,11 @@ public class SubjectService {
 
     public SubjectEntity getActiveSubject(Long id) {
         SubjectEntity subject = repository.findByIdWithTopics(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Disciplina não encontrada " + id));
+                .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.SUBJECT_LOAD));
 
         if(!subject.getIsActive()){
             logger.error("Disciplina foi desativada.");
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Disciplina inativa " + id);
+            throw ApiExceptionFactory.conflict(BusinessError.SUBJECT_LOAD);
         }
         return subject;
     }
@@ -65,7 +64,7 @@ public class SubjectService {
     public void disableSubject(Long id) {
         SubjectEntity entity = repository
                 .findByIdWithTopics(id)
-                .orElseThrow(() ->  ApiExceptionFactory.notFound(BusinessError.SUBJECT_NOT_FOUND));
+                .orElseThrow(() ->  ApiExceptionFactory.notFound(BusinessError.SUBJECT_LOAD));
 
         entity.setIsActive(false);
         entity.getTopics()
