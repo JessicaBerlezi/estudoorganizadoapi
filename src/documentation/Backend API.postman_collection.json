@@ -58,7 +58,7 @@
                     "method": "GET",
                     "header": [],
                     "url": {
-                      "raw": "http://localhost:8080/v1/study-map/subject?id=7",
+                      "raw": "http://localhost:8080/v1/study-map/subject?subjectId=59",
                       "protocol": "http",
                       "host": [
                         "localhost"
@@ -71,12 +71,12 @@
                       ],
                       "query": [
                         {
-                          "key": "id",
-                          "value": "7"
+                          "key": "subjectId",
+                          "value": "59"
                         }
                       ]
                     },
-                    "description": "```\nRetorna dados da disciplina com seus respectivos tópicos não concluídos\n....\n@RequestParam Long subjectId\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n\n ```"
+                    "description": "```\nRetorna dados da disciplina com seus respectivos tópicos não concluídos\n....\n@RequestParam Long subjectId\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n ```"
                   },
                   "response": []
                 },
@@ -93,13 +93,47 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"description\": \"Segurança da informação\",\r\n  \"annotation\": \"adição comentario no update\",\r\n  \"topics\": [\r\n    {\r\n     \"id\": 18,\r\n    \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [2, 10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"description\": \"Aparelhos roteadores\",\r\n      \"incidenceScore\": 1,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"id\": 19,\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [2, 5, 15, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
+                      "raw": "{\r\n  \"description\": \"Segurança da informação atualizacao descricao\",\r\n  \"annotation\": \"adição comentario no update\",\r\n  \"topics\": [\r\n    {\r\n     \"id\": 18,\r\n    \"description\":  \"Fundamentos de segurança\",\r\n      \"incidenceScore\": 3,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [2, 10, 25, 60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"description\": \"Aparelhos roteadores\",\r\n      \"incidenceScore\": 1,\r\n      \"knowledgeScore\": 2,\r\n      \"reviewIntervals\": [60],\r\n      \"annotation\": \"\"\r\n    },\r\n    {\r\n      \"id\": 19,\r\n      \"description\": \"Criptografia\",\r\n      \"incidenceScore\": 2,\r\n      \"knowledgeScore\": 0,\r\n      \"reviewIntervals\": [2, 5, 15, 60],\r\n      \"annotation\": \"\"\r\n    }\r\n  ]\r\n}\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
                         }
                       }
                     },
+                    "url": {
+                      "raw": "http://localhost:8080/v1/study-map/subject?subjectId=59",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "v1",
+                        "study-map",
+                        "subject"
+                      ],
+                      "query": [
+                        {
+                          "key": "subjectId",
+                          "value": "59"
+                        }
+                      ]
+                    },
+                    "description": "```\nAbre painel para permitir ajuste de disciplinas e sua lista de tópicos.\n....\n@RequestParam Long subjectId\n@RequestBody UpdateSubjectDTO request\npublic class UpdateSubjectDTO {\n    @NotBlank(message = \"Nome da disciplina é obrigatória\")\n    @Size(max = 100, message = \"Nome da disciplina deve ter no máximo 100 caracteres\")\n    public String description;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    public String annotation;\n    @Valid\n    public List<UpdateTopicDTO> topics;\n}\nUpdateTopicDTO extends InsertTopicDTO { //DO POST\n    public Long id; \n}\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n\n\n ```"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Desativa disciplina e seus tópicos (soft delete)",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
                     "url": {
                       "raw": "http://localhost:8080/v1/study-map/subject?subjectId=7",
                       "protocol": "http",
@@ -119,41 +153,7 @@
                         }
                       ]
                     },
-                    "description": "```\nAbre painel para permitir ajuste de disciplinas e sua lista de tópicos.\n....\n@RequestParam Long subjectId\n@RequestBody UpdateSubjectDTO request\npublic class UpdateSubjectDTO {\n    @NotBlank(message = \"Nome da disciplina é obrigatória\")\n    @Size(max = 100, message = \"Nome da disciplina deve ter no máximo 100 caracteres\")\n    public String description;\n    @Size(max = 250, message = \"Anotação deve ter no máximo 250 caracteres\")\n    public String annotation;\n    @Valid\n    public List<UpdateTopicDTO> topics;\n}\nUpdateTopicDTO extends InsertTopicDTO { //DO POST\n    public Long id; \n}\n....\nResponseEntity<SubjectDTO>  // (O mesmo para GET, POST, PUT)\n\n\n\n ```"
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Deleção de disciplina no mapa de estudos",
-                  "request": {
-                    "method": "DELETE",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "url": {
-                      "raw": "http://localhost:8080/v1/study-map/subject?id=7",
-                      "protocol": "http",
-                      "host": [
-                        "localhost"
-                      ],
-                      "port": "8080",
-                      "path": [
-                        "v1",
-                        "study-map",
-                        "subject"
-                      ],
-                      "query": [
-                        {
-                          "key": "id",
-                          "value": "7"
-                        }
-                      ]
-                    },
-                    "description": "```\nPermite remoção de disciplina e de seus itens (tópicos)\n....\n@RequestParam Long subjectId\n.... \nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
+                    "description": "```\nDesativa disciplina e seus tópicos (soft delete)\nisActive=false;\n....\n@RequestParam Long subjectId\n.... \nNão possui retorno, apenas Status HTTP 200 OK\n\n ```"
                   },
                   "response": []
                 }
@@ -176,7 +176,7 @@
                     "study-map"
                   ]
                 },
-                "description": "```\nLista de disciplinas em aberto:\nRetorna a lista de disciplinas e tópicos cadastrados, \nque ainda não foram concluídos e estão ativas (Não removidas);\n...\nResponseEntity<StudyMapsDTO>\n.\npublic class StudyMapsDTO {\n    public List<SubjectDTO> subjects;\n}\npublic class SubjectDTO {\n    public Long id;\n    public String description; //second line, smaller font size\n    public LinkedList<TopicSummaryDTO> topics;\n}\npublic class TopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
+                "description": "```\nLista de disciplinas em aberto:\nRetorna a lista de disciplinas e tópicos cadastrados, \nque ainda não foram concluídos e estão ativas (Não removidas);\n...\nResponseEntity<StudyMapDTO>\n.\npublic class StudyMapDTO {\n    public List<SubjectDTO> subjects;\n}\npublic class SubjectDTO {\n    public Long id;\n    public String description; //second line, smaller font size\n    public LinkedList<TopicSummaryDTO> topics;\n}\npublic class TopicSummaryDTO {\n    public Long id;\n    public Integer order;\n    public String color;\n    public String description;\n    public String elapsedTime;\n    public String score;\n}\n\n ```"
               },
               "response": []
             }

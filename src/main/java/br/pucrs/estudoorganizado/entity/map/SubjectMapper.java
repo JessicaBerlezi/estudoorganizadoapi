@@ -5,10 +5,9 @@ import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SubjectMapper {
@@ -16,8 +15,10 @@ public class SubjectMapper {
     public static SubjectEntity convertToEntity(InsertSubjectDTO dto){
         SubjectEntity subject = new SubjectEntity(
                 dto.getDescription(),
-                dto.getAnnotation()
+                dto.getAnnotation(),
+                null
         );
+        subject.setIsActive(true);
 
         List<TopicEntity> entities = new ArrayList<>();
         int order = 1;
@@ -51,5 +52,12 @@ public class SubjectMapper {
                 })
                 .collect(Collectors.toCollection(LinkedList::new));
         return dto;
+    }
+
+    public static SubjectEntity updateEntity(SubjectEntity entity, UpdateSubjectDTO dto) {
+        entity.setDescription(dto.getDescription());
+        entity.setAnnotation(dto.annotation);
+        entity.setUpdatedAt(LocalDateTime.now());
+        return  entity;
     }
 }

@@ -20,7 +20,7 @@ public class BaseCommonEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @PrePersist
+//    @PrePersist
     protected void onCreate() {
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
@@ -29,8 +29,8 @@ public class BaseCommonEntity {
         this.isActive = true;
     }
 
-    @PreUpdate
-    protected void onUpdate() {
+    protected void onInactivate() {
+        this.isActive = false;
         this.updatedAt = LocalDateTime.now();
     }
 }

@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class TopicEntity extends BaseCommonEntity {
     private String annotation;
 
     public TopicEntity() {
+        onCreate();
     }
 
     public TopicEntity(String description,
@@ -72,26 +74,7 @@ public class TopicEntity extends BaseCommonEntity {
         this.reviewIntervalsDays = reviewIntervalsDays;
         this.annotation = annotation;
         this.subject = subject;
-    }
-
-    public TopicEntity(TopicEntity entity,
-                       String description,
-                       Integer order,
-                       Integer incidenceScore,
-                       Integer knowledgeScore,
-                       List<Integer> reviewIntervalsDays,
-                       String annotation) {
-        this.id = entity.getId();
-        this.setCreatedAt(entity.getCreatedAt());
-        this.setIsActive(entity.getIsActive());
-        this.subject = entity.subject;
-        this.description = description;
-        this.order = order;
-        this.incidenceScore = incidenceScore;
-        this.knowledgeScore = knowledgeScore;
-        this.reviewIntervalsDays = reviewIntervalsDays;
-        this.annotation = annotation;
-        this.onUpdate();
+        onCreate();
     }
 
     public String toLogString() {

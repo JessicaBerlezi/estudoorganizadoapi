@@ -50,8 +50,8 @@ public class StudyCycleController {
 
     @Operation(summary = "Deleção de um ciclo de estudos", description = "Permite remoção do ciclo e desvinculação de seus itens")
     @DeleteMapping("/cycle")
-    public ResponseEntity<Void> deleteStudyCycle(@RequestParam Long cycleId) {
-        component.deleteStudyCycle(cycleId);
+    public ResponseEntity<Void> disableStudyCycle(@RequestParam Long cycleId) {
+        component.disableSubject(cycleId);
         return ResponseEntity.ok().build();
     }
 }

@@ -9,6 +9,7 @@ import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TopicMapper {
@@ -141,5 +142,16 @@ public class TopicMapper {
         }
 
         return new ArrayList<>(topicsMap.values());
+    }
+
+    public static TopicEntity updateEntity(TopicEntity entity, UpdateTopicDTO dto, int order){
+        entity.setOrder(order);
+        entity.setDescription(dto.description);
+        entity.setAnnotation(dto.annotation);
+        entity.setIncidenceScore(dto.incidenceScore);
+        entity.setKnowledgeScore(dto.knowledgeScore);
+        entity.setUpdatedAt(LocalDateTime.now());
+
+        return entity;
     }
 }

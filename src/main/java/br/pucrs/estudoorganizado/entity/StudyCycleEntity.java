@@ -1,6 +1,5 @@
 package br.pucrs.estudoorganizado.entity;
 
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleDetailsDTO;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -28,7 +27,6 @@ public class StudyCycleEntity extends BaseCommonEntity {
     private Long id;
 
     @NotBlank
-    //@Size(max = 100)
     @Column(nullable = false, length = 100)
     private String description;
 
@@ -46,27 +44,12 @@ public class StudyCycleEntity extends BaseCommonEntity {
     @OneToMany(mappedBy = "studyCycle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudyCycleItemEntity> items = new ArrayList<>();
 
-    public StudyCycleEntity(String description, String annotation, StudyStatusEnum status, LocalDateTime startedAt) {
-        this.description = description;
-        this.status = status;
-        this.startedAt = startedAt;
-        this.annotation = annotation;
-    }
-
     public StudyCycleEntity(String description, StudyStatusEnum status, LocalDateTime startedAt, String annotation, List<StudyCycleItemEntity> items) {
         this.description = description;
         this.status = status;
         this.startedAt = startedAt;
         this.annotation = annotation;
         this.items = items;
-    }
-
-    public static StudyCycleEntity fromDTO(StudyCycleDetailsDTO dto) {
-        return new StudyCycleEntity(
-                dto.getDescription(),
-                dto.getAnnotation(),
-                StudyStatusEnum.PLANNED,
-                null
-        );
+        onCreate();
     }
 }

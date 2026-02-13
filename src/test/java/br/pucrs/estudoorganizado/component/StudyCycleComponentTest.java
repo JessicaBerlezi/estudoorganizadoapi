@@ -426,12 +426,12 @@ public class StudyCycleComponentTest {
     }
 
     @Test
-    void shouldDeleteStudyCycle() {
+    void shouldDisableSubject() {
         StudyCycleEntity cycle = createStudyCycleEntityMock();
 
         when(service.getStudyCycle(1L)).thenReturn(cycle);
 
-        component.deleteStudyCycle(1L);
+        component.disableSubject(1L);
 
         verify(service).deleteStudyCycle(cycle);
     }

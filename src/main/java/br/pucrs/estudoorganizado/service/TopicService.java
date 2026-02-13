@@ -77,5 +77,9 @@ public class TopicService {
         }
         return topics;
     }
+
+    public TopicEntity updateTopic(TopicEntity topicEntity) {
+        return repository.save(topicEntity);
+    }
 }
 

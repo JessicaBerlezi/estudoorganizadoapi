@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
         Um disciplina poderá, ou não, fazer parte de um ou mais ciclos de estudo""")
 @Entity
 @Getter
+@Setter
 @Table(name = "subject")
 public class SubjectEntity  extends BaseCommonEntity{
 
@@ -45,21 +46,17 @@ public class SubjectEntity  extends BaseCommonEntity{
     public SubjectEntity(String description, String annotation) {
         this.description = description;
         this.annotation = annotation;
+        this.topics = null;
+        onCreate();
     }
 
-    //todo rever isso aqui
-    public SubjectEntity(
-            SubjectEntity entity,
-            List<TopicEntity> topics,
-            String description,
-            String annotation) {
-        this.id = entity.id;
-        this.setCreatedAt(entity.getCreatedAt());
-        this.setIsActive(entity.getIsActive());
-        this.topics = topics;
+    public SubjectEntity(String description,
+                         String annotation,
+                         List<TopicEntity> topics) {
         this.description = description;
         this.annotation = annotation;
-        onUpdate();
+        this.topics = topics;
+        onCreate();
     }
 
     public String toLogString() {

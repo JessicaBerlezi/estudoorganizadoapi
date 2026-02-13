@@ -6,6 +6,7 @@ import br.pucrs.estudoorganizado.controller.dto.StudyCycleWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
 import br.pucrs.estudoorganizado.service.ReviewControlService;
 import br.pucrs.estudoorganizado.service.StudyCycleItemService;
 import br.pucrs.estudoorganizado.service.StudyCycleService;
@@ -75,7 +76,7 @@ public class StudyCycleComponent {
                 );
             }
 
-            StudyCycleEntity cycle = StudyCycleEntity.fromDTO(dto);
+            StudyCycleEntity cycle = StudyCycleMapper.fromDTO(dto);
 
             List<StudyCycleItemEntity> items = foundTopics.stream()
                     .map(topic -> {
@@ -162,7 +163,7 @@ public class StudyCycleComponent {
                 .filter(id -> !existingTopicIds.contains(id)).distinct().collect(Collectors.toList());
     }
 
-    public void deleteStudyCycle(Long cycleId) {
+    public void disableSubject(Long cycleId) {
         try {
             StudyCycleEntity cycle = service.getStudyCycle(cycleId);
             service.deleteStudyCycle(cycle);

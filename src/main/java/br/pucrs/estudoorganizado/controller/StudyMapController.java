@@ -42,10 +42,10 @@ public class StudyMapController {
         return ResponseEntity.ok(component.updateSubjectWithTopics(subjectId, request));
     }
 
-    @Operation(summary = "Deleção de uma disciplina de estudos", description = "Permite remoção de disciplina e de seus itens (tópicos)")
+    @Operation(summary = "Desativa disciplina e seus tópicos (soft delete)")
     @DeleteMapping("/subject")
-    public ResponseEntity<Void> deleteSubject(@RequestParam Long subjectId) {
-        component.deleteSubject(subjectId);
+    public ResponseEntity<Void> disableSubject(@RequestParam Long subjectId) {
+        component.disableSubject(subjectId);
         return ResponseEntity.ok().build();
     }
 }
