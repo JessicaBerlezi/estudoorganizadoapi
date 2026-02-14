@@ -29,4 +29,8 @@ public class ReviewControlEntity extends BaseCommonEntity {
 
     @Enumerated(EnumType.STRING)
     private ReviewStatusEnum status;
+
+    public ReviewControlEntity() {
+        onCreate();
+    }
 }
