@@ -1,0 +1,76 @@
+
+CREATE OR REPLACE VIEW vw_study_structure AS
+
+SELECT
+    CONCAT(
+       s.subject_id, '-',
+       t.topic_id, '-',
+       IFNULL(sci.study_cycle_item_id, 0),
+       IFNULL(sr.study_record_id, 0)
+    ) AS id,
+
+    s.subject_id,
+    s.subject_order,
+    s.description        AS subject_description,
+    s.annotation         AS subject_annotation,
+
+    t.topic_id,
+    t.topic_order,
+    t.description        AS topic_description,
+    t.annotation         AS topic_annotation,
+
+    t.incidence_score    AS topic_incidence_score,
+    t.knowledge_score    AS topic_knowledge_score,
+
+    GROUP_CONCAT(trd.day_of_week) AS topic_review_days,
+
+
+    sc.study_cycle_id,
+    sc.description       AS cycle_description,
+    sc.annotation        AS cycle_annotation,
+
+    sci.started_at       AS cycle_started_at,
+    sci.status           AS cycle_status,
+
+    sr.study_record_id,
+    sr.study_type,
+    sr.started_at        AS study_started_at,
+    sr.duration_minutes  AS study_duration_minutes,
+    sr.questions_solved  AS study_questions_solved,
+    sr.questions_incorrected AS study_questions_incorrected,
+    sr.annotation        AS study_annotation
+
+
+FROM topic t
+
+LEFT JOIN topic_review_days trd
+     ON trd.topic_id = t.topic_id
+
+JOIN subject s
+     ON s.subject_id = t.subject_id
+
+LEFT JOIN study_cycle_item sci
+	ON sci.topic_id = t.topic_id
+
+JOIN study_cycle sc
+    ON sci.study_cycle_id = sc.study_cycle_id
+
+LEFT JOIN study_record sr
+	ON sci.study_cycle_item_id = sr.study_cycle_item_id
+
+LEFT JOIN review_control rc
+       ON rc.topic_id = t.topic_id
+
+WHERE s.is_active = TRUE
+  AND t.is_active = TRUE
+  AND sc.is_active = TRUE
+  AND sci.done_at IS NULL
+GROUP BY
+    s.subject_id,
+    t.topic_id,
+    sci.study_cycle_item_id,
+    sr.study_record_id
+
+ORDER BY s.subject_order,
+    t.topic_order;
+

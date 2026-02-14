@@ -20,8 +20,8 @@ public class StudyMapController {
 
     @Operation(summary = "Lista de disciplinas em aberto", description = "Retorna a lista de disciplinas e tópicos cadastrados, que ainda não foram concluídos")
     @GetMapping
-    public ResponseEntity<StudyMapDTO> getStudyMaps() {
-        return ResponseEntity.ok(component.getStudyMap());
+    public ResponseEntity<StudyMapStructureDTO> getStudyMaps() {
+        return ResponseEntity.ok(component.buildStudyMapInfo());
     }
 
     @Operation(summary = "Criação de disciplina no Mapa de estudos", description = "A partir da tela inicial, abre um painel que permite incluir disciplinas e seus respectivos tópicos.")
@@ -32,7 +32,7 @@ public class StudyMapController {
 
     @Operation(summary = "Informações de uma disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos não concluídos")
     @GetMapping("/subject")
-    public ResponseEntity<SubjectDTO> getSubjectById(@RequestParam Long subjectId){
+    public ResponseEntity<StudyStructureDTO> getSubjectById(@RequestParam Long subjectId){
         return ResponseEntity.ok(component.getSubjectById(subjectId));
     }
 

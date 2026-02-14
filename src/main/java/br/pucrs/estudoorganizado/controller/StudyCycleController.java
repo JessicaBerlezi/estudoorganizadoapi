@@ -1,9 +1,9 @@
 package br.pucrs.estudoorganizado.controller;
 
 import br.pucrs.estudoorganizado.component.StudyCycleComponent;
+import br.pucrs.estudoorganizado.controller.dto.StudyStructureDTO;
+import br.pucrs.estudoorganizado.controller.dto.StudyCycleStructureDTO;
 import br.pucrs.estudoorganizado.controller.dto.StudyCycleDetailsDTO;
-import br.pucrs.estudoorganizado.controller.dto.DailyTasksDTO;
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,27 +23,27 @@ public class StudyCycleController {
     @Operation(summary = "Lista de ciclos de revisões e estudos ativos", description = "Tela inicial da aplicação. \n" +
             "Retorna nesta ordem: Revisões em atraso, revisões para a data atual e tópicos não concluídos do ciclo de estudo ativo")
     @GetMapping
-    public ResponseEntity<DailyTasksDTO> getDailyTasks() {
-        return ResponseEntity.ok(component.getDailyTasks());
+    public ResponseEntity<StudyCycleStructureDTO> getDailyTasks() {
+        return ResponseEntity.ok(component.buildDailyTaskInfo());
     }
 
     @Operation(summary = "Criação de novo ciclo de estudo", description = "Abre painel para permitir inclusão de novo ciclo, com suas respectivas disciplinas e tópicos linas, com seus respectivos")
     @PostMapping("/cycle")
-    public ResponseEntity<StudyCycleWithTopicsDTO> postStudyCycle(@Valid @RequestBody StudyCycleDetailsDTO dto) {
+    public ResponseEntity<StudyStructureDTO> postStudyCycle(@Valid @RequestBody StudyCycleDetailsDTO dto) {
         StudyCycleEntity entity = component.creteStudyCycle(dto);
         return ResponseEntity.ok(component.getStudyCycleById(entity.getId()));
     }
 
     @Operation(summary = "Informações de um ciclo", description = "Retorna dados do ciclo com seus respectivos tópicos e histórico")
     @GetMapping("/cycle")
-    public ResponseEntity<StudyCycleWithTopicsDTO> getStudyCycleById(@RequestParam Long cycleId) {
+    public ResponseEntity<StudyStructureDTO> getStudyCycleById(@RequestParam Long cycleId) {
         return ResponseEntity.ok(component.getStudyCycleById(cycleId));
     }
 
 
     @Operation(summary = "Edição de um ciclo de estudo", description = "Abre painel para permitir edição de ciclo, mesmo corpo da api de criação")
     @PutMapping("/cycle")
-    public ResponseEntity<StudyCycleWithTopicsDTO> putStudyCycle(@RequestParam Long cycleId, @Valid @RequestBody StudyCycleDetailsDTO dto) {
+    public ResponseEntity<StudyStructureDTO> putStudyCycle(@RequestParam Long cycleId, @Valid @RequestBody StudyCycleDetailsDTO dto) {
         component.updateStudyCycle(cycleId, dto);
         return ResponseEntity.ok(component.getStudyCycleById(cycleId));
     }

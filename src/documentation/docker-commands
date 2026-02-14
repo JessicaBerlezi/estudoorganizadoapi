@@ -8,8 +8,3 @@ docker exec -it estudoorganizado-mysql-container mysql -u jberlezi -p
 SHOW DATABASES;
 USE estudoorganizado;
 SHOW TABLES;
-
-
-SELECT TABLE_NAME, CONSTRAINT_NAME
-FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-WHERE REFERENCED_TABLE_NAME = 'topic';

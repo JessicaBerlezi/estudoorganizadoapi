@@ -1,18 +1,13 @@
 package br.pucrs.estudoorganizado.component;
 
-import br.pucrs.estudoorganizado.controller.dto.DailyTasksDTO;
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleDetailsDTO;
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleWithTopicsDTO;
+import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.StudyCycleMapper;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
-import br.pucrs.estudoorganizado.service.ReviewControlService;
-import br.pucrs.estudoorganizado.service.StudyCycleItemService;
-import br.pucrs.estudoorganizado.service.StudyCycleService;
-import br.pucrs.estudoorganizado.service.TopicService;
+import br.pucrs.estudoorganizado.service.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +28,16 @@ public class StudyCycleComponent {
     private final TopicService topicService;
     private final StudyCycleItemService itemService;
     private final ReviewControlService reviewControlService;
+    private final StudyStructureViewService viewService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(StudyCycleComponent.class);
 
-    public DailyTasksDTO getDailyTasks() {
+    public StudyCycleStructureDTO buildDailyTaskInfo() {
         try {
-            DailyTasksDTO response = new DailyTasksDTO();
+            StudyCycleStructureDTO response = new StudyCycleStructureDTO();
             response.reviews = reviewControlService.getReviewAgenda();
-            response.cycles = service.findActiveCyclesWithFullHistory();
+            response.cycles = viewService.findActiveStudyCycleWithFullTopicHistory();
             return response;
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
@@ -51,9 +48,9 @@ public class StudyCycleComponent {
         }
     }
 
-    public StudyCycleWithTopicsDTO getStudyCycleById(Long cycleId) {
+    public StudyStructureDTO getStudyCycleById(Long cycleId) {
         try {
-            return service.getCycleWithFullHistoryById(cycleId);
+            return viewService.getActiveCycleWithFullTopicHistory(cycleId);
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;

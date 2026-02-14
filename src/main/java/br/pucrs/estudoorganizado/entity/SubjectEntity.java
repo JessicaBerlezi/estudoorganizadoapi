@@ -27,6 +27,9 @@ public class SubjectEntity  extends BaseCommonEntity{
     @Column(name = "subject_id")
     private Long id;
 
+    @Column(name = "subject_order")
+    private Integer order;
+
     @Setter
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TopicEntity> topics = new ArrayList<>();

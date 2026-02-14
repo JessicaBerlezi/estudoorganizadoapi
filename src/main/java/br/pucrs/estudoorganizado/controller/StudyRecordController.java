@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.controller;
 
-import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
+import br.pucrs.estudoorganizado.controller.dto.RegisterStudyRecordDTO;
 import br.pucrs.estudoorganizado.service.StudyRecordService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class StudyRecordController {
     public ResponseEntity<Void> postStudyRecord(
             @RequestParam Long cycleId,
             @RequestParam Long topicId,
-            @Valid @RequestBody RegistreStudyRecordDTO request) {
+            @Valid @RequestBody RegisterStudyRecordDTO request) {
         service.recordStudy(cycleId, topicId, request);
         return ResponseEntity.ok().build();
     }

@@ -5,7 +5,7 @@ import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.map.SubjectMapper;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
-import br.pucrs.estudoorganizado.service.StudyMapService;
+import br.pucrs.estudoorganizado.service.StudyStructureViewService;
 import br.pucrs.estudoorganizado.service.SubjectService;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
@@ -22,14 +22,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudyMapComponent {
 
-    private final StudyMapService service;
     private final SubjectService subjectService;
+    private final StudyStructureViewService viewService;
 
     private static final Logger logger = LoggerFactory.getLogger(StudyMapComponent.class);
 
-    public StudyMapDTO getStudyMap() {
-        try {
-            return service.getStudyMaps();
+    public StudyMapStructureDTO buildStudyMapInfo(){
+        try{
+            StudyMapStructureDTO studyMapsDTO = new StudyMapStructureDTO();
+            studyMapsDTO.subjects = viewService.findActiveSubjectsWithFullTopicHistory();
+            return studyMapsDTO;
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
@@ -51,10 +53,9 @@ public class StudyMapComponent {
         }
     }
 
-    public SubjectDTO getSubjectById(Long subjectId) {
+    public StudyStructureDTO getSubjectById(Long subjectId) {
         try {
-             SubjectEntity entity = subjectService.getActiveSubject(subjectId);
-            return SubjectMapper.convertToDTO(entity);
+            return viewService.getActiveSubjectWithFullTopicHistory(subjectId);
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;

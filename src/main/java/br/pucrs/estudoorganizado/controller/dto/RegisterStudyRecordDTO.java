@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class RegistreStudyRecordDTO {
+public class RegisterStudyRecordDTO {
 
     @NotNull
     LocalDate startedAt;

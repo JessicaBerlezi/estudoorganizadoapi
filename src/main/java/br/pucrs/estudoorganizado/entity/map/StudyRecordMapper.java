@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.entity.map;
 
-import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
+import br.pucrs.estudoorganizado.controller.dto.RegisterStudyRecordDTO;
 import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.StudyRecordEntity;
@@ -8,15 +8,15 @@ import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 
 public class StudyRecordMapper {
 
-    public static StudyRecordEntity toStudyRecord(StudyCycleItemEntity studyCycleItem, RegistreStudyRecordDTO dto) {
+    public static StudyRecordEntity toStudyRecord(StudyCycleItemEntity studyCycleItem, RegisterStudyRecordDTO dto) {
         return buildRecord(studyCycleItem, null, StudyTypeEnum.STUDY_CYCLE, dto);
     }
 
-    public static StudyRecordEntity toReviewRecord(ReviewControlEntity reviewControl, RegistreStudyRecordDTO dto) {
+    public static StudyRecordEntity toReviewRecord(ReviewControlEntity reviewControl, RegisterStudyRecordDTO dto) {
         return buildRecord(null, reviewControl, StudyTypeEnum.REVIEW, dto);
     }
 
-    private static StudyRecordEntity buildRecord(StudyCycleItemEntity studyCycleItem, ReviewControlEntity reviewControl, StudyTypeEnum type, RegistreStudyRecordDTO dto) {
+    private static StudyRecordEntity buildRecord(StudyCycleItemEntity studyCycleItem, ReviewControlEntity reviewControl, StudyTypeEnum type, RegisterStudyRecordDTO dto) {
 
             int solved = dto.getQuestionsSolved();
         int incorrect = dto.getQuestionsIncorrected();
@@ -47,7 +47,7 @@ public class StudyRecordMapper {
         );
     }
 
-    private static double calcQuestionsPercent(RegistreStudyRecordDTO dto) {
+    private static double calcQuestionsPercent(RegisterStudyRecordDTO dto) {
         int solved = dto.getQuestionsSolved();
         int incorrect = dto.getQuestionsIncorrected();
 

@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.service;
 
-import br.pucrs.estudoorganizado.controller.dto.RegistreStudyRecordDTO;
+import br.pucrs.estudoorganizado.controller.dto.RegisterStudyRecordDTO;
 import br.pucrs.estudoorganizado.controller.dto.ReviewWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
@@ -56,7 +56,7 @@ public class ReviewControlService {
      * @param topicId ID do tópico revisado
      * @param request Dados da revisão realizada
      */
-    public void recordReview(Long topicId, RegistreStudyRecordDTO request) {
+    public void recordReview(Long topicId, RegisterStudyRecordDTO request) {
 
         ReviewControlEntity reviewControl = repository
                 .findByTopicId(topicId)

@@ -1,14 +1,16 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
 import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class StudyCycleWithTopicsDTO {
+public class StudyStructureDTO {
     private Long id;
+    private Long order;
     private String description;
     private String statusInfo;
     private String annotation;
-    private List<TopicWithHistoryDTO> topics = new ArrayList<>();
+    private List<TopicStructureDTO> topics = new ArrayList<>();
 }

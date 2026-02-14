@@ -4,7 +4,6 @@ import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
-import br.pucrs.estudoorganizado.entity.view.CycleStudyView;
 import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
@@ -39,36 +38,6 @@ public class TopicMapper {
         dto.color = Utils.resolveTopicColor(entity.getIncidenceScore(), entity.getKnowledgeScore());
         dto.elapsedTime = "0min";
         dto.score = "-%";
-        return dto;
-    }
-
-    public static TopicWithHistoryDTO toTopicDTO(CycleStudyView row) {
-        TopicWithHistoryDTO dto = new TopicWithHistoryDTO();
-        dto.setId(row.getTopicId());
-        dto.setOrder(row.getTopicOrder());
-        dto.setColor(Utils.resolveTopicColor(row.getTopicIncidenceScore(), row.getTopicKnowledgeScore()));
-        dto.setDescription(row.getTopicDescription());
-        dto.setSubject(row.getSubjectDescription());
-        dto.setAnnotation(row.getTopicAnnotation());
-
-        if(row.getRecordId() != null){
-            dto.setElapsedTime(Utils.formatDurationMinutes(row.getTopicTotalDurationMinutes()));
-            dto.setScore(row.getTopicAvgScore() == null ? "-" : row.getTopicAvgScore() + "%");
-
-            dto.getHistory().add(toHistoryDTO(
-                    row.getStudyType(),
-                    row.getRecordStartedAt(),
-                    row.getQuestionsSolved(),
-                    row.getQuestionsIncorrected(),
-                    row.getQuestionsPercent(),
-                    row.getRecordAnnotation(),
-                    row.getRecordDurationMinutes()
-            ));
-        } else {
-            dto.setElapsedTime("0 min");
-            dto.setScore("- %");
-        }
-
         return dto;
     }
 

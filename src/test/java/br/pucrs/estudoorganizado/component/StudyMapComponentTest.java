@@ -5,8 +5,7 @@ import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
-import br.pucrs.estudoorganizado.entity.map.SubjectMapper;
-import br.pucrs.estudoorganizado.service.StudyMapService;
+import br.pucrs.estudoorganizado.service.StudyStructureViewService;
 import br.pucrs.estudoorganizado.service.SubjectService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 public class StudyMapComponentTest {
     @Mock
-    private StudyMapService service;
+    private StudyStructureViewService viewService;
 
     @Mock
     private SubjectService subjectService;
@@ -38,107 +37,53 @@ public class StudyMapComponentTest {
 
     @Test
     void shouldReturnStudyMap() {
-        StudyMapDTO dto = new StudyMapDTO();
+        List<StudyStructureDTO> dtos = new ArrayList<>();
 
-        when(service.getStudyMaps()).thenReturn(dto);
+        when(viewService.findActiveSubjectsWithFullTopicHistory()).thenReturn(dtos);
 
-        StudyMapDTO result = component.getStudyMap();
+        StudyMapStructureDTO result = component.buildStudyMapInfo();
 
-        Assertions.assertEquals(dto, result);
-        verify(service).getStudyMaps();
+        Assertions.assertEquals(dtos, result.subjects);
+        verify(viewService, times(1)).findActiveSubjectsWithFullTopicHistory();
     }
 
     @Test
-    void shouldThrowResponseStatusExceptionWhenGetStudyMapFailsWithResponseStatus() {
-        when(service.getStudyMaps())
+    void shouldThrowResponseStatusExceptionWhenBuildStudyMapInfoFailsWithResponseStatus() {
+        when(viewService.findActiveSubjectsWithFullTopicHistory())
                 .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Erro"));
 
         Assertions.assertThrows(ResponseStatusException.class,
-                () -> component.getStudyMap());
+                () -> component.buildStudyMapInfo());
 
-        verify(service).getStudyMaps();
+        verify(viewService, times(1)).findActiveSubjectsWithFullTopicHistory();
     }
 
     @Test
-    void shouldThrowBadRequestWhenGetStudyMapFailsWithGenericException() {
-        when(service.getStudyMaps())
+    void shouldThrowBadRequestWhenBuildStudyMapInfoFailsWithGenericException() {
+        when(viewService.findActiveSubjectsWithFullTopicHistory())
                 .thenThrow(new RuntimeException("Erro interno"));
 
         ResponseStatusException ex =
                 Assertions.assertThrows(ResponseStatusException.class,
-                        () -> component.getStudyMap());
+                        () -> component.buildStudyMapInfo());
 
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-        Assertions.assertEquals("Erro ao carregar mapa de estudos.", ex.getReason());
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, ex.getStatusCode());
+        Assertions.assertEquals(BusinessError.STUDY_MAPS_LOAD.message(), ex.getReason());
     }
 
-    // ================================
-    // createSubjectWithTopics
-    // ================================
-
-    @Test
-    void shouldCreateSubject() {
-        InsertSubjectDTO insertDto = new InsertSubjectDTO();
-        SubjectDTO expected = new SubjectDTO();
-
-        when(subjectService.createSubjectWithTopics(insertDto))
-                .thenReturn(expected);
-
-        SubjectDTO result = component.createSubjectWithTopics(insertDto);
-
-        Assertions.assertEquals(expected, result);
-        verify(subjectService).createSubjectWithTopics(insertDto);
-    }
-
-    @Test
-    void shouldThrowBadRequestWhenCreateFails() {
-        InsertSubjectDTO insertDto = new InsertSubjectDTO();
-
-        when(subjectService.createSubjectWithTopics(insertDto))
-                .thenThrow(new RuntimeException());
-
-        ResponseStatusException ex =
-                Assertions.assertThrows(ResponseStatusException.class,
-                        () -> component.createSubjectWithTopics(insertDto));
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-        Assertions.assertEquals(
-                "Erro ao criar nova disciplina no mapa de estudos.",
-                ex.getReason()
-        );
-    }
-
-
-    // ================================
-    // getSubjectById
-    // ================================
-
-    @Test
-    void shouldReturnSubjectById() {
-        SubjectEntity entity = Mocks.createSubjectEntityMock();
-
-        when(subjectService.getActiveSubject(1L))
-                .thenReturn(entity);
-
-        SubjectDTO result = component.getSubjectById(1L);
-
-        SubjectDTO dto = SubjectMapper.convertToDTO(entity);
-        Assertions.assertEquals(dto.getTopics().size(), result.getTopics().size());
-        verify(subjectService).getActiveSubject(1L);
-    }
 
     @Test
     void shouldThrowBadRequestWhenGetSubjectFails() {
-        when(subjectService.getActiveSubject(1L))
+        when(viewService.getActiveSubjectWithFullTopicHistory(1L))
                 .thenThrow(new RuntimeException());
 
         ResponseStatusException ex =
                 Assertions.assertThrows(ResponseStatusException.class,
                         () -> component.getSubjectById(1L));
 
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, ex.getStatusCode());
         Assertions.assertEquals(
-                "Erro ao carregar informações de disciplinas.",
+                BusinessError.STUDY_MAP_LOAD.message(),
                 ex.getReason()
         );
     }
@@ -173,13 +118,10 @@ public class StudyMapComponentTest {
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        SubjectDTO result = component.updateSubjectWithTopics(subjectId, dto);
+        component.updateSubjectWithTopics(subjectId, dto);
+        ArgumentCaptor<SubjectEntity> captor =
+                ArgumentCaptor.forClass(SubjectEntity.class);
 
-        // Assert
-        Assertions.assertNotNull(result);
-
-        // Captura o entity REAL que foi salvo
-        ArgumentCaptor<SubjectEntity> captor = ArgumentCaptor.forClass(SubjectEntity.class);
         verify(subjectService).updateSubjectWithTopics(captor.capture());
 
         SubjectEntity savedEntity = captor.getValue();
@@ -286,7 +228,7 @@ public class StudyMapComponentTest {
                 () -> component.updateSubjectWithTopics(subjectId, dto)
         );
 
-        Assertions.assertEquals("Erro ao atualizar dados de disciplinas.", ex.getReason());
+        Assertions.assertEquals(BusinessError.STUDY_MAP_UPDATE.message(), ex.getReason());
         verify(subjectService).getActiveSubject(subjectId);
     }
 

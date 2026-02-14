@@ -2,10 +2,7 @@ package br.pucrs.estudoorganizado.controller;
 
 import br.pucrs.estudoorganizado.Mocks;
 import br.pucrs.estudoorganizado.component.StudyMapComponent;
-import br.pucrs.estudoorganizado.controller.dto.InsertSubjectDTO;
-import br.pucrs.estudoorganizado.controller.dto.InsertTopicDTO;
-import br.pucrs.estudoorganizado.controller.dto.SubjectDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectDTO;
+import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -76,6 +73,8 @@ public class StudyMapControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
+
+        verify(component).createSubjectWithTopics(any());
     }
 
 
@@ -129,7 +128,7 @@ public class StudyMapControllerTest {
     void shouldReturnOkWhenGetSubjectById() throws Exception {
 
         when(component.getSubjectById(1L))
-                .thenReturn(new SubjectDTO());
+                .thenReturn(new StudyStructureDTO());
 
         mockMvc.perform(get(URL + "/subject")
                         .param("subjectId", "1"))
@@ -164,6 +163,8 @@ public class StudyMapControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
+
+        verify(component).updateSubjectWithTopics(eq(1L), any(UpdateSubjectDTO.class));
     }
 
     @Test

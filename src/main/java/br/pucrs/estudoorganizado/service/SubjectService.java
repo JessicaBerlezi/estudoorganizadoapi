@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class SubjectService {
@@ -40,15 +38,6 @@ public class SubjectService {
             throw ApiExceptionFactory.notFound(BusinessError.STUDY_MAP_UPDATE);
         }
     }
-
-
-    public List<SubjectDTO> findActivesSubjects() {
-        return repository.findByIsActiveTrueOrderByIdAsc()
-                .stream()
-                .map(SubjectMapper::convertToDTO)
-                .toList();
-    }
-
     public SubjectEntity getActiveSubject(Long id) {
         SubjectEntity subject = repository.findByIdWithTopics(id)
                 .orElseThrow(() -> ApiExceptionFactory.notFound(BusinessError.SUBJECT_LOAD));
