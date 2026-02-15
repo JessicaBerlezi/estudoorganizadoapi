@@ -4,12 +4,9 @@ import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
-import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
-import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -44,78 +41,6 @@ public class TopicMapper {
         dto.elapsedTime = "0min";
         dto.score = "-%";
         return dto;
-    }
-
-    private static HistoryDTO toHistoryDTO(
-            StudyTypeEnum studyType,
-            LocalDate recordStartedAt,
-            Integer questionsSolved,
-            Integer questionsIncorrected,
-            Double questionsPercent,
-            String recordAnnotation,
-            Long recordDurationMinutes) {
-        HistoryDTO dto = new HistoryDTO();
-
-        String label = switch (studyType) {
-            case STUDY_CYCLE -> "Estudo";
-            case REVIEW -> "Revisão";
-        };
-
-        dto.description = label + " "
-                + Utils.formatDurationMinutes(recordDurationMinutes) +" em "
-                + recordStartedAt.format(Utils.DATE_FMT);
-
-        int solved = Optional.ofNullable(questionsSolved).orElse(0);
-        int incorrect = Optional.ofNullable(questionsIncorrected).orElse(0);
-        int correct = Math.max(0, solved - incorrect);
-
-        dto.information = solved + "Q " + correct + "A " +
-                Math.round(Optional.ofNullable(questionsPercent).orElse(0.0)) + "%";
-
-        dto.annotation = recordAnnotation;
-
-        return dto;
-    }
-
-    public static List<TopicWithHistoryDTO> toTopicWithHistoryDTOList(List<TopicWithHistoryView> rows) {
-
-        Map<Long, TopicWithHistoryDTO> topicsMap = new LinkedHashMap<>();
-
-        for (TopicWithHistoryView row : rows) {
-
-            TopicWithHistoryDTO topicDTO = topicsMap.computeIfAbsent(
-                    row.getTopicId(),
-                    id -> {
-                        TopicWithHistoryDTO dto = new TopicWithHistoryDTO();
-                        dto.setId(row.getTopicId());
-                        dto.setOrder(row.getTopicOrder());
-                        dto.setColor(Utils.resolveTopicColor(
-                                row.getTopicIncidenceScore(),
-                                row.getTopicKnowledgeScore()
-                        ));
-                        dto.setDescription(row.getTopicDescription());
-                        dto.setSubject(row.getSubjectDescription());
-                        dto.setElapsedTime(Utils.formatDurationMinutes(row.getTopicTotalDurationMinutes()));
-                        dto.setScore(row.getTopicAvgScore() == null ? "-" : row.getTopicAvgScore() + "%");
-                        dto.setAnnotation(row.getTopicAnnotation());
-                        dto.setHistory(new ArrayList<>());
-                        return dto;
-                    }
-            );
-
-            topicDTO.getHistory().add(toHistoryDTO(
-                    row.getStudyType(),
-                    row.getRecordStartedAt(),
-                    row.getQuestionsSolved(),
-                    row.getQuestionsIncorrected(),
-                    row.getQuestionsPercent(),
-                    row.getRecordAnnotation(),
-                    row.getRecordDurationMinutes()
-            ));
-
-        }
-
-        return new ArrayList<>(topicsMap.values());
     }
 
     public static TopicEntity updateEntity(TopicEntity entity, UpdateTopicDTO dto, int order){

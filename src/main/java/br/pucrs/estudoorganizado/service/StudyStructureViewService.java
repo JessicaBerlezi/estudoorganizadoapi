@@ -3,6 +3,7 @@ package br.pucrs.estudoorganizado.service;
 import br.pucrs.estudoorganizado.controller.dto.StudyStructureDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicStructureDTO;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyStructureViewMapper;
 import br.pucrs.estudoorganizado.entity.view.StudyStructureView;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
@@ -85,11 +86,14 @@ public class StudyStructureViewService {
         Map<Long, StudyStructureDTO> cycleMap = new LinkedHashMap<>();
         Map<Long, TopicStructureDTO> topicMap = new HashMap<>();
 
-        for (StudyStructureView row : rows) {
+        for (int i = 0; i < rows.size(); i++) {
+            StudyStructureView row = rows.get(i);
+
+            int order = i + 1;
 
             StudyStructureDTO cycle = cycleMap.computeIfAbsent(
                     row.getStudyCycleId(),
-                    id -> StudyStructureViewMapper.buildStudyCycleInfo(row)
+                    id -> StudyStructureViewMapper.buildStudyCycleInfo(row, order)
             );
 
             topicMap.computeIfAbsent(
@@ -127,5 +131,50 @@ public class StudyStructureViewService {
             );
         }
         return cycle;
+    }
+
+    /**
+     * Retorna a agenda de revisões agrupadas por status (Atrasadas e Hoje).
+     * DELAYED → "Em atraso"
+     * PENDING → "Hoje"
+     */
+    public List<StudyStructureDTO> findActiveStudyCycleReviewWithFullTopicHistory() {
+
+        List<StudyStructureView> reviews =
+                repository.findReviewAgendaOrdered(List.of(
+                        ReviewStatusEnum.DELAYED,
+                        ReviewStatusEnum.PENDING
+                ));
+
+        StudyStructureDTO emptyCycle = new StudyStructureDTO();
+        if (reviews.isEmpty()) {
+            emptyCycle.setDescription("Nenhuma revisão planejada");
+            emptyCycle.setTopics(Collections.emptyList());
+            return List.of(emptyCycle);
+        }
+
+        Map<Long, StudyStructureDTO> cycleMap = new LinkedHashMap<>();
+        Map<Long, TopicStructureDTO> topicMap = new HashMap<>();
+
+        for (int i = 0; i < reviews.size(); i++) {
+            StudyStructureView row = reviews.get(i);
+
+            int order = i + 1;
+            StudyStructureDTO review = cycleMap.computeIfAbsent(
+                    row.getTopicId(),
+                    id -> StudyStructureViewMapper.buildStudyCycleReviewInfo(row, order)
+            );
+
+            topicMap.computeIfAbsent(
+                    row.getTopicId(),
+                    id -> {
+                        TopicStructureDTO t = StudyStructureViewMapper.buildTopicInfo(row);
+                        review.getTopics().add(t);
+                        return t;
+                    }
+            );
+        }
+        return new ArrayList<>(cycleMap.values());
+
     }
 }

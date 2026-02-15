@@ -27,7 +27,6 @@ public class StudyCycleComponent {
     private final StudyCycleService service;
     private final TopicService topicService;
     private final StudyCycleItemService itemService;
-    private final ReviewControlService reviewControlService;
     private final StudyStructureViewService viewService;
 
 
@@ -36,7 +35,7 @@ public class StudyCycleComponent {
     public StudyCycleStructureDTO buildDailyTaskInfo() {
         try {
             StudyCycleStructureDTO response = new StudyCycleStructureDTO();
-            response.reviews = reviewControlService.getReviewAgenda();
+            response.reviews = viewService.findActiveStudyCycleReviewWithFullTopicHistory();
             response.cycles = viewService.findActiveStudyCycleWithFullTopicHistory();
             return response;
         } catch (ResponseStatusException e) {

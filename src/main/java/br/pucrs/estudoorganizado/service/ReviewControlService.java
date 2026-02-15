@@ -1,19 +1,15 @@
 package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.RegisterStudyRecordDTO;
-import br.pucrs.estudoorganizado.controller.dto.ReviewWithTopicsDTO;
 import br.pucrs.estudoorganizado.entity.ReviewControlEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyRecordMapper;
-import br.pucrs.estudoorganizado.entity.map.TopicMapper;
-import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.ReviewControlRepository;
 import br.pucrs.estudoorganizado.repository.StudyRecordRepository;
 import br.pucrs.estudoorganizado.repository.TopicRepository;
-import br.pucrs.estudoorganizado.repository.TopicWithHistoryViewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +23,6 @@ public class ReviewControlService {
     private final TopicRepository topicRepository;
     private final ReviewControlRepository repository;
     private final StudyRecordRepository studyRecordRepository;
-    private final TopicWithHistoryViewRepository viewRepository;
 
     public void startedReview(Long topicId) {
         TopicEntity topic = topicRepository.findById(topicId)
@@ -154,40 +149,5 @@ public class ReviewControlService {
 
         repository.saveAll(reviews);
     }
-
-    /**
-     * Retorna a agenda de revisões agrupadas por status (Atrasadas e Hoje).
-     * DELAYED → "Em atraso"
-     * PENDING → "Hoje"
-     */
-    public List<ReviewWithTopicsDTO> getReviewAgenda() {
-        updateReviewStatuses();
-        List<ReviewWithTopicsDTO> reviews = new ArrayList<>();
-        reviews.add(getReviewAgendaByStatus(ReviewStatusEnum.DELAYED, "Em atraso"));
-        reviews.add(getReviewAgendaByStatus(ReviewStatusEnum.PENDING, "Planejado"));
-        return reviews;
-    }
-
-    private ReviewWithTopicsDTO getReviewAgendaByStatus(ReviewStatusEnum status, String statusInfo) {
-
-        ReviewWithTopicsDTO reviewDTO = new ReviewWithTopicsDTO();
-        reviewDTO.setDescription("Agenda de revisões");
-        reviewDTO.setStatusInfo(statusInfo);
-        List<ReviewControlEntity> reviews = repository.findAllByStatus(status);
-
-
-        List<Long> topicIds = reviews.stream()
-                .map(rc -> rc.getTopic().getId())
-                .distinct()
-                .toList();
-
-        List<TopicWithHistoryView> topics =
-                viewRepository.findByTopicIdIn(topicIds);
-
-        reviewDTO.setTopics(TopicMapper.toTopicWithHistoryDTOList(topics));
-
-        return reviewDTO;
-    }
-
 
 }

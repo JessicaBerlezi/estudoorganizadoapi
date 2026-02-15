@@ -1,5 +1,6 @@
 package br.pucrs.estudoorganizado.entity.view;
 
+import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyStatusEnum;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import jakarta.persistence.*;
@@ -40,6 +41,10 @@ public class StudyStructureView {
     @Enumerated(EnumType.STRING)
     private StudyStatusEnum cycleStatus;
     private LocalDateTime cycleStartedAt;
+
+    private LocalDate reviewScheduleDate;
+    @Enumerated(EnumType.STRING)
+    private ReviewStatusEnum reviewStatus;
 
     private Long studyRecordId;
     @Enumerated(EnumType.STRING)

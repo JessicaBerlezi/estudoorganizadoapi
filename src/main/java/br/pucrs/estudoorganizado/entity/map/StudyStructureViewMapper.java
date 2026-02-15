@@ -3,6 +3,7 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.HistoryDTO;
 import br.pucrs.estudoorganizado.controller.dto.StudyStructureDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicStructureDTO;
+import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.view.StudyStructureView;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
@@ -16,9 +17,10 @@ public class StudyStructureViewMapper {
     }
 
 
-    public static StudyStructureDTO buildStudyCycleInfo(StudyStructureView row) {
+    public static StudyStructureDTO buildStudyCycleInfo(StudyStructureView row, int order) {
         StudyStructureDTO dto = new StudyStructureDTO();
         dto.setId(row.getStudyCycleId());
+        dto.setOrder((long) order);
         dto.setDescription(row.getCycleDescription());
         dto.setAnnotation(row.getCycleAnnotation());
         dto.setStatusInfo(buildStatusInfo(row.getCycleStartedAt()));
@@ -26,9 +28,21 @@ public class StudyStructureViewMapper {
     }
 
 
+    public static StudyStructureDTO buildStudyCycleReviewInfo(StudyStructureView row, int order) {
+        StudyStructureDTO dto = new StudyStructureDTO();
+        dto.setId(row.getTopicId());
+        dto.setOrder((long) order);
+        boolean hasDelayed = row.getReviewStatus() == ReviewStatusEnum.DELAYED;
+        dto.setDescription(hasDelayed ? "Revisões em atraso" : "Revisões planejadas");
+        dto.setStatusInfo("Data planejada: " + row.getReviewScheduleDate().format(Utils.DATE_FMT));
+        return dto;
+    }
+
+
     public static StudyStructureDTO buildSubjectInfo(StudyStructureView row) {
         StudyStructureDTO dto = new StudyStructureDTO();
         dto.setId(row.getSubjectId());
+        dto.setOrder(row.getSubjectOrder());
         dto.setDescription(row.getSubjectDescription());
         dto.setAnnotation(row.getSubjectAnnotation());
         dto.setStatusInfo(buildStatusInfo(row.getCycleStartedAt()));
