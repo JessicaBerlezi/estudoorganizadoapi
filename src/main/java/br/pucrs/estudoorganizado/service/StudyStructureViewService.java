@@ -116,7 +116,7 @@ public class StudyStructureViewService {
             throw ApiExceptionFactory.notFound(BusinessError.STUDY_CYCLE_LOAD);
         }
 
-        StudyStructureDTO cycle = StudyStructureViewMapper.buildSubjectInfo(rows.getFirst());
+        StudyStructureDTO cycle = StudyStructureViewMapper.buildStudyCycleInfo(rows.getFirst(), 1);
         Map<Long, TopicStructureDTO> topicMap = new HashMap<>();
 
         for (StudyStructureView row : rows) {
