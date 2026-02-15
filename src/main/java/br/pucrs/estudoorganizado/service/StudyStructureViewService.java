@@ -77,7 +77,7 @@ public class StudyStructureViewService {
 
 
     public List<StudyStructureDTO> findActiveStudyCycleWithFullTopicHistory() {
-        List<StudyStructureView> rows = repository.findAll();
+        List<StudyStructureView> rows = repository.findActivesStudyCycle();
 
         if (rows.isEmpty()) {
             throw ApiExceptionFactory.notFound(BusinessError.STUDY_CYCLE_LOAD);

@@ -22,4 +22,13 @@ public interface StudyStructureViewRepository extends JpaRepository<StudyStructu
     List<StudyStructureView> findReviewAgendaOrdered(
             @Param("statuses") List<ReviewStatusEnum> statuses
     );
+
+    @Query("""
+       SELECT v
+       FROM StudyStructureView v
+       WHERE v.studyCycleId IS NOT NULL
+   
+       """)
+    List<StudyStructureView> findActivesStudyCycle();
+
 }

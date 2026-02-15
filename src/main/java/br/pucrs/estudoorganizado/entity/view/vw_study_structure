@@ -22,8 +22,7 @@ SELECT
     t.incidence_score    AS topic_incidence_score,
     t.knowledge_score    AS topic_knowledge_score,
 
-    GROUP_CONCAT(trd.day_of_week) AS topic_review_days,
-
+    trd.topic_review_days,
 
     sc.study_cycle_id,
     sc.description       AS cycle_description,
@@ -43,39 +42,39 @@ SELECT
     sr.questions_incorrected AS study_questions_incorrected,
     sr.annotation        AS study_annotation
 
-
 FROM topic t
-
-LEFT JOIN topic_review_days trd
-     ON trd.topic_id = t.topic_id
 
 JOIN subject s
      ON s.subject_id = t.subject_id
 
-LEFT JOIN study_cycle_item sci
-	ON sci.topic_id = t.topic_id
+-- AGREGAÇÃO ISOLADA (remove necessidade de GROUP BY global)
+LEFT JOIN (
+    SELECT
+        topic_id,
+        GROUP_CONCAT(day_of_week) AS topic_review_days
+    FROM topic_review_days
+    GROUP BY topic_id
+) trd ON trd.topic_id = t.topic_id
 
-JOIN study_cycle sc
-    ON sci.study_cycle_id = sc.study_cycle_id
+LEFT JOIN study_cycle_item sci
+    ON sci.topic_id = t.topic_id
+   AND sci.done_at IS NULL
+
+LEFT JOIN study_cycle sc
+    ON sc.study_cycle_id = sci.study_cycle_id
+   AND sc.is_active = TRUE
 
 LEFT JOIN study_record sr
-	ON sci.study_cycle_item_id = sr.study_cycle_item_id
+    ON sr.study_cycle_item_id = sci.study_cycle_item_id
 
 LEFT JOIN review_control rc
-       ON rc.topic_id = t.topic_id
+    ON rc.topic_id = t.topic_id
+   AND (rc.status IS NULL OR rc.status NOT IN ('DONE', 'PLANNED'))
 
 WHERE s.is_active = TRUE
   AND t.is_active = TRUE
-  AND sc.is_active = TRUE
-  AND sci.done_at IS NULL
-
-GROUP BY
-    s.subject_id,
-    t.topic_id,
-    sci.study_cycle_item_id,
-    sr.study_record_id,
-    rc.review_control_id
 
 ORDER BY s.subject_order,
-    t.topic_order;
+    t.topic_order,
+    s.subject_id;
 
