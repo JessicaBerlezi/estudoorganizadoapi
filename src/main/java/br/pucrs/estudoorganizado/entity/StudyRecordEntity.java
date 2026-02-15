@@ -3,13 +3,18 @@ package br.pucrs.estudoorganizado.entity;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "study_record")
-public class StudyRecordEntity {
+public class StudyRecordEntity  extends BaseCommonEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,29 +23,29 @@ public class StudyRecordEntity {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "study_cycle_item_id")
-    private final StudyCycleItemEntity studyCycleItem;
+    private StudyCycleItemEntity studyCycleItem;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "review_control_id")
-    private final ReviewControlEntity reviewControl;
+    private ReviewControlEntity reviewControl;
 
     @Enumerated(EnumType.STRING)
-    private final StudyTypeEnum studyType;
+    private StudyTypeEnum studyType;
 
-    private final LocalDate startedAt;
+    private LocalDate startedAt;
 
     @Column(name = "duration_minutes")
-    private final Long minutes;
+    private Long minutes;
 
-    private final double questionsPercent;
+    private double questionsPercent;
 
-    private final Integer questionsSolved;
+    private Integer questionsSolved;
 
-    private final Integer questionsIncorrected;
+    private  Integer questionsIncorrected;
 
     @Size(max = 250)
     @Column(length = 250)
-    private final String annotation;
+    private String annotation;
 
     public StudyRecordEntity(StudyCycleItemEntity studyCycleItem,
                              ReviewControlEntity reviewControl,
