@@ -33,7 +33,7 @@ public class StudyStructureViewMapper {
         dto.setId(row.getTopicId());
         dto.setOrder((long) order);
         boolean hasDelayed = row.getReviewStatus() == ReviewStatusEnum.DELAYED;
-        dto.setDescription(hasDelayed ? "Revisões em atraso" : "Revisões planejadas");
+        dto.setDescription(hasDelayed ? "Revisão em atraso" : "Revisão planejada");
         dto.setStatusInfo("Data planejada: " + row.getReviewScheduleDate().format(Utils.DATE_FMT));
         return dto;
     }
