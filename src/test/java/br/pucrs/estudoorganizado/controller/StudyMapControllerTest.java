@@ -67,7 +67,7 @@ public class StudyMapControllerTest {
         dto.topics = List.of(topic);
 
         when(component.createSubjectWithTopics(any()))
-                .thenReturn(new SubjectDTO());
+                .thenReturn(1L);
 
         mockMvc.perform(post(URL + "/subject")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -156,7 +156,7 @@ public class StudyMapControllerTest {
         dto.topics = List.of();
 
         when(component.updateSubjectWithTopics(eq(1L), any(UpdateSubjectDTO.class)))
-                .thenReturn(new SubjectDTO());
+                .thenReturn(1L);
 
         mockMvc.perform(put(URL + "/subject")
                         .param("subjectId", "1")

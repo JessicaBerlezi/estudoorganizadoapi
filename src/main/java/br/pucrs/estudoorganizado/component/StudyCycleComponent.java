@@ -61,6 +61,13 @@ public class StudyCycleComponent {
     }
 
     public StudyCycleEntity creteStudyCycle(StudyCycleDetailsDTO dto) {
+        if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.CYCLE_DESCRIPTION);
+        }
+        if (dto.getTopics() == null || dto.getTopics().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_MANDATORY);
+        }
+
         try {
             List<TopicEntity> foundTopics = topicService.getExistingTopicsById(dto.getTopics());
 
@@ -92,6 +99,13 @@ public class StudyCycleComponent {
     }
 
     public void updateStudyCycle(Long cycleId, StudyCycleDetailsDTO dto) {
+        if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.CYCLE_DESCRIPTION);
+        }
+        if (dto.getTopics() == null || dto.getTopics().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_MANDATORY);
+        }
+
         try {
             StudyCycleEntity cycle = service.getStudyCycle(cycleId);
 

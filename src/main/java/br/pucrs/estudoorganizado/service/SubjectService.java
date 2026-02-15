@@ -21,12 +21,11 @@ public class SubjectService {
     private final SubjectRepository repository;
 
     @Transactional
-    public SubjectDTO createSubjectWithTopics(InsertSubjectDTO dto) {
-
+    public SubjectEntity createSubjectWithTopics(InsertSubjectDTO dto) {
         SubjectEntity subject = SubjectMapper.convertToEntity(dto);
-        repository.save(subject);
+        SubjectEntity entity = repository.save(subject);
         logger.info("Subject saved: {}", subject);
-        return SubjectMapper.convertToDTO(subject);
+        return entity;
     }
 
     @Transactional

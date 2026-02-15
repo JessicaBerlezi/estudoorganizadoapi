@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,15 +55,154 @@ public class SubjectEntityTest {
         dto.annotation = null;
         dto.topics = List.of(topic1, topic2);
 
+        SubjectEntity result = subjectService.createSubjectWithTopics(dto);
 
-        SubjectDTO result = subjectService.createSubjectWithTopics(dto);
+        // ASSERT retorno
+        Assertions.assertNotNull(result.getId());
 
+        // ASSERT banco real
         SubjectEntity saved =
                 subjectRepository.findById(result.getId()).orElseThrow();
 
         Assertions.assertEquals("Disciplina Teste", saved.getDescription());
         Assertions.assertTrue(saved.getIsActive());
         Assertions.assertEquals(2, saved.getTopics().size());
+    }
+
+
+    @Test
+    void shouldCreateSubjectSuccessfullyWithTopics() {
+        // Arrange
+        InsertTopicDTO topic = new InsertTopicDTO();
+        topic.description = "Álgebra";
+        topic.incidenceScore = 3;
+        topic.knowledgeScore = 2;
+        topic.reviewIntervals = List.of(1, 3, 7);
+
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Matemática";
+        dto.annotation = "Base";
+        dto.topics = List.of(topic);
+
+        // Act
+        SubjectEntity entity = subjectService.createSubjectWithTopics(dto);
+
+        // Assert
+        Assertions.assertNotNull(entity);
+        Assertions.assertNotNull(entity.getId());
+        Assertions.assertEquals("Matemática", entity.getDescription());
+        Assertions.assertTrue(entity.getIsActive());
+        Assertions.assertEquals(1, entity.getTopics().size());
+    }
+
+    @Test
+    void shouldPersistTopicsCascadeCorrectly() {
+        // Arrange
+        InsertTopicDTO t1 = new InsertTopicDTO();
+        t1.description = "Topico 1";
+        t1.incidenceScore = 1;
+        t1.knowledgeScore = 1;
+        t1.reviewIntervals = List.of(1, 5);
+
+        InsertTopicDTO t2 = new InsertTopicDTO();
+        t2.description = "Topico 2";
+        t2.incidenceScore = 2;
+        t2.knowledgeScore = 2;
+        t2.reviewIntervals = List.of(2, 10);
+
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Disciplina Cascade";
+        dto.annotation = "Teste cascade";
+        dto.topics = List.of(t1, t2);
+
+        // Act
+        SubjectEntity saved = subjectService.createSubjectWithTopics(dto);
+
+        // Reload do banco (importante)
+        SubjectEntity fromDb = subjectRepository.findById(saved.getId()).orElseThrow();
+
+        // Assert
+        Assertions.assertEquals(2, fromDb.getTopics().size());
+        Assertions.assertTrue(
+                fromDb.getTopics().stream()
+                        .allMatch(topic -> topic.getId() != null),
+                "Tópicos devem ser persistidos com ID"
+        );
+    }
+
+
+    @Test
+    void shouldHandleNullReviewIntervals() {
+        // Arrange
+        InsertTopicDTO topic = new InsertTopicDTO();
+        topic.description = "Topico sem revisão";
+        topic.incidenceScore = 1;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = null; // vindo null do front
+
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Teste Review Null";
+        dto.topics = List.of(topic);
+
+        // Act
+        SubjectEntity entity = subjectService.createSubjectWithTopics(dto);
+
+        // Assert
+        Assertions.assertNotNull(entity.getId());
+        Assertions.assertEquals(1, entity.getTopics().size());
+    }
+
+    @Test
+    void shouldPersistAnnotationAsNullWithoutBreaking() {
+        // Arrange
+        InsertTopicDTO topic = new InsertTopicDTO();
+        topic.description = "Topico";
+        topic.incidenceScore = 1;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1);
+
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Annotation Null";
+        dto.annotation = null; // campo opcional
+        dto.topics = List.of(topic);
+
+        // Act
+        SubjectEntity entity = subjectService.createSubjectWithTopics(dto);
+
+        // Assert
+        SubjectEntity fromDb = subjectRepository.findById(entity.getId()).orElseThrow();
+        Assertions.assertNull(fromDb.getAnnotation());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDescriptionIsNull() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = null; // inválido
+        dto.topics = new ArrayList<>();
+
+        // Act & Assert
+        Assertions.assertThrows(Exception.class, () ->
+                subjectService.createSubjectWithTopics(dto)
+        );
+    }
+    @Test
+    void shouldBreakWhenTopicFieldsAreInvalidsNull() {
+        // Arrange
+        InsertTopicDTO topic = new InsertTopicDTO();
+        topic.description = null;
+        topic.incidenceScore = -2;
+        topic.knowledgeScore = 3;
+        topic.reviewIntervals = null;
+
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Teste campos inválidos";
+        dto.topics = List.of(topic);
+
+        // Act & Assert
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                subjectService.createSubjectWithTopics(dto)
+        );
     }
 
     @Test

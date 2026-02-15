@@ -109,6 +109,7 @@ public class StudyMapComponentTest {
         newTopic.description = "Novo Tópico";
 
         UpdateSubjectDTO dto = new UpdateSubjectDTO();
+        dto.description = "Disciplina x";
         dto.topics = List.of(updateExisting, newTopic);
 
         when(subjectService.getActiveSubject(subjectId))
@@ -145,52 +146,13 @@ public class StudyMapComponentTest {
     }
 
     @Test
-    void shouldRemoveAllTopicsWhenDtoTopicsIsEmpty() {
-        // Arrange
-        Long subjectId = 1L;
-        SubjectEntity subjectMock = Mocks.createSubjectEntityMockWithId();
-        subjectMock.setTopics(new ArrayList<>(subjectMock.getTopics()));
-
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
-        dto.topics = new ArrayList<>();
-
-        when(subjectService.getActiveSubject(subjectId))
-                .thenReturn(subjectMock);
-
-        when(subjectService.updateSubjectWithTopics(any()))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Act
-        component.updateSubjectWithTopics(subjectId, dto);
-
-        // Assert
-        ArgumentCaptor<SubjectEntity> captor = ArgumentCaptor.forClass(SubjectEntity.class);
-        verify(subjectService).updateSubjectWithTopics(captor.capture());
-
-        SubjectEntity saved = captor.getValue();
-
-        Assertions.assertTrue(saved.getTopics().isEmpty(),
-                "Todos os tópicos deveriam ser removidos quando a lista vem vazia");
-    }
-
-
-    @Test
     void shouldOnlyUpdateWhenAllTopicsExist() {
         // Arrange
         Long subjectId = 1L;
         SubjectEntity subjectMock = Mocks.createSubjectEntityMockWithId();
         subjectMock.setTopics(new ArrayList<>(subjectMock.getTopics()));
 
-        UpdateTopicDTO t1 = new UpdateTopicDTO();
-        t1.id = 101L;
-        t1.description = "Verbos Editado";
-
-        UpdateTopicDTO t2 = new UpdateTopicDTO();
-        t2.id = 102L;
-        t2.description = "Pronomes Editado";
-
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
-        dto.topics = List.of(t1, t2);
+        UpdateSubjectDTO dto = Mocks.createUpdateSubjectDTOMock();
 
         when(subjectService.getActiveSubject(subjectId))
                 .thenReturn(subjectMock);
@@ -216,8 +178,7 @@ public class StudyMapComponentTest {
     void shouldThrowBadRequestWhenUnexpectedExceptionOccurs() {
         // Arrange
         Long subjectId = 1L;
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
-        dto.topics = new ArrayList<>();
+        UpdateSubjectDTO dto = Mocks.createUpdateSubjectDTOMock();
 
         when(subjectService.getActiveSubject(subjectId))
                 .thenThrow(new RuntimeException("Erro inesperado"));
@@ -260,4 +221,83 @@ public class StudyMapComponentTest {
         );
     }
 
+
+    @Test
+    void shouldThrowExceptionNCreateSubjectWhenTopicsIsEmpty() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Sem tópicos";
+        dto.annotation = "Teste";
+
+        dto.topics = new ArrayList<>();
+
+        // Act
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                component.createSubjectWithTopics(dto)
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionNCreateSubjectWhenTopicsIsNull() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "Sem tópicos";
+        dto.annotation = "Teste";
+
+        dto.topics = null;
+
+        // Act
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                component.createSubjectWithTopics(dto)
+        );
+    }
+
+
+    @Test
+    void shouldThrowExceptionNCreateSubjectWhenDescriptionIsEmpty() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = "  ";
+        dto.annotation = "Teste";
+        InsertTopicDTO item = new InsertTopicDTO();
+        item.description = "topico";
+        dto.topics = List.of(item);
+
+        // Act
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                component.createSubjectWithTopics(dto)
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionNCreateSubjectWhenDescriptionIsNull() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = null;
+        dto.annotation = "Teste";
+        InsertTopicDTO item = new InsertTopicDTO();
+        item.description = "topico";
+        dto.topics = List.of(item);
+
+        // Act
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                component.createSubjectWithTopics(dto)
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionNCreateSubjectWhenDescriptionIsInvalid() {
+        // Arrange
+        InsertSubjectDTO dto = new InsertSubjectDTO();
+        dto.description = " . ";
+        dto.annotation = "Teste";
+        InsertTopicDTO item = new InsertTopicDTO();
+        item.description = "topico";
+        dto.topics = List.of(item);
+
+        // Act
+        Assertions.assertThrows(ResponseStatusException.class, () ->
+                component.createSubjectWithTopics(dto)
+        );
+    }
 }

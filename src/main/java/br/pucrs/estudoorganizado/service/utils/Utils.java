@@ -35,16 +35,16 @@ public class Utils {
 
     public static String formatDurationMinutes(Long minutes) {
         if (minutes == null || minutes <= 0) {
-            return "0min";
+            return "0 min";
         }
 
         long hours = minutes / 60;
         long remainingMinutes = minutes % 60;
 
         if (hours > 0) {
-            return hours + "h " + remainingMinutes + "min";
+            return hours + "h " + remainingMinutes + " min";
         }
-        return remainingMinutes + "min";
+        return remainingMinutes + " min";
     }
 
 }

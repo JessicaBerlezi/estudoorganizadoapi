@@ -4,6 +4,7 @@ import br.pucrs.estudoorganizado.entity.enumerate.StudyStatusEnum;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Immutable
 @Getter
+@Setter
 @Table(name = "vw_study_structure ")
 public class StudyStructureView {
 

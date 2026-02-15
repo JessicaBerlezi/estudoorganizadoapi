@@ -3,8 +3,10 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
+import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import br.pucrs.estudoorganizado.entity.enumerate.StudyTypeEnum;
 import br.pucrs.estudoorganizado.entity.view.TopicWithHistoryView;
+import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
 import java.time.LocalDate;
@@ -16,6 +18,9 @@ public class TopicMapper {
     @org.jetbrains.annotations.NotNull
     @org.jetbrains.annotations.Contract("_, _, _ -> new")
     public static TopicEntity convertToEntity(InsertTopicDTO dto, SubjectEntity subject, Integer order) {
+        if (dto.description == null || dto.description.isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_DESCRIPTION);
+        }
         return new TopicEntity(
                 dto.description,
                 order,

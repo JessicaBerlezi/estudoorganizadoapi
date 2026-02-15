@@ -26,8 +26,9 @@ public class StudyMapController {
 
     @Operation(summary = "Criação de disciplina no Mapa de estudos", description = "A partir da tela inicial, abre um painel que permite incluir disciplinas e seus respectivos tópicos.")
     @PostMapping("/subject")
-    public ResponseEntity<SubjectDTO> postSubject(@Valid @RequestBody InsertSubjectDTO dto){
-        return ResponseEntity.ok(component.createSubjectWithTopics(dto));
+    public ResponseEntity<StudyStructureDTO> postSubject(@Valid @RequestBody InsertSubjectDTO dto){
+        Long subjectId = component.createSubjectWithTopics(dto);
+        return ResponseEntity.ok(component.getSubjectById(subjectId));
     }
 
     @Operation(summary = "Informações de uma disciplina", description = "Retorna dados da disciplina com seus respectivos tópicos não concluídos")
@@ -38,8 +39,9 @@ public class StudyMapController {
 
     @Operation(summary = "Edição de uma disciplina no Mapa de estudos", description = "Abre painel para permitir ajuste de disciplinas e sua lista de tópicos")
     @PutMapping("/subject")
-    public ResponseEntity<SubjectDTO> putSubject(@RequestParam Long subjectId, @Valid @RequestBody UpdateSubjectDTO request) {
-        return ResponseEntity.ok(component.updateSubjectWithTopics(subjectId, request));
+    public ResponseEntity<StudyStructureDTO> putSubject(@RequestParam Long subjectId, @Valid @RequestBody UpdateSubjectDTO request) {
+        component.updateSubjectWithTopics(subjectId, request);
+        return ResponseEntity.ok(component.getSubjectById(subjectId));
     }
 
     @Operation(summary = "Desativa disciplina e seus tópicos (soft delete)")

@@ -20,6 +20,11 @@ public enum BusinessError {
     TOPIC_NOT_FOUND("Registro de tópico não encontrado."),
     REVIEW_NOT_FOUND("Não há revisão pendente para este tópico"),
 
+    SUBJECT_DESCRIPTION("Descrição da disciplina é obrigatória"),
+    TOPIC_DESCRIPTION("Descrição do tópico é obrigatória"),
+    TOPIC_MANDATORY("Necessário envio de pelo menos um tópico"),
+    CYCLE_DESCRIPTION("Descrição do ciclo é obrigatória"),
+
     UPDATE_ERROR("Erro ao atualizar registro");
     public final String message;
 

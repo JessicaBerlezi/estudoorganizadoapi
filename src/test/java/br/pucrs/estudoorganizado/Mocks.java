@@ -1,5 +1,7 @@
 package br.pucrs.estudoorganizado;
 
+import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateTopicDTO;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 
@@ -26,7 +28,7 @@ public class Mocks {
 
     public static SubjectEntity createSubjectEntityMockWithId(){
         SubjectEntity portugues = new SubjectEntity("PortuguÊs", null);
-        portugues.setId(01L);
+        portugues.setId(101L);
 
         TopicEntity verbos = new TopicEntity();
         verbos.setId(101L);
@@ -41,5 +43,21 @@ public class Mocks {
         portugues.setTopics(List.of(verbos, pronomes));
 
         return portugues;
+    }
+
+    public static UpdateSubjectDTO createUpdateSubjectDTOMock(){
+        UpdateTopicDTO t1 = new UpdateTopicDTO();
+        t1.id = 101L;
+        t1.description = "Verbos Editado";
+
+        UpdateTopicDTO t2 = new UpdateTopicDTO();
+        t2.id = 102L;
+        t2.description = "Pronomes Editado";
+
+        UpdateSubjectDTO dto = new UpdateSubjectDTO();
+        dto.description = "descricao atualizacada";
+        dto.topics =List.of(t1, t2);
+
+        return dto;
     }
 }

@@ -41,9 +41,18 @@ public class StudyMapComponent {
         }
     }
 
-    public SubjectDTO createSubjectWithTopics(InsertSubjectDTO dto) {
+    public Long createSubjectWithTopics(InsertSubjectDTO dto) {
+        if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.SUBJECT_DESCRIPTION);
+        }
+        if (dto.getTopics() == null || dto.getTopics().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_MANDATORY);
+        }
+
         try {
-            return subjectService.createSubjectWithTopics(dto);
+            SubjectEntity entity = subjectService.createSubjectWithTopics(dto);
+            logger.info("Disciplina criada: {}", entity);
+            return entity.getId();
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
@@ -65,7 +74,13 @@ public class StudyMapComponent {
         }
     }
 
-    public SubjectDTO updateSubjectWithTopics(Long subjectId, UpdateSubjectDTO dto) {
+    public Long updateSubjectWithTopics(Long subjectId, UpdateSubjectDTO dto) {
+        if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.SUBJECT_DESCRIPTION);
+        }
+        if (dto.getTopics() == null || dto.getTopics().isEmpty()) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_MANDATORY);
+        }
         try {
             SubjectEntity subject = subjectService.getActiveSubject(subjectId);
             logger.info("Subject to be updated: {}, new info: {}", subject, dto);
@@ -95,7 +110,7 @@ public class StudyMapComponent {
             }
             SubjectEntity entity = subjectService.updateSubjectWithTopics(updatedSubject);
             logger.info("Subject updated: {}", entity);
-            return SubjectMapper.convertToDTO(entity);
+            return entity.getId();
         } catch (ResponseStatusException e) {
             logger.error(e.getMessage());
             throw e;
