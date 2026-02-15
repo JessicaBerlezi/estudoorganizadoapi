@@ -518,6 +518,14 @@
           "description": "```\nGerenciamento de ciclos de estudo e revisões, \na partir da lista de disciplinas e tópicos do mapa de estudos.\n\n ```"
         }
       ]
+    },
+    {
+      "name": "POPULATE HELPER",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
     }
   ]
 }

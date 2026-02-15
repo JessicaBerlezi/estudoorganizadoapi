@@ -58,7 +58,7 @@ public class StudyStructureViewMapperTest {
         row.setCycleAnnotation(null);
         row.setCycleStartedAt(null);
 
-        StudyStructureDTO dto = StudyStructureViewMapper.buildStudyCycleInfo(row);
+        StudyStructureDTO dto = StudyStructureViewMapper.buildStudyCycleInfo(row, 1);
 
         Assertions.assertNotNull(dto);
         Assertions.assertEquals(1L, dto.getId());
@@ -209,7 +209,7 @@ public class StudyStructureViewMapperTest {
 
         Assertions.assertDoesNotThrow(() -> {
             StudyStructureViewMapper.buildSubjectInfo(row);
-            StudyStructureViewMapper.buildStudyCycleInfo(row);
+            StudyStructureViewMapper.buildStudyCycleInfo(row, 1);
         });
     }
 

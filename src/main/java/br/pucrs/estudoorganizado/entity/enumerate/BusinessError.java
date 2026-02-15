@@ -6,6 +6,7 @@ public enum BusinessError {
     STUDY_CYCLE_CREATE("Erro ao criar novo ciclo de estudo."),
     STUDY_CYCLE_UPDATE("Erro ao atualizar dados do ciclo de estudo."),
     STUDY_CYCLE_DELETE("Erro ao remover o ciclo de estudo."),
+    STUDY_CYCLE_REVIEW_LOAD("Erro ao buscar dados do ciclo de revisões de estudo."),
 
     STUDY_MAPS_LOAD("Erro ao carregar disciplinas."),
     STUDY_MAP_LOAD("Erro ao buscar dados de disciplina."),
