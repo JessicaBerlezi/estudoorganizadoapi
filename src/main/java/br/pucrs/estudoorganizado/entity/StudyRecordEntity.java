@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "study_record")
-public class StudyRecordEntity  extends BaseCommonEntity{
+public class StudyRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
