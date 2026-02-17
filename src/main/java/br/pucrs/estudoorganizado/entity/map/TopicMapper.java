@@ -25,7 +25,7 @@ public class TopicMapper {
                 subject
         );
     }
-    public static TopicEntity updateExistingTopicAndConvertToEntity(UpdateTopicStructureDTO dto, TopicEntity existing, int order){
+    public static void updateExistingTopicAndConvertToEntity(UpdateTopicStructureDTO dto, TopicEntity existing, int order){
         if (dto.id == null || !dto.id.equals(existing.getId())) {
             throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_ID_REQUIRED);
         }
@@ -36,15 +36,10 @@ public class TopicMapper {
         existing.setAnnotation(dto.annotation);
         existing.setOrder(order);
         existing.setUpdatedAt(LocalDateTime.now());
-
-        return existing;
     }
 
     public static TopicSummaryDTO convertToSummaryDTO(TopicEntity entity) {
-        return fillSummaryFields(new TopicSummaryDTO(), entity);
-    }
-
-    private static <T extends TopicSummaryDTO> T fillSummaryFields(T dto, TopicEntity entity) {
+        TopicSummaryDTO dto = new TopicSummaryDTO();
         dto.id = entity.getId();
         dto.order = entity.getOrder();
         dto.description = entity.getDescription();
