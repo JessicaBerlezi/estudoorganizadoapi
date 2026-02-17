@@ -37,20 +37,20 @@ public class SubjectEntityTest {
     @Test
     void shouldCreateSubjectWithTopics() {
 
-       InsertTopicDTO topic1 = new InsertTopicDTO();
+       InsertTopicStructureDTO topic1 = new InsertTopicStructureDTO();
         topic1.description = "Topico 1";
         topic1.incidenceScore = 1;
         topic1.knowledgeScore = 1;
         topic1.reviewIntervals = List.of(1, 5);
 
-        InsertTopicDTO topic2 = new InsertTopicDTO();
+        InsertTopicStructureDTO topic2 = new InsertTopicStructureDTO();
         topic2.description = "Topico 2";
         topic2.incidenceScore = 2;
         topic2.knowledgeScore = 2;
         topic2.reviewIntervals = List.of(2, 10);
 
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Disciplina Teste";
         dto.annotation = null;
         dto.topics = List.of(topic1, topic2);
@@ -73,13 +73,13 @@ public class SubjectEntityTest {
     @Test
     void shouldCreateSubjectSuccessfullyWithTopics() {
         // Arrange
-        InsertTopicDTO topic = new InsertTopicDTO();
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
         topic.description = "Álgebra";
         topic.incidenceScore = 3;
         topic.knowledgeScore = 2;
         topic.reviewIntervals = List.of(1, 3, 7);
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Matemática";
         dto.annotation = "Base";
         dto.topics = List.of(topic);
@@ -98,19 +98,19 @@ public class SubjectEntityTest {
     @Test
     void shouldPersistTopicsCascadeCorrectly() {
         // Arrange
-        InsertTopicDTO t1 = new InsertTopicDTO();
+        InsertTopicStructureDTO t1 = new InsertTopicStructureDTO();
         t1.description = "Topico 1";
         t1.incidenceScore = 1;
         t1.knowledgeScore = 1;
         t1.reviewIntervals = List.of(1, 5);
 
-        InsertTopicDTO t2 = new InsertTopicDTO();
+        InsertTopicStructureDTO t2 = new InsertTopicStructureDTO();
         t2.description = "Topico 2";
         t2.incidenceScore = 2;
         t2.knowledgeScore = 2;
         t2.reviewIntervals = List.of(2, 10);
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Disciplina Cascade";
         dto.annotation = "Teste cascade";
         dto.topics = List.of(t1, t2);
@@ -134,13 +134,13 @@ public class SubjectEntityTest {
     @Test
     void shouldHandleNullReviewIntervals() {
         // Arrange
-        InsertTopicDTO topic = new InsertTopicDTO();
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
         topic.description = "Topico sem revisão";
         topic.incidenceScore = 1;
         topic.knowledgeScore = 1;
         topic.reviewIntervals = null; // vindo null do front
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Teste Review Null";
         dto.topics = List.of(topic);
 
@@ -155,13 +155,13 @@ public class SubjectEntityTest {
     @Test
     void shouldPersistAnnotationAsNullWithoutBreaking() {
         // Arrange
-        InsertTopicDTO topic = new InsertTopicDTO();
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
         topic.description = "Topico";
         topic.incidenceScore = 1;
         topic.knowledgeScore = 1;
         topic.reviewIntervals = List.of(1);
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Annotation Null";
         dto.annotation = null; // campo opcional
         dto.topics = List.of(topic);
@@ -177,7 +177,7 @@ public class SubjectEntityTest {
     @Test
     void shouldThrowExceptionWhenDescriptionIsNull() {
         // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = null; // inválido
         dto.topics = new ArrayList<>();
 
@@ -189,13 +189,13 @@ public class SubjectEntityTest {
     @Test
     void shouldBreakWhenTopicFieldsAreInvalidsNull() {
         // Arrange
-        InsertTopicDTO topic = new InsertTopicDTO();
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
         topic.description = null;
         topic.incidenceScore = -2;
         topic.knowledgeScore = 3;
         topic.reviewIntervals = null;
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Teste campos inválidos";
         dto.topics = List.of(topic);
 

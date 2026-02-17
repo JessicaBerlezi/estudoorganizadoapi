@@ -2,7 +2,7 @@ package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.StudyStructureDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicStructureDTO;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;
 import br.pucrs.estudoorganizado.entity.map.StudyStructureViewMapper;
 import br.pucrs.estudoorganizado.entity.view.StudyStructureView;

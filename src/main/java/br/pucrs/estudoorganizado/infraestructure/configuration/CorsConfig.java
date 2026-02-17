@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.configuration;
+package br.pucrs.estudoorganizado.infraestructure.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

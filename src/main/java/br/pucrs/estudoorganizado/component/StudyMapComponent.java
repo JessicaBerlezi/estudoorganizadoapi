@@ -8,7 +8,7 @@ import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.service.StudyStructureViewService;
 import br.pucrs.estudoorganizado.service.SubjectService;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class StudyMapComponent {
         }
     }
 
-    public Long createSubjectWithTopics(InsertSubjectDTO dto) {
+    public Long createSubjectWithTopics(InsertSubjectStructureDTO dto) {
         if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
             throw ApiExceptionFactory.badRequest(BusinessError.SUBJECT_DESCRIPTION);
         }
@@ -74,7 +74,7 @@ public class StudyMapComponent {
         }
     }
 
-    public Long updateSubjectWithTopics(Long subjectId, UpdateSubjectDTO dto) {
+    public Long updateSubjectWithTopics(Long subjectId, UpdateSubjectStructureDTO dto) {
         if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
             throw ApiExceptionFactory.badRequest(BusinessError.SUBJECT_DESCRIPTION);
         }
@@ -85,7 +85,7 @@ public class StudyMapComponent {
             SubjectEntity subject = subjectService.getActiveSubject(subjectId);
             logger.info("Subject to be updated: {}, new info: {}", subject, dto);
 
-            SubjectEntity updatedSubject = SubjectMapper.updateEntity(subject, dto);
+            SubjectEntity updatedSubject = SubjectMapper.updateExistingSubjectAndConvertToEntity(subject, dto);
 
             Map<Long, TopicEntity> existingTopics = subject.getTopics().stream()
                     .filter(t -> t.getId() != null)
@@ -97,14 +97,13 @@ public class StudyMapComponent {
             }
 
             int order = 1;
-            for (UpdateTopicDTO topicDTO : dto.topics) {
+            for (UpdateTopicStructureDTO topicDTO : dto.topics) {
                 if (topicDTO.id != null && existingTopics.containsKey(topicDTO.id)) {
                     TopicEntity existingTopic = existingTopics.get(topicDTO.id);
-                    TopicEntity updatedTopic = TopicMapper.updateEntity(existingTopic, topicDTO, order++);
-                   updatedSubject.getTopics().remove(existingTopic);
-                    updatedSubject.getTopics().add(updatedTopic);
+                    TopicMapper.updateExistingTopicAndConvertToEntity(topicDTO, existingTopic, order++);
+
                 } else {
-                    TopicEntity newTopic = TopicMapper.convertToEntity(topicDTO, subject, order++);
+                    TopicEntity newTopic = TopicMapper.createTopicAndConvertToEntity(topicDTO, subject, order++);
                     updatedSubject.getTopics().add(newTopic);
                 }
             }
@@ -122,14 +121,14 @@ public class StudyMapComponent {
 
     private List<TopicEntity> topicsToRemove(
             Map<Long, TopicEntity> existingTopics,
-            List<UpdateTopicDTO> incomingTopics) {
+            List<UpdateTopicStructureDTO> incomingTopics) {
 
         if (incomingTopics == null || incomingTopics.isEmpty()) {
             // Se o usuário enviou lista vazia, todos os existentes viram órfãos
             return new ArrayList<>(existingTopics.values());
         }
         Set<Long> incomingIds = incomingTopics.stream()
-                .map(UpdateTopicDTO::getId)
+                .map(UpdateTopicStructureDTO::getId)
                 .filter(Objects::nonNull) //Id pode vir null para os tópicos novos
                 .collect(Collectors.toSet());
 

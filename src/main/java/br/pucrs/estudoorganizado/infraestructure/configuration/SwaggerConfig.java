@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.configuration;
+package br.pucrs.estudoorganizado.infraestructure.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

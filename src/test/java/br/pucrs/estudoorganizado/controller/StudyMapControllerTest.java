@@ -6,20 +6,24 @@ import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.eq;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
@@ -57,11 +61,11 @@ public class StudyMapControllerTest {
     @Test
     void shouldReturnOkWhenValidInsertSubject() throws Exception {
 
-        InsertTopicDTO topic = new InsertTopicDTO();
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
         topic.description = "Tópico 1";
         topic.reviewIntervals = List.of(1, 3, 5);
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Matemática";
         dto.annotation = "Disciplina base";
         dto.topics = List.of(topic);
@@ -77,48 +81,319 @@ public class StudyMapControllerTest {
         verify(component).createSubjectWithTopics(any());
     }
 
+    @Test
+    void shouldCreateSubjectSuccessfully() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Direito Constitucional";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        StudyStructureDTO response = new StudyStructureDTO();
+
+        Mockito.when(component.createSubjectWithTopics(Mockito.any())).thenReturn(1L);
+        Mockito.when(component.getSubjectById(1L)).thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/study-map/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
     @Test
-    void shouldReturnBadRequestWhenDescriptionIsNull() throws Exception {
+    void shouldThrowsDescriptionBlankedInCreateSubject() throws Exception {
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
-        dto.description = null; // inválido
-        dto.annotation = "Annotation válida";
-        dto.topics = List.of(new InsertTopicDTO());
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
 
-        mockMvc.perform(post(URL + "/subject")
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "  ";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        StudyStructureDTO response = new StudyStructureDTO();
+
+        Mockito.when(component.createSubjectWithTopics(Mockito.any())).thenReturn(1L);
+        Mockito.when(component.getSubjectById(1L)).thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/study-map/subject")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.SUBJECT_NAME_REQUIRED));
     }
+
+    @Test
+    void shouldThrowsDescriptionNullInCreateSubject() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        StudyStructureDTO response = new StudyStructureDTO();
+
+        Mockito.when(component.createSubjectWithTopics(Mockito.any())).thenReturn(1L);
+        Mockito.when(component.getSubjectById(1L)).thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/study-map/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.SUBJECT_NAME_REQUIRED));
+    }
+
+
 
     @Test
     void shouldReturnBadRequestWhenDescriptionTooLong() throws Exception {
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
-        dto.description = "D".repeat(101);
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
+        dto.description = "D".repeat(151);
         dto.annotation = "Annotation válida";
-        dto.topics = List.of(new InsertTopicDTO());
+        dto.topics = List.of(topic);
 
         mockMvc.perform(post(URL + "/subject")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.SUBJECT_NAME_MAX));
     }
+
 
     @Test
     void shouldReturnBadRequestWhenAnnotationTooLong() throws Exception {
 
-        InsertSubjectDTO dto = new InsertSubjectDTO();
-        dto.description = "Descrição válida";
-        dto.annotation = "A".repeat(251);
-        dto.topics = List.of(new InsertTopicDTO());
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
+        dto.description = "Disciplina base";
+        dto.annotation =  "D".repeat(301);
+        dto.topics = List.of(topic);
+
 
         mockMvc.perform(post(URL + "/subject")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.ANNOTATION_MAX));
     }
+
+    @Test
+    void shouldReturnBadRequestWhenIncidenceScoreHasHigherWrongValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 6;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.INCIDENCE_RANGE));
+    }
+
+
+    @Test
+    void shouldReturnBadRequestWhenIncidenceScoreHasLowerWrongValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = -5;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.INCIDENCE_RANGE));
+    }
+
+
+    @Test
+    void shouldReturnBadRequestWhenKnowledgeScoreHasHigherWrongValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 0;
+        topic.knowledgeScore = 3;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.KNOWLEDGE_RANGE));
+    }
+
+
+    @Test
+    void shouldReturnBadRequestWhenKnowledgeScoreHasLowerWrongValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = -1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.KNOWLEDGE_RANGE));
+    }
+
+
+    @Test
+    void shouldReturnBadRequestWhenReviewIntervalsScoreHasEmptyValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 0;
+        topic.reviewIntervals = List.of();
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.REVIEW_INTERVALS_EMPTY));
+    }
+
+
+
+    @Test
+    void shouldReturnBadRequestWhenReviewIntervalsScoreHasLowerHigherValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30, 120);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.REVIEW_INTERVALS_INVALID));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenReviewIntervalsScoreHasLowerWrongValue() throws Exception {
+
+        InsertTopicStructureDTO topic = new InsertTopicStructureDTO();
+        topic.description = "Tópico 1";
+        topic.incidenceScore =3;
+        topic.knowledgeScore = 0;
+        topic.reviewIntervals = List.of(1, -17, 30);
+        topic.annotation = "Anotação";
+
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = List.of(topic);
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.REVIEW_INTERVALS_INVALID));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenTopicListIsEmpty() throws Exception {
+        InsertSubjectStructureDTO request = new InsertSubjectStructureDTO();
+        request.description = "Disciplina base";
+        request.annotation = "Disciplina base";
+        request.topics = Collections.emptyList();
+
+        mockMvc.perform(post(URL + "/subject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value(ValidationMessages.TOPIC_REQUIRED));
+    }
+
+
 
     // ==========================
     // GET /v1/study-map/subject
@@ -149,28 +424,35 @@ public class StudyMapControllerTest {
     @Test
     void shouldReturnOkWhenValidUpdate() throws Exception {
 
-        SubjectEntity subject = Mocks.createSubjectEntityMock();
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
-        dto.description = "Nova descrição";
-        dto.annotation = "Nova annotation";
-        dto.topics = List.of();
+        UpdateTopicStructureDTO topic = new UpdateTopicStructureDTO();
+        topic.id = 10L; // obrigatório na atualização
+        topic.description = "Tópico atualizado";
+        topic.incidenceScore = 2;
+        topic.knowledgeScore = 1;
+        topic.reviewIntervals = List.of(1, 7, 30);
+        topic.annotation = "Anotação atualizada";
 
-        when(component.updateSubjectWithTopics(eq(1L), any(UpdateSubjectDTO.class)))
+        UpdateSubjectStructureDTO request = new UpdateSubjectStructureDTO();
+        request.description = "Direito Administrativo";
+        request.annotation = "Disciplina ajustada";
+        request.topics = List.of(topic);
+
+        when(component.updateSubjectWithTopics(eq(1L), any(UpdateSubjectStructureDTO.class)))
                 .thenReturn(1L);
 
         mockMvc.perform(put(URL + "/subject")
                         .param("subjectId", "1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
-        verify(component).updateSubjectWithTopics(eq(1L), any(UpdateSubjectDTO.class));
+        verify(component).updateSubjectWithTopics(eq(1L), any(UpdateSubjectStructureDTO.class));
     }
 
     @Test
     void shouldReturnBadRequestWhenUpdateDescriptionIsNull() throws Exception {
 
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
+        UpdateSubjectStructureDTO dto = new UpdateSubjectStructureDTO();
         dto.description = null; // inválido
         dto.annotation = "Annotation";
 

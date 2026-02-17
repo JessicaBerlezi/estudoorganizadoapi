@@ -1,7 +1,7 @@
 package br.pucrs.estudoorganizado;
 
-import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectDTO;
-import br.pucrs.estudoorganizado.controller.dto.UpdateTopicDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateSubjectStructureDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateTopicStructureDTO;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
 
@@ -45,16 +45,16 @@ public class Mocks {
         return portugues;
     }
 
-    public static UpdateSubjectDTO createUpdateSubjectDTOMock(){
-        UpdateTopicDTO t1 = new UpdateTopicDTO();
+    public static UpdateSubjectStructureDTO createUpdateSubjectDTOMock(){
+        UpdateTopicStructureDTO t1 = new UpdateTopicStructureDTO();
         t1.id = 101L;
         t1.description = "Verbos Editado";
 
-        UpdateTopicDTO t2 = new UpdateTopicDTO();
+        UpdateTopicStructureDTO t2 = new UpdateTopicStructureDTO();
         t2.id = 102L;
         t2.description = "Pronomes Editado";
 
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
+        UpdateSubjectStructureDTO dto = new UpdateSubjectStructureDTO();
         dto.description = "descricao atualizacada";
         dto.topics =List.of(t1, t2);
 

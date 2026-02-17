@@ -1,6 +1,5 @@
 package br.pucrs.estudoorganizado.infraestructure.exception;
 
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

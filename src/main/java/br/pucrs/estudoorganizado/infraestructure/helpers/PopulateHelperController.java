@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.configuration.admincontrol;
+package br.pucrs.estudoorganizado.infraestructure.helpers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

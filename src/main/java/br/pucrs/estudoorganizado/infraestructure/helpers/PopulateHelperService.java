@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.configuration.admincontrol;
+package br.pucrs.estudoorganizado.infraestructure.helpers;
 
 import br.pucrs.estudoorganizado.entity.*;
 import br.pucrs.estudoorganizado.entity.enumerate.ReviewStatusEnum;

@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado.entity.enumerate;
+package br.pucrs.estudoorganizado.infraestructure.exception;
 
 public enum BusinessError {
     STUDY_CYCLES_LOAD("Erro ao carregar ciclos de estudo e revisões."),
@@ -22,6 +22,7 @@ public enum BusinessError {
     REVIEW_NOT_FOUND("Não há revisão pendente para este tópico"),
 
     SUBJECT_DESCRIPTION("Descrição da disciplina é obrigatória"),
+    TOPIC_ID_REQUIRED("Id do tópico é obrigatório na atualização"),
     TOPIC_DESCRIPTION("Descrição do tópico é obrigatória"),
     TOPIC_MANDATORY("Necessário envio de pelo menos um tópico"),
     CYCLE_DESCRIPTION("Descrição do ciclo é obrigatória"),

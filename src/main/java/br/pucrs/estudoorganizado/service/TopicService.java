@@ -3,7 +3,7 @@ package br.pucrs.estudoorganizado.service;
 import br.pucrs.estudoorganizado.controller.dto.SubjectTopicOptionDTO;
 import br.pucrs.estudoorganizado.controller.dto.TopicSummaryDTO;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.TopicMapper;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;

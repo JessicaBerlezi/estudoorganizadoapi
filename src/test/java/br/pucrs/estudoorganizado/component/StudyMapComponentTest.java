@@ -4,7 +4,9 @@ import br.pucrs.estudoorganizado.Mocks;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.entity.map.SubjectMapper;
+import br.pucrs.estudoorganizado.entity.map.TopicMapper;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import br.pucrs.estudoorganizado.service.StudyStructureViewService;
 import br.pucrs.estudoorganizado.service.SubjectService;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -100,15 +103,15 @@ public class StudyMapComponentTest {
         SubjectEntity subjectMock = Mocks.createSubjectEntityMockWithId();
         subjectMock.setTopics(new ArrayList<>(subjectMock.getTopics()));
 
-        UpdateTopicDTO updateExisting = new UpdateTopicDTO();
+        UpdateTopicStructureDTO updateExisting = new UpdateTopicStructureDTO();
         updateExisting.id = 101L;
         updateExisting.description = "Verbos Atualizado";
 
-        UpdateTopicDTO newTopic = new UpdateTopicDTO();
+        UpdateTopicStructureDTO newTopic = new UpdateTopicStructureDTO();
         newTopic.id = null;
         newTopic.description = "Novo Tópico";
 
-        UpdateSubjectDTO dto = new UpdateSubjectDTO();
+        UpdateSubjectStructureDTO dto = new UpdateSubjectStructureDTO();
         dto.description = "Disciplina x";
         dto.topics = List.of(updateExisting, newTopic);
 
@@ -152,7 +155,7 @@ public class StudyMapComponentTest {
         SubjectEntity subjectMock = Mocks.createSubjectEntityMockWithId();
         subjectMock.setTopics(new ArrayList<>(subjectMock.getTopics()));
 
-        UpdateSubjectDTO dto = Mocks.createUpdateSubjectDTOMock();
+        UpdateSubjectStructureDTO dto = Mocks.createUpdateSubjectDTOMock();
 
         when(subjectService.getActiveSubject(subjectId))
                 .thenReturn(subjectMock);
@@ -178,7 +181,7 @@ public class StudyMapComponentTest {
     void shouldThrowBadRequestWhenUnexpectedExceptionOccurs() {
         // Arrange
         Long subjectId = 1L;
-        UpdateSubjectDTO dto = Mocks.createUpdateSubjectDTOMock();
+        UpdateSubjectStructureDTO dto = Mocks.createUpdateSubjectDTOMock();
 
         when(subjectService.getActiveSubject(subjectId))
                 .thenThrow(new RuntimeException("Erro inesperado"));
@@ -225,7 +228,7 @@ public class StudyMapComponentTest {
     @Test
     void shouldThrowExceptionNCreateSubjectWhenTopicsIsEmpty() {
         // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Sem tópicos";
         dto.annotation = "Teste";
 
@@ -240,7 +243,7 @@ public class StudyMapComponentTest {
     @Test
     void shouldThrowExceptionNCreateSubjectWhenTopicsIsNull() {
         // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "Sem tópicos";
         dto.annotation = "Teste";
 
@@ -255,11 +258,10 @@ public class StudyMapComponentTest {
 
     @Test
     void shouldThrowExceptionNCreateSubjectWhenDescriptionIsEmpty() {
-        // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = "  ";
         dto.annotation = "Teste";
-        InsertTopicDTO item = new InsertTopicDTO();
+        InsertTopicStructureDTO item = new InsertTopicStructureDTO();
         item.description = "topico";
         dto.topics = List.of(item);
 
@@ -272,10 +274,10 @@ public class StudyMapComponentTest {
     @Test
     void shouldThrowExceptionNCreateSubjectWhenDescriptionIsNull() {
         // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = null;
         dto.annotation = "Teste";
-        InsertTopicDTO item = new InsertTopicDTO();
+        InsertTopicStructureDTO item = new InsertTopicStructureDTO();
         item.description = "topico";
         dto.topics = List.of(item);
 
@@ -288,10 +290,10 @@ public class StudyMapComponentTest {
     @Test
     void shouldThrowExceptionNCreateSubjectWhenDescriptionIsInvalid() {
         // Arrange
-        InsertSubjectDTO dto = new InsertSubjectDTO();
+        InsertSubjectStructureDTO dto = new InsertSubjectStructureDTO();
         dto.description = " . ";
         dto.annotation = "Teste";
-        InsertTopicDTO item = new InsertTopicDTO();
+        InsertTopicStructureDTO item = new InsertTopicStructureDTO();
         item.description = "topico";
         dto.topics = List.of(item);
 
@@ -299,5 +301,97 @@ public class StudyMapComponentTest {
         Assertions.assertThrows(ResponseStatusException.class, () ->
                 component.createSubjectWithTopics(dto)
         );
+    }
+
+    @Test
+    void shouldUpdateExistingAndAddNewTopicsTogether() {
+        TopicEntity existingTopic = new TopicEntity("Antigo tópico", 1, 2, 1, List.of(7), "Anotação", null);
+        existingTopic.setId(10L);
+        List<TopicEntity> topics = new ArrayList<>();
+        topics.add(existingTopic);
+        SubjectEntity existingSubject = new SubjectEntity("Materia existente", "", topics);
+        existingSubject.setId(1L);
+        Mockito.when(subjectService.getActiveSubject(1L)).thenReturn(existingSubject);
+
+        // DTO com id → atualizar
+        UpdateTopicStructureDTO dtoUpdate = new UpdateTopicStructureDTO();
+        dtoUpdate.id = 10L;
+        dtoUpdate.description = "Tópico atualizado";
+        dtoUpdate.incidenceScore = 3;
+        dtoUpdate.knowledgeScore = 2;
+        dtoUpdate.reviewIntervals = List.of(1, 30);
+        dtoUpdate.annotation = "Nova anotação";
+
+        // DTO sem id → novo
+        UpdateTopicStructureDTO dtoNew = new UpdateTopicStructureDTO();
+        dtoNew.description = "Novo tópico";
+        dtoNew.incidenceScore = 1;
+        dtoNew.knowledgeScore = 0;
+        dtoNew.reviewIntervals = List.of(15);
+        dtoNew.annotation = "Anotação nova";
+
+        UpdateSubjectStructureDTO dto = new UpdateSubjectStructureDTO();
+        dto.setDescription("Disciplina atualizada");
+        dto.setTopics(List.of(dtoUpdate, dtoNew));
+        SubjectMapper.updateExistingSubjectAndConvertToEntity(existingSubject, dto);
+
+        Mockito.when(subjectService.updateSubjectWithTopics(Mockito.any()))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Long id = component.updateSubjectWithTopics(1L, dto);
+
+        Assertions.assertEquals(1L, id);
+        Assertions.assertEquals(2, existingSubject.getTopics().size());
+        Assertions.assertTrue(existingSubject.getTopics().contains(existingTopic));
+        Assertions.assertTrue(existingSubject.getTopics().stream().anyMatch(t -> "Tópico atualizado".equals(t.getDescription())));
+        Assertions.assertTrue(existingSubject.getTopics().stream().anyMatch(t -> "Novo tópico".equals(t.getDescription())));
+    }
+
+    @Test
+    void shouldUpdateExistingAndAddNewTopicAndRemovesTogether() {
+        TopicEntity existingTopic = new TopicEntity("Antigo tópico", 1, 2, 1, List.of(7), "Anotação", null);
+        existingTopic.setId(10L);
+        TopicEntity oldTopic = new TopicEntity("Antigo a ser removido", 1, 2, 1, List.of(7), "Anotação", null);
+        oldTopic.setId(2L);
+        List<TopicEntity> topics = new ArrayList<>();
+        topics.add(existingTopic);
+        topics.add(oldTopic);
+        SubjectEntity existingSubject = new SubjectEntity("Materia existente", "", topics);
+        existingSubject.setId(1L);
+        Mockito.when(subjectService.getActiveSubject(1L)).thenReturn(existingSubject);
+
+        // DTO com id → atualizar
+        UpdateTopicStructureDTO dtoUpdate = new UpdateTopicStructureDTO();
+        dtoUpdate.id = 10L;
+        dtoUpdate.description = "Tópico atualizado";
+        dtoUpdate.incidenceScore = 3;
+        dtoUpdate.knowledgeScore = 2;
+        dtoUpdate.reviewIntervals = List.of(1, 30);
+        dtoUpdate.annotation = "Nova anotação";
+
+        // DTO sem id → novo
+        UpdateTopicStructureDTO dtoNew = new UpdateTopicStructureDTO();
+        dtoNew.description = "Novo tópico";
+        dtoNew.incidenceScore = 1;
+        dtoNew.knowledgeScore = 0;
+        dtoNew.reviewIntervals = List.of(15);
+        dtoNew.annotation = "Anotação nova";
+
+        UpdateSubjectStructureDTO dto = new UpdateSubjectStructureDTO();
+        dto.setDescription("Disciplina atualizada");
+        dto.setTopics(List.of(dtoUpdate, dtoNew));
+        SubjectMapper.updateExistingSubjectAndConvertToEntity(existingSubject, dto);
+
+        Mockito.when(subjectService.updateSubjectWithTopics(Mockito.any()))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Long id = component.updateSubjectWithTopics(1L, dto);
+
+        Assertions.assertEquals(1L, id);
+        Assertions.assertEquals(2, existingSubject.getTopics().size());
+        Assertions.assertTrue(existingSubject.getTopics().contains(existingTopic));
+        Assertions.assertFalse(existingSubject.getTopics().contains(oldTopic));
+        Assertions.assertTrue(existingSubject.getTopics().stream().anyMatch(t -> "Tópico atualizado".equals(t.getDescription())));
+        Assertions.assertTrue(existingSubject.getTopics().stream().anyMatch(t -> "Novo tópico".equals(t.getDescription())));
     }
 }

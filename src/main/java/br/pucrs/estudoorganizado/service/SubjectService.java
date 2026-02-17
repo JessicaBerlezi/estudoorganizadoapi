@@ -2,7 +2,7 @@ package br.pucrs.estudoorganizado.service;
 
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import br.pucrs.estudoorganizado.entity.map.SubjectMapper;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.repository.SubjectRepository;
@@ -21,8 +21,8 @@ public class SubjectService {
     private final SubjectRepository repository;
 
     @Transactional
-    public SubjectEntity createSubjectWithTopics(InsertSubjectDTO dto) {
-        SubjectEntity subject = SubjectMapper.convertToEntity(dto);
+    public SubjectEntity createSubjectWithTopics(InsertSubjectStructureDTO dto) {
+        SubjectEntity subject = SubjectMapper.createSubjectAndConvertToEntity(dto);
         SubjectEntity entity = repository.save(subject);
         logger.info("Subject saved: {}", subject);
         return entity;

@@ -3,18 +3,15 @@ package br.pucrs.estudoorganizado.entity.map;
 import br.pucrs.estudoorganizado.controller.dto.*;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import br.pucrs.estudoorganizado.entity.TopicEntity;
-import br.pucrs.estudoorganizado.entity.enumerate.BusinessError;
+import br.pucrs.estudoorganizado.infraestructure.exception.BusinessError;
 import br.pucrs.estudoorganizado.infraestructure.exception.ApiExceptionFactory;
 import br.pucrs.estudoorganizado.service.utils.Utils;
 
 import java.time.LocalDateTime;
-import java.util.*;
 
 public class TopicMapper {
 
-    @org.jetbrains.annotations.NotNull
-    @org.jetbrains.annotations.Contract("_, _, _ -> new")
-    public static TopicEntity convertToEntity(InsertTopicDTO dto, SubjectEntity subject, Integer order) {
+    public static TopicEntity createTopicAndConvertToEntity(BaseTopicStructureDTO dto, SubjectEntity subject, Integer order) {
         if (dto.description == null || dto.description.isEmpty()) {
             throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_DESCRIPTION);
         }
@@ -27,6 +24,20 @@ public class TopicMapper {
                 dto.annotation,
                 subject
         );
+    }
+    public static TopicEntity updateExistingTopicAndConvertToEntity(UpdateTopicStructureDTO dto, TopicEntity existing, int order){
+        if (dto.id == null || !dto.id.equals(existing.getId())) {
+            throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_ID_REQUIRED);
+        }
+        existing.setDescription(dto.description);
+        existing.setIncidenceScore(dto.incidenceScore);
+        existing.setKnowledgeScore(dto.knowledgeScore);
+        existing.setReviewIntervalsDays(dto.reviewIntervals);
+        existing.setAnnotation(dto.annotation);
+        existing.setOrder(order);
+        existing.setUpdatedAt(LocalDateTime.now());
+
+        return existing;
     }
 
     public static TopicSummaryDTO convertToSummaryDTO(TopicEntity entity) {
@@ -41,16 +52,5 @@ public class TopicMapper {
         dto.elapsedTime = "0min";
         dto.score = "-%";
         return dto;
-    }
-
-    public static TopicEntity updateEntity(TopicEntity entity, UpdateTopicDTO dto, int order){
-        entity.setOrder(order);
-        entity.setDescription(dto.description);
-        entity.setAnnotation(dto.annotation);
-        entity.setIncidenceScore(dto.incidenceScore);
-        entity.setKnowledgeScore(dto.knowledgeScore);
-        entity.setUpdatedAt(LocalDateTime.now());
-
-        return entity;
     }
 }

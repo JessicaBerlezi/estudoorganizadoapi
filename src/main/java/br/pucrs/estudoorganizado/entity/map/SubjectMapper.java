@@ -9,7 +9,7 @@ import java.util.*;
 
 public class SubjectMapper {
 
-    public static SubjectEntity convertToEntity(InsertSubjectDTO dto) {
+    public static SubjectEntity createSubjectAndConvertToEntity(InsertSubjectStructureDTO dto) {
 
         SubjectEntity subject = new SubjectEntity(
                 dto.getDescription(),
@@ -20,8 +20,8 @@ public class SubjectMapper {
 
         List<TopicEntity> entities = new ArrayList<>();
         int order = 1;
-        for (InsertTopicDTO topicDTO : dto.getTopics()) {
-            entities.add(TopicMapper.convertToEntity(
+        for (InsertTopicStructureDTO topicDTO : dto.getTopics()) {
+            entities.add(TopicMapper.createTopicAndConvertToEntity(
                     topicDTO,
                     subject,
                     order
@@ -33,7 +33,7 @@ public class SubjectMapper {
         return subject;
     }
 
-    public static SubjectEntity updateEntity(SubjectEntity entity, UpdateSubjectDTO dto) {
+    public static SubjectEntity updateExistingSubjectAndConvertToEntity(SubjectEntity entity, UpdateSubjectStructureDTO dto) {
 
         entity.setDescription(dto.getDescription());
         entity.setAnnotation(dto.annotation);
