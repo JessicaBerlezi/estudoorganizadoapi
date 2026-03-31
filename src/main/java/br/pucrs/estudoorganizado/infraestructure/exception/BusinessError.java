@@ -1,5 +1,7 @@
 package br.pucrs.estudoorganizado.infraestructure.exception;
 
+import br.pucrs.estudoorganizado.controller.ValidationMessages;
+
 public enum BusinessError {
     STUDY_CYCLES_LOAD("Erro ao carregar ciclos de estudo e revisões."),
     STUDY_CYCLE_LOAD("Erro ao buscar dados do ciclo de estudo."),
@@ -21,11 +23,11 @@ public enum BusinessError {
     TOPIC_NOT_FOUND("Registro de tópico não encontrado."),
     REVIEW_NOT_FOUND("Não há revisão pendente para este tópico"),
 
-    SUBJECT_DESCRIPTION("Descrição da disciplina é obrigatória"),
+    SUBJECT_DESCRIPTION(ValidationMessages.SUBJECT_NAME_REQUIRED),
     TOPIC_ID_REQUIRED("Id do tópico é obrigatório na atualização"),
-    TOPIC_DESCRIPTION("Descrição do tópico é obrigatória"),
-    TOPIC_MANDATORY("Necessário envio de pelo menos um tópico"),
-    CYCLE_DESCRIPTION("Descrição do ciclo é obrigatória"),
+    TOPIC_DESCRIPTION(ValidationMessages.TOPIC_NAME_REQUIRED),
+    TOPIC_MANDATORY(ValidationMessages.TOPIC_REQUIRED),
+    CYCLE_DESCRIPTION(ValidationMessages.CYCLE_NAME_REQUIRED),
 
     UPDATE_ERROR("Erro ao atualizar registro");
     public final String message;

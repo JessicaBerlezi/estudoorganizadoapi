@@ -1,5 +1,6 @@
 package br.pucrs.estudoorganizado.controller.dto;
 
+import br.pucrs.estudoorganizado.controller.ValidationMessages;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -12,20 +13,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class StudyCycleDetailsDTO {
-    @NotBlank(message = "Nome do ciclo de estudo é obrigatório")
-    @Size(max = 100, message = "Nome do ciclo de estudo deve ter no máximo 100 caracteres")
+public class UpdateStudyCycleStructureDTO {
+
+    @NotBlank(message = ValidationMessages.CYCLE_NAME_REQUIRED)
+    @Size(max = 100, message = ValidationMessages.CYCLE_NAME_MAX)
     String description;
 
-    @Size(max = 250, message = "Anotação deve ter no máximo 250 caracteres")
+    @Size(max = 250, message = ValidationMessages.ANNOTATION_MAX)
     String annotation;
 
     @Valid
-    @NotEmpty(message = "Algum tópico deve ser selecionada")
+    @NotEmpty(message = ValidationMessages.TOPIC_REQUIRED)
     List<Long> topics;
 
     @JsonCreator
-    public StudyCycleDetailsDTO(
+    public UpdateStudyCycleStructureDTO(
             @JsonProperty("description") String description,
             @JsonProperty("annotation") String annotation,
             @JsonProperty("topics") List<Long> topics) {
@@ -43,7 +45,7 @@ public class StudyCycleDetailsDTO {
                 .collect(Collectors.joining(", ", "[", "]"));
 
 
-          return String.format(
+        return String.format(
                 "description='%s', annotation=%s, topicsId=%s",
                 description,
                 annotation != null && !annotation.isBlank(),

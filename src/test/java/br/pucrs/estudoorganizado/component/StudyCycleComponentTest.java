@@ -1,6 +1,6 @@
 package br.pucrs.estudoorganizado.component;
 
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleDetailsDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateStudyCycleStructureDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import br.pucrs.estudoorganizado.entity.StudyCycleItemEntity;
 import br.pucrs.estudoorganizado.entity.SubjectEntity;
@@ -52,7 +52,7 @@ public class StudyCycleComponentTest {
              1L, 2L
         );
 
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "Ciclo Teste",
                 "Anotação Teste",
                 topicDTOs
@@ -106,7 +106,7 @@ public class StudyCycleComponentTest {
                 1L
         );
 
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "Ciclo Teste",
                 "Anotação Teste",
                 topicDTOs
@@ -204,7 +204,7 @@ public class StudyCycleComponentTest {
         when(itemService.findAllByStudyCycleId(1L))
                 .thenReturn(cycle1Mock.getItems());
 
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "valid study cycle",
                 null,
                 List.of(101L, 102L, 103L, 104L)
@@ -256,7 +256,7 @@ public class StudyCycleComponentTest {
 
         StudyCycleItemEntity newItem = createNewStudyCycleItemMock();
         TopicEntity newTopic = newItem.getTopic() ;
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "valid study cycle",
                 null,
                 List.of(101L, 102L, 103L, 104L, newItem.getTopic().getId())
@@ -304,7 +304,7 @@ public class StudyCycleComponentTest {
 
     @Test
     void shouldUpdateStudyCycleByRemovingItem() {
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "valid study cycle",
                 null,
                 List.of(101L, 102L, 103L) // remove 104
@@ -341,7 +341,7 @@ public class StudyCycleComponentTest {
 
     @Test
     void shouldUpdateOnlyDescriptionAndKeepItems(){
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "nova descricao",
                 null,
                 List.of(101L, 102L, 103L, 104L)
@@ -375,7 +375,7 @@ public class StudyCycleComponentTest {
 
     @Test
     void shouldUpdateStudyCycleByAlterAllPossibleInfo() {
-        StudyCycleDetailsDTO dto = new StudyCycleDetailsDTO(
+        UpdateStudyCycleStructureDTO dto = new UpdateStudyCycleStructureDTO(
                 "novo ciclo atualizado",
                 "comentário importante",
                 List.of(101L, 105L)

@@ -6,7 +6,7 @@ import br.pucrs.estudoorganizado.entity.enumerate.StudyStatusEnum;
 
 public class StudyCycleMapper {
 
-    public static StudyCycleEntity fromDTO(StudyCycleDetailsDTO dto) {
+    public static StudyCycleEntity fromDTO(UpdateStudyCycleStructureDTO dto) {
         return new StudyCycleEntity(
                 dto.getDescription(),
                 StudyStatusEnum.PLANNED,

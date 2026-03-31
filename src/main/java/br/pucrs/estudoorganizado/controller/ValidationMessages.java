@@ -4,9 +4,10 @@ public class ValidationMessages {
     public static final String SUBJECT_NAME_REQUIRED = "Nome da disciplina é obrigatório";
     public static final String SUBJECT_NAME_MAX = "Nome da disciplina deve ter no máximo 100 caracteres";
 
+    public static final String CYCLE_NAME_REQUIRED = "Nome do ciclo de estudo é obrigatório";
+    public static final String CYCLE_NAME_MAX = "Nome do ciclo de estudo deve ter no máximo 100 caracteres";
 
     public static final String TOPIC_REQUIRED = "Lista de tópicos da disciplina é obrigatória";
-    public static final String TOPIC_ID_REQUIRED = "Id do tópico é obrigatório na atualização";
     public static final String TOPIC_NAME_REQUIRED = "Nome do tópico é obrigatório";
     public static final String TOPIC_NAME_MAX = "Nome do tópico deve ter no máximo 150 caracteres";
 

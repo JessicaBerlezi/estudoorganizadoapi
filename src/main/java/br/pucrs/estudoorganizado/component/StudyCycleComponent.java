@@ -59,7 +59,7 @@ public class StudyCycleComponent {
         }
     }
 
-    public StudyCycleEntity creteStudyCycle(StudyCycleDetailsDTO dto) {
+    public StudyCycleEntity creteStudyCycle(UpdateStudyCycleStructureDTO dto) {
         if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
             throw ApiExceptionFactory.badRequest(BusinessError.CYCLE_DESCRIPTION);
         }
@@ -97,10 +97,7 @@ public class StudyCycleComponent {
         }
     }
 
-    public void updateStudyCycle(Long cycleId, StudyCycleDetailsDTO dto) {
-        if (dto.getDescription() == null || dto.getDescription().isEmpty()) {
-            throw ApiExceptionFactory.badRequest(BusinessError.CYCLE_DESCRIPTION);
-        }
+    public void updateStudyCycle(Long cycleId, UpdateStudyCycleStructureDTO dto) {
         if (dto.getTopics() == null || dto.getTopics().isEmpty()) {
             throw ApiExceptionFactory.badRequest(BusinessError.TOPIC_MANDATORY);
         }

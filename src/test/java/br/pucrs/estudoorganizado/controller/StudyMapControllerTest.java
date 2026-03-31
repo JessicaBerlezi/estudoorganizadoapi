@@ -1,9 +1,7 @@
 package br.pucrs.estudoorganizado.controller;
 
-import br.pucrs.estudoorganizado.Mocks;
 import br.pucrs.estudoorganizado.component.StudyMapComponent;
 import br.pucrs.estudoorganizado.controller.dto.*;
-import br.pucrs.estudoorganizado.entity.SubjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

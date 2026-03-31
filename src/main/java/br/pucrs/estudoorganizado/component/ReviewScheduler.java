@@ -1,4 +1,4 @@
-package br.pucrs.estudoorganizado;
+package br.pucrs.estudoorganizado.component;
 
 import br.pucrs.estudoorganizado.service.ReviewControlService;
 import lombok.RequiredArgsConstructor;

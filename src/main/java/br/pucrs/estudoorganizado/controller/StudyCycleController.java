@@ -3,7 +3,7 @@ package br.pucrs.estudoorganizado.controller;
 import br.pucrs.estudoorganizado.component.StudyCycleComponent;
 import br.pucrs.estudoorganizado.controller.dto.StudyStructureDTO;
 import br.pucrs.estudoorganizado.controller.dto.StudyCycleStructureDTO;
-import br.pucrs.estudoorganizado.controller.dto.StudyCycleDetailsDTO;
+import br.pucrs.estudoorganizado.controller.dto.UpdateStudyCycleStructureDTO;
 import br.pucrs.estudoorganizado.entity.StudyCycleEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ public class StudyCycleController {
 
     @Operation(summary = "Criação de novo ciclo de estudo", description = "Abre painel para permitir inclusão de novo ciclo, com suas respectivas disciplinas e tópicos linas, com seus respectivos")
     @PostMapping("/cycle")
-    public ResponseEntity<StudyStructureDTO> postStudyCycle(@Valid @RequestBody StudyCycleDetailsDTO dto) {
+    public ResponseEntity<StudyStructureDTO> postStudyCycle(@Valid @RequestBody UpdateStudyCycleStructureDTO dto) {
         StudyCycleEntity entity = component.creteStudyCycle(dto);
         return ResponseEntity.ok(component.getStudyCycleById(entity.getId()));
     }
@@ -43,7 +43,7 @@ public class StudyCycleController {
 
     @Operation(summary = "Edição de um ciclo de estudo", description = "Abre painel para permitir edição de ciclo, mesmo corpo da api de criação")
     @PutMapping("/cycle")
-    public ResponseEntity<StudyStructureDTO> putStudyCycle(@RequestParam Long cycleId, @Valid @RequestBody StudyCycleDetailsDTO dto) {
+    public ResponseEntity<StudyStructureDTO> putStudyCycle(@RequestParam Long cycleId, @Valid @RequestBody UpdateStudyCycleStructureDTO dto) {
         component.updateStudyCycle(cycleId, dto);
         return ResponseEntity.ok(component.getStudyCycleById(cycleId));
     }
