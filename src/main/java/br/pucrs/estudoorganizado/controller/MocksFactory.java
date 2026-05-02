@@ -9,9 +9,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MocksFactory {
-    private static String getRandomRGB(){
-        return Utils.getRandomRGB();
-    }
 
     public static LinkedList<SubjectDTO> createSubjectDTOMock(){
         LinkedList<SubjectDTO> subject = new LinkedList<>();
@@ -78,13 +75,14 @@ public class MocksFactory {
         int i = 1;
         Random random = new Random();
         for (String t : topics) {
+            int score = random.nextInt(100) + 1;
             TopicSummaryDTO topic = new TopicSummaryDTO();
             topic.id = i;
             topic.order = i++;
-            topic.rgb = getRandomRGB();
+            topic.rgb = Utils.getColorByScore(score);
             topic.description = t;
             topic.elapsedTime = random.nextInt(13) + "h " + random.nextInt(60) + "min";
-            topic.score = random.nextInt(100) + 1 + "%";
+            topic.score = score + "%";
             subject.topics.add(topic);
         }
         return subject;
@@ -160,17 +158,17 @@ public class MocksFactory {
             String description,
             String subject,
             String elapsedTime,
-            String score,
+            int score,
             String reviewInfo,
             String annotation,
             LinkedList<TopicHistoryDTO> history) {
 
         TopicReviewDetailDTO topic = new TopicReviewDetailDTO();
         topic.order = order;
-        topic.rgb = getRandomRGB();
+        topic.rgb = Utils.getColorByScore(score);
         topic.description = description;
         topic.elapsedTime = elapsedTime;
-        topic.score = score;
+        topic.score = score +"%";
         topic.subject = subject;
         topic.annotation = annotation;
         topic.reviewInfo = reviewInfo;
@@ -198,7 +196,7 @@ public class MocksFactory {
         TopicDetailDTO topic = new TopicDetailDTO();
 
         topic.order = order;
-        topic.rgb = getRandomRGB();
+        topic.rgb = Utils.getColorByScore(0);
         topic.description = description;
         topic.elapsedTime = elapsedTime;
         topic.score = "-%";
@@ -220,7 +218,7 @@ public class MocksFactory {
                         "Licitações",
                         "Direito Administrativo",
                         "3h45min",
-                        "85%",
+                        85,
                         "Agenda de próximas revisões: 3d, 5d, 15d, 30d",
                         "Focar nos tópicos 4, 7, 8",
                         history
@@ -246,7 +244,7 @@ public class MocksFactory {
                         "DW",
                         "Análise de dados",
                         "1h20min",
-                        "90%",
+                        90,
                         "Agenda de próximas revisões: 15d, 30d",
                         null,
                         history

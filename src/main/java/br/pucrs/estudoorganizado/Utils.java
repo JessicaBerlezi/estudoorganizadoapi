@@ -11,10 +11,47 @@ public class Utils {
             "#BF0001", "#920000", "#FF6D6D",
             "#9E9E9E", "#777777", "#C2C2C2"
     };
-    public static String getRandomRGB() {
-        Random random = new Random();
-        int indice = random.nextInt(rgbs.length);
-        return rgbs[indice];
+
+    private static final String VERDE = "#71AD47";
+    private static final String VERDE_ESCURO = "#4F7A32";
+    private static final String AMARELO = "#FEC000";
+    private static final String LARANJA = "#EE7D31";
+    private static final String VERMELHO = "#BF0001";
+    private static final String VERMELHO_ESCURO = "#920000";
+    private static final String CINZA = "#9E9E9E";
+
+
+    public static String getColorByScore(Integer score) {
+
+        if (score == null) {
+            return CINZA;
+        }
+
+        if (score >= 90) {
+            return VERMELHO_ESCURO;
+        }
+
+        if (score >= 70) {
+            return VERMELHO;
+        }
+
+        if (score >= 50) {
+            return LARANJA;
+        }
+
+        if (score >= 30) {
+            return AMARELO;
+        }
+
+        if (score >= 10) {
+            return VERDE_ESCURO;
+        }
+
+        if (score >= 0) {
+            return VERDE;
+        }
+
+        return CINZA;
     }
 
 }
